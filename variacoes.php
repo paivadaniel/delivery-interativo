@@ -56,7 +56,17 @@ require_once('cabecalho.php');
         </a>
     </ol>
 
+    <hr>
 
+    <div class="conteudo-descricao-item">
+        <div class="titulo-descricao-item">
+            <b>Descrição Pizza Calabreza</b>
+        </div>
+        <p class="descricao-item">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. At nobis recusandae sit officia molestiae distinctio fuga facilis dicta ullam? Officiis explicabo nobis consequuntur cumque optio est quisquam labore, temporibus tenetur.
+
+        </p>
+    </div>
 </div>
 
 <?php

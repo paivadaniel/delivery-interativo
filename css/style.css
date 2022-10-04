@@ -17,8 +17,8 @@ body {
 }
 
 .cards {
-    margin-top: 70px;
-    /*com fixed-top na nav, começa a contar 70px a partir do topo, e não mais a partir da nav */
+    margin-top: 60px;
+    /*com fixed-top na nav, começa a contar 60px a partir do topo, e não mais a partir da nav */
     justify-content: center;
     /* para centralizar o conteúdo de cards */
 }
@@ -117,7 +117,7 @@ body {
     background: radial-gradient(#f58888, #e32424);
 }
 
-/* POPUP */
+/* POPUP 1 */
 
 .overlay {
     position: fixed;
@@ -192,7 +192,7 @@ body {
 }
 
 .titulo-item{
-	margin-top: 65px;
+	margin-top: 60px;
 	margin-bottom:5px;
 	background: #f2f0f0;
 	padding:5px;
@@ -215,4 +215,103 @@ body {
 .direita {
     position:absolute;
     right: 17px;
+}
+
+.titulo-descricao-item{
+    font-weight: 400;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.descricao-item {
+    font-size:13px;
+    margin-top:10px;
+}
+
+.conteudo-descricao-item {
+    margin: 0 15px; /* margem superior e inferior de 0px e direita e esquerda de 15px */
+}
+
+.destaque{
+    margin-top:60px;
+    padding:10px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+    font-size:15px;
+    text-align:center;
+    font-weight:400;
+
+}
+
+.destaque-qtd{
+    margin-top:10px;
+    padding:10px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+    font-size:15px;
+    text-align:left;
+    font-weight:400;
+
+}
+
+.total-item{
+    margin-top:10px;
+    padding:10px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+    font-size:15px;
+    font-weight:400;
+    position:absolute;
+    bottom:85px;
+    width:100%; /* se tirar width 100% da conflito com a classe direita já definida para esse elemento */
+    background: #fff;
+}
+
+.abaixo {
+    position:absolute;
+    bottom:30px;
+    width:100%; 
+}
+
+.no-border-radius {
+    border-radius:0px;
+    height:40px;
+}
+
+/* POPUP 2 */
+
+.overlay2 {
+    position: fixed;
+    bottom: 0;
+    visibility: hidden;
+    opacity: 0;
+    background: #fcfbeb;
+    width: 100%;
+    height: auto;
+    z-index:1;
+}
+
+.overlay2:target {
+    /* quando chama a popup, ou seja, quando target */
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.popup2 {
+    margin: 5px auto;
+    padding: 10px;
+
+}
+
+.popup2 .close {
+    position: absolute;
+    top: 0px;
+    right:5px;  
+    transition: all 200ms;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+
+.popup2 .close:hover {
+    color: #c23232;
 }

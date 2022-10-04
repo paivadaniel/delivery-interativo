@@ -88,8 +88,14 @@ require_once('cabecalho.php');
 
     </ol>
 
-    <div class="botao">
-        <button class="btn btn-primary">AVANÇAR</button>
+    <div class="d-grid gap-2 mt-4">
+        <!-- d-grip gap-2 são classes bootstrap para deixar o botão cheio, ou seja, preenchendo toda a extensão da tela -->
+        <a href="observacoes.php" class="btn btn-primary">AVANÇAR</a>
+        <!--
+            estética é a mesma de cima, basta declarar as classes btn e btn-primary
+        <button href="observacoes.php" class="btn btn-primary" type="button">AVANÇAR</button>
+
+-->
     </div>
 
 </div>
