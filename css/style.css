@@ -1,0 +1,218 @@
+* {
+    margin: 0px;
+    /*para não ter margin */
+    padding: 0px;
+    /*para não ter padding */
+    box-sizing: border-box;
+    /* como se tivesse fechando uma caixa em volta da página */
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+        Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.main-container {
+    padding: 5px;
+}
+
+.cards {
+    margin-top: 70px;
+    /*com fixed-top na nav, começa a contar 70px a partir do topo, e não mais a partir da nav */
+    justify-content: center;
+    /* para centralizar o conteúdo de cards */
+}
+
+.card {
+    margin: 10px;
+    padding: 20px;
+    height: 120px;
+    border-radius: 10px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+    /* direita, esquerda, cima e baixo, e depois red, green, blue, opacidade */
+    transition: all 0.2s;
+    /* efeito de transição que dura 0,2s, pode ser visto quando o card tiver um link */
+    width: 100%;
+
+}
+
+.card:hover {
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.4);
+    transform: scale(1.01);
+}
+
+.card-title {
+    grid-row: 2/4;
+    /* para posicionamento do elemento, não fez diferença */
+    font-weight: 300;
+    color: #fff;
+    text-align: center;
+    /* centraliza card-title na horizontal*/
+    /*position:relative, e as coordenadas de top e tranform a seguir centralizam card-title na vertical*/
+    position: relative;
+    /*para definir dentro do card, onde o card-title ficará */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.link-card {
+    text-decoration: none;
+}
+
+.carrinho {
+    margin-right: 10px;
+}
+
+@media (max-width: 768px) {
+
+    /* largura do tablet */
+    .card {
+        padding: 5px;
+        min-height: 70px;
+        margin: 0px 0px 20px 0px;
+    }
+
+    .card-title {
+        font-size: 18px;
+    }
+
+    .cards {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}
+
+@media (min-width: 768px) { /* para largura de tela maior que a de tablets */
+    .cards {
+        margin-left: 100px;
+        margin-right: 100px;
+    }
+
+}
+
+/* CARD BACKGROUNDS */
+
+.azul {
+    background: radial-gradient(#1fe4f5, #3fbafe);
+    /* gradiente circular é aplicado com radial-gradient, outra opção é linear-gradient */
+}
+
+.rosa {
+    background: radial-gradient(#fbc1cc, #fa99b2);
+}
+
+.azul-escuro {
+    background: radial-gradient(#76b2fe, #b69efe);
+}
+
+.verde {
+    background: radial-gradient(#60efbc, #58d5c9);
+}
+
+.roxo {
+    background: radial-gradient(#f588d8, #c0a3e5);
+}
+
+.vermelho {
+    background: radial-gradient(#f58888, #e32424);
+}
+
+/* POPUP */
+
+.overlay {
+    position: fixed;
+    top: 60px;
+    right: 10px;
+    visibility: hidden;
+    opacity: 0;
+    background: #fcfbeb;
+    width: 300px;
+    height: auto;
+}
+
+.overlay:target {
+    /* quando chama a popup, ou seja, quando target */
+    visibility: visible;
+    opacity: 1;
+}
+
+
+.popup {
+    margin: 5px auto;
+    padding: 10px;
+
+}
+
+.popup .close {
+    position: absolute;
+    top: 0;
+    right: 5px;
+    transition: all 200ms;
+    font-size: 25px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+
+.popup .close:hover {
+    color: #c23232;
+}
+
+.linha {
+    margin: 5px 0px;
+}
+
+.titulo-popup {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.conteudo-popup {
+    font-size: 15px;
+}
+
+.rodape {
+    position: absolute;
+    /* position absolute faz referência ao elemento pai que é o body, já position relative faz referência ao próprio elemento, já position fixed não se move por nada, é igual aqueles botões de whatsapp no canto direito inferior da tela, que rolamos a tela e eles continuam ali, com bottom: 20px e right: 20px */
+    bottom: 0px;
+    width: 100%;
+    background-color: #ededed;
+    text-align: center;
+    font-size: 14px;
+}
+
+.link-neutro {
+    text-decoration: none;
+    color: #000;
+}
+
+.valor-item{
+	font-size:12px;
+	color:#025709;
+}
+
+.titulo-item{
+	margin-top: 65px;
+	margin-bottom:5px;
+	background: #f2f0f0;
+	padding:5px;
+}
+
+.titulo-item-2{
+    margin-top: 15px;
+	margin-bottom:5px;
+	background: #f2f0f0;
+	padding:5px;
+}
+
+.total {
+    text-align:right; /*align é propriedade html, text-html é propriedade css, ambas fazem a mesma coisa */
+    margin:8px 8px 0 0;
+    font-size:14px;
+    
+}
+
+.direita {
+    position:absolute;
+    right: 17px;
+}
