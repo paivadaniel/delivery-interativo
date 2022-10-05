@@ -229,7 +229,7 @@ body {
 }
 
 .conteudo-descricao-item {
-    margin: 0 15px; /* margem superior e inferior de 0px e direita e esquerda de 15px */
+    margin: 15px 15px; /* margem superior e inferior de 0px e direita e esquerda de 15px */
 }
 
 .destaque{
@@ -297,7 +297,7 @@ body {
 
 .popup2 {
     margin: 5px auto;
-    padding: 10px;
+    padding: 10px 0px;
 
 }
 
@@ -315,3 +315,58 @@ body {
 .popup2 .close:hover {
     color: #c23232;
 }
+
+/* MAIS POPUP 2 */
+
+.card-add-carrinho {
+    background: var(--color-background);
+    padding: 10px; /*calc(4 * var(--size-bezel)) */
+    margin-top: calc(4 * var(--size-bezel));
+    border-radius: var(--size-radius);
+    border: 3px solid var(--color-shadow, currentColor);
+    box-shadow: .5rem .5rem 0 var(--color-shadow, currentColor);  
+    
+  }
+  
+  
+  .group 			  { 
+    position:relative; 
+    margin-bottom:25px; 
+  }
+  
+  .input 				{
+    font-size:14px;
+    padding:10px 10px 10px 5px;
+    display:block;
+    width:100%;
+    border:none;
+    border-bottom:1px solid #757575;
+  }
+  .input:focus 		{ outline:none; }
+  
+  /* LABEL ======================================= */
+  .label 				 {
+    color:#999; 
+    font-size:14px;
+    font-weight:normal;
+    position:absolute;
+    pointer-events:none;
+    left:5px;
+    top:10px;
+    transition:0.2s ease all; 
+    -moz-transition:0.2s ease all; 
+    -webkit-transition:0.2s ease all;
+  }
+  
+  /* active state */
+  .input:focus ~ label, input:valid ~ label 		{
+    top:-2px;
+    font-size:10px;
+    color:#5264AE;
+  }
+
+  /* imagem produto */
+  .imagem-produto {
+    width:100%;
+    margin-top:15px;
+  }

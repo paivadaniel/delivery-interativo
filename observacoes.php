@@ -74,28 +74,67 @@ require_once('cabecalho.php');
 <div id="popup2" class="overlay2">
     <div class="popup2">
         <div class="row">
-            <div class="col-11">
+            <div class="col-12">
+                <div class="card-add-carrinho">
+                    <a class="close" href="#">&times;</a>
+                    <form action="carrinho.php" method="post">
 
-                <div class="row">
-                    <div class="col-6">
-                        <input type="text" name="telefone" class="form-control" placeholder="Seu Telefone" required>
-                    </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="group">
+                                    <input type="text" class="input" name="telefone" id="telefone" required>
+                                    <span class="highlight"></span>
+                                    <span class="bar"></span>
+                                    <label class="label">Telefone</label>
+                                </div>
+                            </div>
 
-                    <div class="col-6">
-                        <input type="text" name="nome" class="form-control" placeholder="Seu Nome" required>
-                    </div>
+                            <div class="col-6">
+                                <div class="group">
+                                    <input type="text" class="input" name="nome" id="nome" required>
+                                    <span class="highlight"></span>
+                                    <span class="bar"></span>
+                                    <label class="label">Nome</label>
+                                </div>
+                            </div>
+
+                            <div class="row" align="center">
+                                <div class="col-6">
+                                    <a href="index.php" class="btn btn-primary" style="width:100%">COMPRAR MAIS</a>
+                                </div>
+
+                                <div class="col-6">
+                                    <button class="btn btn-success" style="width:100%">FINALIZAR COMPRA</button>
+                                </div>
+
+                                <br>
+                                <small>
+                                    <div id="mensagem" align="center"></div>
+                                </small>
+
+                            </div>
+
+                        </div>
                 </div>
-            </div>
-            <div class="col-1">
-                <a class="close" href="#">&times;</a>
+                </form>
             </div>
         </div>
-        <hr class="linha">
-        <div class="conteudo-popup">
-            Aqui vamos colocar depois o conteúdo desse popup trazendo os itens que forem adicionados no carrinho
-        </div>
+
     </div>
+
 </div>
+</div>
+
+<!-- jQuery -->
+<script src="js/jquery-3.4.1.min.js"></script>
+
+<!-- Mascaras JS -->
+<script type="text/javascript" src="js/mascaras.js"></script>
+
+<!-- jQuery para Mascaras JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script> 
+
 <?php
 require_once('rodape.php');
 ?>
+

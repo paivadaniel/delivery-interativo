@@ -66,8 +66,16 @@ require_once('cabecalho.php');
             Lorem ipsum dolor sit amet consectetur adipisicing elit. At nobis recusandae sit officia molestiae distinctio fuga facilis dicta ullam? Officiis explicabo nobis consequuntur cumque optio est quisquam labore, temporibus tenetur.
 
         </p>
+
+        <div>
+            <img src="img/produtos/calabresa.jpg" alt="Pizza de Calabresa" class="imagem-produto">
+        </div>
+
     </div>
+
+
 </div>
+
 
 <?php
 require_once('rodape.php');
