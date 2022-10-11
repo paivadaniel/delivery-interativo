@@ -82,7 +82,9 @@ body {
     }
 }
 
-@media (min-width: 768px) { /* para largura de tela maior que a de tablets */
+@media (min-width: 768px) {
+
+    /* para largura de tela maior que a de tablets */
     .cards {
         margin-left: 100px;
         margin-right: 100px;
@@ -136,7 +138,6 @@ body {
     opacity: 1;
 }
 
-
 .popup {
     margin: 5px auto;
     padding: 10px;
@@ -186,93 +187,96 @@ body {
     color: #000;
 }
 
-.valor-item{
-	font-size:12px;
-	color:#025709;
+.valor-item {
+    font-size: 12px;
+    color: #025709;
 }
 
-.titulo-item{
-	margin-top: 60px;
-	margin-bottom:5px;
-	background: #f2f0f0;
-	padding:5px;
+.titulo-item {
+    margin-top: 60px;
+    margin-bottom: 5px;
+    background: #f2f0f0;
+    padding: 5px;
 }
 
-.titulo-item-2{
+.titulo-item-2 {
     margin-top: 15px;
-	margin-bottom:5px;
-	background: #f2f0f0;
-	padding:5px;
+    margin-bottom: 5px;
+    background: #f2f0f0;
+    padding: 5px;
 }
 
 .total {
-    text-align:right; /*align é propriedade html, text-html é propriedade css, ambas fazem a mesma coisa */
-    margin:8px 8px 0 0;
-    font-size:14px;
-    
+    text-align: right;
+    /*align é propriedade html, text-html é propriedade css, ambas fazem a mesma coisa */
+    margin: 8px 8px 0 0;
+    font-size: 14px;
+
 }
 
 .direita {
-    position:absolute;
+    position: absolute;
     right: 17px;
 }
 
-.titulo-descricao-item{
+.titulo-descricao-item {
     font-weight: 400;
     font-size: 14px;
     margin-top: 10px;
 }
 
 .descricao-item {
-    font-size:13px;
-    margin-top:10px;
+    font-size: 13px;
+    margin-top: 10px;
 }
 
 .conteudo-descricao-item {
-    margin: 15px 15px; /* margem superior e inferior de 0px e direita e esquerda de 15px */
+    margin: 15px 15px;
+    /* margem superior e inferior de 0px e direita e esquerda de 15px */
 }
 
-.destaque{
-    margin-top:60px;
-    padding:10px;
+.destaque {
+    margin-top: 60px;
+    padding: 10px;
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
-    font-size:15px;
-    text-align:center;
-    font-weight:400;
-
-}
-
-.destaque-qtd{
-    margin-top:10px;
-    padding:10px;
-    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
-    font-size:15px;
-    text-align:left;
-    font-weight:400;
+    font-size: 15px;
+    text-align: center;
+    font-weight: 400;
 
 }
 
-.total-item{
-    margin-top:10px;
-    padding:10px;
+.destaque-qtd {
+    margin-top: 10px;
+    padding: 10px;
     box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
-    font-size:15px;
-    font-weight:400;
-    position:absolute;
-    bottom:85px;
-    width:100%; /* se tirar width 100% da conflito com a classe direita já definida para esse elemento */
+    font-size: 15px;
+    text-align: left;
+    font-weight: 400;
+
+}
+
+.total-item {
+    margin-top: 10px;
+    padding: 10px;
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.25);
+    font-size: 15px;
+    font-weight: 400;
+    position: absolute;
+    bottom: 85px;
+    width: 100%;
+    /* se tirar width 100% da conflito com a classe direita já definida para esse elemento */
     background: #fff;
 }
 
 .abaixo {
-    position:absolute;
-    bottom:30px;
-    width:100%; 
+    position: absolute;
+    bottom: 30px;
+    width: 100%;
 }
 
 .no-border-radius {
-    border-radius:0px;
-    height:40px;
+    border-radius: 0px;
+    height: 40px;
 }
 
 /* POPUP 2 */
@@ -285,7 +289,7 @@ body {
     background: #fcfbeb;
     width: 100%;
     height: auto;
-    z-index:1;
+    z-index: 1;
 }
 
 .overlay2:target {
@@ -304,7 +308,7 @@ body {
 .popup2 .close {
     position: absolute;
     top: 0px;
-    right:5px;  
+    right: 5px;
     transition: all 200ms;
     font-size: 25px;
     font-weight: bold;
@@ -320,53 +324,122 @@ body {
 
 .card-add-carrinho {
     background: var(--color-background);
-    padding: 10px; /*calc(4 * var(--size-bezel)) */
+    padding: 10px;
+    /*calc(4 * var(--size-bezel)) */
     margin-top: calc(4 * var(--size-bezel));
     border-radius: var(--size-radius);
     border: 3px solid var(--color-shadow, currentColor);
-    box-shadow: .5rem .5rem 0 var(--color-shadow, currentColor);  
-    
-  }
-  
-  
-  .group 			  { 
-    position:relative; 
-    margin-bottom:25px; 
-  }
-  
-  .input 				{
-    font-size:14px;
-    padding:10px 10px 10px 5px;
-    display:block;
-    width:100%;
-    border:none;
-    border-bottom:1px solid #757575;
-  }
-  .input:focus 		{ outline:none; }
-  
-  /* LABEL ======================================= */
-  .label 				 {
-    color:#999; 
-    font-size:14px;
-    font-weight:normal;
-    position:absolute;
-    pointer-events:none;
-    left:5px;
-    top:10px;
-    transition:0.2s ease all; 
-    -moz-transition:0.2s ease all; 
-    -webkit-transition:0.2s ease all;
-  }
-  
-  /* active state */
-  .input:focus ~ label, input:valid ~ label 		{
-    top:-2px;
-    font-size:10px;
-    color:#5264AE;
+    box-shadow: .5rem .5rem 0 var(--color-shadow, currentColor);
+
+}
+
+
+.group {
+    position: relative;
+    margin-bottom: 25px;
+}
+
+.input {
+    font-size: 14px;
+    padding: 10px 10px 10px 5px;
+    display: block;
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #757575;
+}
+
+.input:focus {
+    outline: none;
+}
+
+/* POPUP-EXCLUIR*/
+
+.overlay-excluir {
+    position: absolute;
+    top: 75px;
+    right:22px;    
+    visibility: hidden;
+    opacity: 0;
+    background: #ffeae6;
+    width:300px;
+    height:auto;
+    z-index:1;
+      
   }
 
-  /* imagem produto */
-  .imagem-produto {
-    width:100%;
-    margin-top:15px;
-  }
+.overlay-excluir:target {
+    /* quando chama a popup, ou seja, quando target */
+    visibility: visible;
+    opacity: 1;
+}
+
+/* LABEL ======================================= */
+.label {
+    color: #999;
+    font-size: 14px;
+    font-weight: normal;
+    position: absolute;
+    pointer-events: none;
+    left: 5px;
+    top: 10px;
+    transition: 0.2s ease all;
+    -moz-transition: 0.2s ease all;
+    -webkit-transition: 0.2s ease all;
+}
+
+/* active state */
+.input:focus~label,
+input:valid~label {
+    top: -2px;
+    font-size: 10px;
+    color: #5264AE;
+}
+
+/* imagem produto */
+.imagem-produto {
+    width: 100%;
+    margin-top: 15px;
+}
+
+.carrinho-qtd {
+    text-align: right;
+    padding: 10px;
+    background-color: #ededed;
+    font-size:0; /* se remover esse font-size 0, vai dar espaçamento entre as divs, para isso não ocorrer, temos que deixar font-size da div pai 0, e dar um font-size para os elementos filhos dessa div, no caso menos-mais, qtd-item-carrinho e total-item-carrinho */
+}
+
+.menos-mais {
+    width: 25px;
+    height: 30px;
+    background: #cecece;
+    padding: 3px;
+    text-align: center;
+    display: inline-block; /* para remover a quebra de linha da div*/
+    font-size:15px;
+
+}
+
+.qtd-item-carrinho {
+    width: 25px;
+    height: 30px;
+    background: #fff;
+    padding: 3px;
+    text-align: center;
+    display: inline-block; /* para remover a quebra de linha da div*/
+    font-size:15px;
+}
+
+.total-item-carrinho {
+    width: 100px;
+    height: 30px;
+    background: #fff;
+    padding: 3px;
+    text-align: center;
+    display: inline-block; /* para remover a quebra de linha da div*/
+    font-size:15px;
+    color:#0a8f17;
+
+}
+
+.nome-produto {
+}

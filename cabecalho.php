@@ -1,3 +1,9 @@
+<?php
+
+require_once('sistema/conexao.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +29,7 @@
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
-    <title>Delivery Interativo</title>
+    <title> <?php echo $nome_sistema; ?> </title>
 </head>
 
 <body>

@@ -1,5 +1,5 @@
 <?php
-require_once('cabecalho.php');
+require_once('cabecalho.php'); //sistema/conexao.php já está sendo requisitado em cabecalho.php
 
 ?>
 
@@ -9,7 +9,7 @@ require_once('cabecalho.php');
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php">
                 <img src="img/logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
-                Delivery Interativo
+                <?php echo $nome_sistema; ?>
             </a>
 
             <?php
