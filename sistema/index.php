@@ -2,6 +2,17 @@
 
 require_once('conexao.php');
 
+$senha = '123';
+$senha_crip = md5($senha); //função md5 codifica a variável senha
+
+//cria um usuário administrador caso não houver nenhum
+$query = $pdo->query("SELECT * FROM usuarios WHERE nivel = 'Administrador'");
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+
+if (@count($res) == 0) { //se não tiver pelo menos um usuário administrador cadastrado
+    $pdo->query("INSERT INTO usuarios SET nome = 'Administrador', email = '$email_sistema', cpf = '000.000.000-00', senha = '$senha', senha_crip = '$senha_crip', nivel = 'Administrador', ativo = 'Sim', data = curDate(), foto = 'sem-foto.jpg'");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +40,7 @@ require_once('conexao.php');
 
     <div class="container mt-5">
         <div class="row d-flex justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-4">
 
                 <div class="card px-5 py-5" id="form1">
                     <div class="form-data" v-if="!submitted">
@@ -38,14 +49,14 @@ require_once('conexao.php');
                             <img src="../img/logo.png" alt="" width="100px">
                         </div>
 
-                        <form action="painel" method="post">
+                        <form action="autenticar.php" method="post">
                             <div class="forms-inputs mb-4">
                                 <span>Email ou CPF</span>
-                                <input autocomplete="off" type="text" v-model="email" v-bind:class="{'form-control':true, 'is-invalid' : !validEmail(email) && emailBlured}" v-on:blur="emailBlured = true" class="form-control" required>
+                                <input autocomplete="off" type="text" v-model="email" v-bind:class="{'form-control':true, 'is-invalid' : !validEmail(email) && emailBlured}" v-on:blur="emailBlured = true" class="form-control" name="email" required>
                             </div>
                             <div class="forms-inputs mb-4">
                                 <span>Senha</span>
-                                <input autocomplete="off" type="password" v-model="password" v-bind:class="{'form-control':true, 'is-invalid' : !validPassword(password) && passwordBlured}" v-on:blur="passwordBlured = true" class="form-control" required>
+                                <input autocomplete="off" type="password" v-model="password" v-bind:class="{'form-control':true, 'is-invalid' : !validPassword(password) && passwordBlured}" v-on:blur="passwordBlured = true" class="form-control" name="senha" required>
                             </div>
 
                             <div class="mb-3">
@@ -91,7 +102,7 @@ require_once('conexao.php');
                     </div>
                     <br>
                     <small>
-                        <div id="mensagem-recuperar"></div>
+                        <div id="mensagem-recuperar" align="center"></div>
                     </small>
                 </form>
             </div>
@@ -104,44 +115,41 @@ require_once('conexao.php');
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script type="text/javascript">
-	$("#form-rec").submit(function () {
+    $("#form-rec").submit(function() {
 
-		event.preventDefault(); //para forçar página não atualizar
-		var formData = new FormData(this); //para recuperar os campos que estão dentro do formulário e jogar na variável formData
+        event.preventDefault(); //para forçar página não atualizar
+        var formData = new FormData(this); //para recuperar os campos que estão dentro do formulário e jogar na variável formData
 
-		$.ajax({
-			url: "recuperar-senha.php",
-			type: 'POST',
-			data: formData, //formData é para quando se trabalha com imagem, ou seja, desnecessário nesse caso
+        $.ajax({
+            url: "recuperar-senha.php",
+            type: 'POST',
+            data: formData, //formData é para quando se trabalha com imagem, ou seja, desnecessário nesse caso
 
-			success: function (mensagem) {
-				$('#mensagem-recuperar').text('');
-				$('#mensagem-recuperar').removeClass();
+            success: function(mensagem) {
+                $('#mensagem-recuperar').text('');
+                $('#mensagem-recuperar').removeClass();
 
-				if (mensagem.trim() == "Email Enviado com Sucesso!") {
-					//$('#btn-fechar-rec').click();					
-					$('#email-rec').val('');
-					$('#mensagem-recuperar').addClass('text-success');
-					$('#mensagem-recuperar').text('Senha Enviada para o Email!');	
+                if (mensagem.trim() == "Email Enviado com Sucesso!") {
+                    //$('#btn-fechar-rec').click();					
+                    $('#email-rec').val('');
+                    $('#mensagem-recuperar').addClass('text-success');
+                    $('#mensagem-recuperar').text('Senha Enviada para o Email!');
 
-				} else {
+                } else {
 
-					$('#mensagem-recuperar').addClass('text-danger');
-					$('#mensagem-recuperar').text(mensagem);
-				}
+                    $('#mensagem-recuperar').addClass('text-danger');
+                    $('#mensagem-recuperar').text(mensagem);
+                }
 
 
-			},
+            },
 
             //linhas a seguir é para quando se trabalha com imagens no AJAX, ou seja, desnecessárias nesse caso
-			cache: false,
-			contentType: false,
-			processData: false,
+            cache: false,
+            contentType: false,
+            processData: false,
 
-		});
+        });
 
-	});
+    });
 </script>
-
-
-

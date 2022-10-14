@@ -16,7 +16,7 @@ try {
 $nome_sistema = 'Delivery Interativo';
 $email_sistema = 'danielantunespaiva@gmail.com';
 $telefone_sistema = '(15) 99180-5895';
-$whatsapp_sistema = '55'.preg_replace('/[ ()-]+/' , '' , $telefone_sistema);
+$whatsapp_sistema = '55'.preg_replace('/[ ()-]+/' , '' , $telefone_sistema); //substitui colchetes, espaço, parenteses e hífen por nada
 $endereco_sistema = 'Rua X Número 0 Bairro Centro';
 
 ?>

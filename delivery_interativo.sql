@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11-Out-2022 às 20:08
+-- Tempo de geração: 14-Out-2022 às 21:18
 -- Versão do servidor: 10.4.21-MariaDB
 -- versão do PHP: 8.0.10
 
@@ -31,12 +31,21 @@ CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
   `nome` varchar(60) NOT NULL,
   `email` varchar(50) NOT NULL,
+  `cpf` varchar(20) DEFAULT NULL,
   `senha` varchar(35) NOT NULL,
   `senha_crip` varchar(100) NOT NULL,
   `nivel` varchar(30) NOT NULL,
   `ativo` varchar(5) NOT NULL,
-  `data` date NOT NULL
+  `data` date NOT NULL,
+  `foto` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `usuarios`
+--
+
+INSERT INTO `usuarios` (`id`, `nome`, `email`, `cpf`, `senha`, `senha_crip`, `nivel`, `ativo`, `data`, `foto`) VALUES
+(1, 'Administrador', 'danielantunespaiva@gmail.com', '000.000.000-00', '123', '202cb962ac59075b964b07152d234b70', 'Administrador', 'Sim', '2022-10-14', 'sem-foto.jpg');
 
 --
 -- Índices para tabelas despejadas
@@ -56,7 +65,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
