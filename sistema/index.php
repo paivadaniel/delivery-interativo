@@ -10,7 +10,7 @@ $query = $pdo->query("SELECT * FROM usuarios WHERE nivel = 'Administrador'");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 
 if (@count($res) == 0) { //se não tiver pelo menos um usuário administrador cadastrado
-    $pdo->query("INSERT INTO usuarios SET nome = 'Administrador', email = '$email_sistema', cpf = '000.000.000-00', senha = '$senha', senha_crip = '$senha_crip', nivel = 'Administrador', ativo = 'Sim', data = curDate(), foto = 'sem-foto.jpg'");
+    $pdo->query("INSERT INTO usuarios SET nome = 'Administrador', email = '$email_sistema', cpf = '000.000.000-00', senha = '$senha', senha_crip = '$senha_crip', nivel = 'Administrador', ativo = 'Sim', data = curDate(), foto = 'sem-foto.jpg', telefone='$telefone_sistema'");
 }
 
 ?>
@@ -24,7 +24,7 @@ if (@count($res) == 0) { //se não tiver pelo menos um usuário administrador ca
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>Página de Login - <?php echo $nome_sistema; ?></title>
 
-    <link rel="shortcut icon" href="../img/favicon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="../img/<?php echo $favicon_sistema ?>" type="image/x-icon">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -46,7 +46,7 @@ if (@count($res) == 0) { //se não tiver pelo menos um usuário administrador ca
                     <div class="form-data" v-if="!submitted">
 
                         <div class="logo">
-                            <img src="../img/logo.png" alt="" width="100px">
+                            <img src="../img/<?php echo $logo_sistema ?>" alt="" width="100px">
                         </div>
 
                         <form action="autenticar.php" method="post">

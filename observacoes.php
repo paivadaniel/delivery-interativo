@@ -131,7 +131,7 @@ require_once('cabecalho.php');
 <!-- Mascaras JS -->
 <script type="text/javascript" src="js/mascaras.js"></script>
 
-<!-- jQuery para Mascaras JS -->
+<!-- jQuery para funcionar Mascaras JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script> 
 
 <?php

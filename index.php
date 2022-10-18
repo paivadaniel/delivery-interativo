@@ -8,7 +8,7 @@ require_once('cabecalho.php'); //sistema/conexao.php já está sendo requisitado
         <!-- fixed-top anula padding-top da classe main-container no css e faz com que o topo não desça mesmo com a rolagem da página -->
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php">
-                <img src="img/logo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+                <img src="img/<?php echo $logo_sistema ?>" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
                 <?php echo $nome_sistema; ?>
             </a>
 
