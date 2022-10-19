@@ -597,26 +597,6 @@ if (@$_GET['pagina'] != '') {
 </div>
 
 <script type="text/javascript">
-	function carregarImgPerfil() {
-    var target = document.getElementById('target-usuario');
-    var file = document.querySelector("#foto_perfil").files[0];
-    
-        var reader = new FileReader();
-
-        reader.onloadend = function () {
-            target.src = reader.result;
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
-
-        } else {
-            target.src = "";
-        }
-    }
-</script>
-
-<script type="text/javascript">
 	$("#form-perfil").submit(function() {
 
 		event.preventDefault();
@@ -651,6 +631,26 @@ if (@$_GET['pagina'] != '') {
 		});
 
 	});
+</script>
+
+<script type="text/javascript">
+	function carregarImgPerfil() {
+    var target = document.getElementById('target-usuario');
+    var file = document.querySelector("#foto_perfil").files[0];
+    
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            target.src = reader.result;
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+
+        } else {
+            target.src = "";
+        }
+    }
 </script>
 
 <script type="text/javascript">

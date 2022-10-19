@@ -75,12 +75,12 @@ $pag = 'usuarios';
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label>Foto</label>
-                                <input class="form-control" type="file" name="foto" onChange="carregarImg();" id="foto">
+                                <input class="form-control" type="file" name="foto-usuario" onChange="carregarImg();" id="foto-usuario">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div id="divImg">
-                                <img src="images/perfil/sem-foto.jpg" width="80px" id="target">
+                                <img src="images/perfil/sem-foto.jpg" width="80px" id="target-usuario">
                             </div>
                         </div>
 
@@ -105,3 +105,23 @@ $pag = 'usuarios';
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+	function carregarImg() {
+    var target = document.getElementById('target-usuario');
+    var file = document.querySelector("#foto-usuario").files[0];
+    
+        var reader = new FileReader();
+
+        reader.onloadend = function () {
+            target.src = reader.result;
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+
+        } else {
+            target.src = "";
+        }
+    }
+</script>
