@@ -79,7 +79,7 @@ $("#form").submit(function () {
         success: function (mensagem) {
             $('#mensagem').text('');
             $('#mensagem').removeClass()
-            if (mensagem.trim() == "Salvo com Sucesso") {
+            if (mensagem.trim() == "Salvo com Sucesso!") {
 
                 $('#btn-fechar').click();
                 listar();

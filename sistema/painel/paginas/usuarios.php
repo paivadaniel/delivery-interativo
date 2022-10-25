@@ -63,7 +63,7 @@ $pag = 'usuarios';
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Nível</label>
-                                <select class="form-control sel2" id="cargo" name="cargo" style="width:100%;">
+                                <select class="form-control sel2" id="nivel" name="nivel" style="width:100%;">
 
                                     <option>Administrador</option>
                                 </select>
