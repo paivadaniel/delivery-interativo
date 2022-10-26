@@ -1,8 +1,8 @@
 <?php
-$pag = 'usuarios';
+$pag = 'funcionarios';
 ?>
 
-<a onclick="inserir()" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Novo Usuário</a>
+<a onclick="inserir()" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> Novo Funcionário</a>
 
 <div class="bs-example widget-shadow" style="padding:15px" id="listar">
 
@@ -130,13 +130,13 @@ $pag = 'usuarios';
             <div class="modal-body">
 
                 <div class="row" style="border-bottom: 1px solid #cac7c7;">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <span><b>Email: </b></span>
                         <span id="email_dados"></span>
                     </div>
-                    <div class="col-md-4">
-                        <span><b>Senha: </b></span>
-                        <span id="senha_dados"></span>
+                    <div class="col-md-6">
+                        <span><b>Data de Cadastro: </b></span>
+                        <span id="data_dados"></span>
                     </div>
                 </div>
 
@@ -161,14 +161,7 @@ $pag = 'usuarios';
                         <span id="ativo_dados"></span>
                     </div>
                 </div>
-
-                <div class="row" style="border-bottom: 1px solid #cac7c7;">
-                    <div class="col-md-6">
-                        <span><b>Data de Cadastro: </b></span>
-                        <span id="data_dados"></span>
-                    </div>
-                </div>
-
+      
                 <div class="row">
                     <div class="col-md-12" align="center">
                         <img width="250px" id="target_mostrar">
@@ -176,8 +169,6 @@ $pag = 'usuarios';
                 </div>
 
             </div>
-
-
         </div>
     </div>
 </div>

@@ -2,7 +2,7 @@
 require_once("../../../conexao.php");
 $tabela = 'usuarios';
 
-$query = $pdo->query("SELECT * FROM $tabela order by id desc");
+$query = $pdo->query("SELECT * FROM $tabela WHERE nivel != 'Administrador' order by id desc");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
 $total_reg = @count($res);
 if ($total_reg > 0) {
@@ -13,8 +13,8 @@ if ($total_reg > 0) {
 	<thead> 
 	<tr> 
 	<th>Nome</th>	
-	<th class="esc">Email</th> 	
-	<th class="esc">Senha</th> 
+	<th class="esc">Email</th> 
+    <th class="esc">Telefone</th> 	
 	<th class="esc">Nível</th>	
 	<th class="esc">Foto</th>		
 	<th>Ações</th>
@@ -60,7 +60,7 @@ HTML;
 <tr class="{$classe_linha}">
 <td>{$nome}</td>
 <td class="esc">{$email}</td>
-<td class="esc">{$senha}</td>
+<td class="esc">{$telefone}</td>
 <td class="esc">{$nivel}</td>
 <td class="esc"><img src="images/perfil/{$foto}" width="30px"></td> <!-- listar.php é chamado em ajax.js que por sua vez é chamado em usuarios.php, que está dentro de painel/index.php -->
 <td>
@@ -80,12 +80,6 @@ HTML;
 		</li>										
 		</ul>
 		</li>
-
-
-		<big><a href="#" onclick="ativar('{$id}', '{$acao}')" title="{$titulo_link}"><i class="fa {$icone} text-success"></i></a></big>
-
-
-
 
 </td>
 </tr>

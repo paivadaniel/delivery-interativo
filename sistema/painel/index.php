@@ -126,6 +126,12 @@ if (@$_GET['pagina'] != '') {
 	<!-- //pie-chart -->
 	<!-- index page sales reviews visitors pie chart -->
 
+	<!-- DataTables -->
+
+	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css" />
+
+	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+
 
 </head>
 
@@ -160,9 +166,35 @@ if (@$_GET['pagina'] != '') {
 								</a>
 								<ul class="treeview-menu">
 									<li><a href="index.php?pagina=usuarios"><i class="fa fa-angle-right"></i> Usuários</a></li>
-									<li><a href="#"><i class="fa fa-angle-right"></i> Funcionários</a></li>
+									<li><a href="index.php?pagina=funcionarios"><i class="fa fa-angle-right"></i> Funcionários</a></li>
 								</ul>
 							</li>
+
+
+							<li class="treeview">
+								<a href="#">
+									<i class="fa fa-plus"></i>
+									<span>Cadastros</span>
+									<i class="fa fa-angle-left pull-right"></i>
+								</a>
+								<ul class="treeview-menu">
+									<li><a href="index.php?pagina=niveis"><i class="fa fa-angle-right"></i> Níveis</a></li>
+								</ul>
+							</li>
+
+
+							<li class="treeview">
+								<a href="#">
+									<i class="fa fa-cutlery"></i>
+									<span>Produtos</span>
+									<i class="fa fa-angle-left pull-right"></i>
+								</a>
+								<ul class="treeview-menu">
+									<li><a href="index.php?pagina=produtos"><i class="fa fa-angle-right"></i> Produtos</a></li>
+									<li><a href="index.php?pagina=categorias"><i class="fa fa-angle-right"></i> Categorias</a></li>
+								</ul>
+							</li>
+
 
 						</ul>
 					</div>
@@ -357,7 +389,7 @@ if (@$_GET['pagina'] != '') {
 <script type="text/javascript" src="../../js/mascaras.js"></script>
 
 <!-- jQuery para funcionar Mascaras JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 
 <!-- Modal Config -->
 <div class="modal fade" id="modalConfig" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -370,149 +402,151 @@ if (@$_GET['pagina'] != '') {
 				</button>
 			</div>
 			<form id="form-config">
-			<div class="modal-body">
+				<div class="modal-body">
 
 					<div class="row">
-						<div class="col-md-3">							
-								<label>Nome do Sistema</label>
-								<input type="text" class="form-control" id="nome_sistema" name="nome_sistema" placeholder="Delivery Interativo" value="<?php echo @$nome_sistema ?>" required>							
+						<div class="col-md-3">
+							<label>Nome do Sistema</label>
+							<input type="text" class="form-control" id="nome_sistema" name="nome_sistema" placeholder="Delivery Interativo" value="<?php echo @$nome_sistema ?>" required>
 						</div>
 
-						<div class="col-md-3">							
-								<label>Email do Sistema</label>
-								<input type="email" class="form-control" id="email_sistema" name="email_sistema" placeholder="Email do Sistema" value="<?php echo @$email_sistema ?>" >							
+						<div class="col-md-3">
+							<label>Email do Sistema</label>
+							<input type="email" class="form-control" id="email_sistema" name="email_sistema" placeholder="Email do Sistema" value="<?php echo @$email_sistema ?>">
 						</div>
 
-						<div class="col-md-3">							
-								<label>Telefone do Sistema</label>
-								<input type="text" class="form-control" id="telefone_sistema" name="telefone_sistema" placeholder="Telefone do Sistema" value="<?php echo @$telefone_sistema ?>" required>							
+						<div class="col-md-3">
+							<label>Telefone do Sistema</label>
+							<input type="text" class="form-control" id="telefone_sistema" name="telefone_sistema" placeholder="Telefone do Sistema" value="<?php echo @$telefone_sistema ?>" required>
 						</div>
 
-						<div class="col-md-3">							
-								<label>Telefone Fixo</label>
-								<input type="text" class="form-control" id="telefone_fixo" name="telefone_fixo" placeholder="Telefone Fixo" value="<?php echo @$telefone_fixo ?>" >							
+						<div class="col-md-3">
+							<label>Telefone Fixo</label>
+							<input type="text" class="form-control" id="telefone_fixo" name="telefone_fixo" placeholder="Telefone Fixo" value="<?php echo @$telefone_fixo ?>">
 						</div>
 					</div>
 
 					<div class="row">
-						<div class="col-md-6">							
-								<label>Endereço <small>(Logradouro, Número, Bairro e Cidade)</small></label>
-								<input type="text" class="form-control" id="endereco_sistema" name="endereco_sistema" placeholder="Rua X..." value="<?php echo @$endereco_sistema ?>" >							
+						<div class="col-md-6">
+							<label>Endereço <small>(Logradouro, Número, Bairro e Cidade)</small></label>
+							<input type="text" class="form-control" id="endereco_sistema" name="endereco_sistema" placeholder="Rua X..." value="<?php echo @$endereco_sistema ?>">
 						</div>
 
-						<div class="col-md-6">							
-								<label>Instagram</label>
-								<input type="text" class="form-control" id="instagram_sistema" name="instagram_sistema" placeholder="Link do Instagram" value="<?php echo @$instagram_sistema ?>">							
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-3">							
-								<label>Tipo Relatório</label>
-								<select class="form-control" name="tipo_rel">
-									<option value="PDF" <?php if(@$tipo_rel == 'PDF'){?> selected <?php } ?> >PDF</option>
-									<option value="HTML" <?php if(@$tipo_rel == 'HTML'){?> selected <?php } ?> >HTML</option>
-								</select>							
-						</div>
-
-						<div class="col-md-3">							
-								<label>Mostrar Miniaturas</label>
-								<select class="form-control" name="tipo_miniatura">
-								<option value="Cores" <?php if(@$tipo_miniatura == 'Cores'){?> selected <?php } ?> >Cores</option>
-									<option value="Foto" <?php if(@$tipo_miniatura == 'Foto'){?> selected <?php } ?> >Foto</option>	
-									</select>					
-						</div>
-
-						<div class="col-md-3">							
-								<label>Status do Pedido Via Whatsapp</label> <!-- enviar informações do status do pedido por whatsapp ou não -->
-								<select class="form-control" name="status_whatsapp">
-								<option value="Sim" <?php if(@$status_whatsapp == 'Sim'){?> selected <?php } ?> >Sim</option>
-									<option value="Não" <?php if(@$status_whatsapp == 'Não'){?> selected <?php } ?> >Não</option>	
-									</select>					
-						</div>
-
-						<div class="col-md-3">							
-								<label>Previsão de Entrega <small>(Min.)</small></label>
-								<input type="number" class="form-control" id="previsao_entrega" name="previsao_entrega" placeholder="Previsão Minutos" value="<?php echo @$previsao_entrega ?>" required>							
+						<div class="col-md-6">
+							<label>Instagram</label>
+							<input type="text" class="form-control" id="instagram_sistema" name="instagram_sistema" placeholder="Link do Instagram" value="<?php echo @$instagram_sistema ?>">
 						</div>
 					</div>
 
 					<div class="row">
-						<div class="col-md-2">							
-								<label>Abertura</label>
-								<input type="time" name="horario_abertura" class="form-control" value="<?php echo @$horario_abertura ?>">					
+						<div class="col-md-3">
+							<label>Tipo Relatório</label>
+							<select class="form-control" name="tipo_rel">
+								<option value="PDF" <?php if (@$tipo_rel == 'PDF') { ?> selected <?php } ?>>PDF</option>
+								<option value="HTML" <?php if (@$tipo_rel == 'HTML') { ?> selected <?php } ?>>HTML</option>
+							</select>
 						</div>
 
-						<div class="col-md-2">							
-								<label>Fechamento</label>
-								<input type="time" name="horario_fechamento" class="form-control" value="<?php echo @$horario_fechamento ?>">					
+						<div class="col-md-3">
+							<label>Mostrar Miniaturas</label>
+							<select class="form-control" name="tipo_miniatura">
+								<option value="Cores" <?php if (@$tipo_miniatura == 'Cores') { ?> selected <?php } ?>>Cores</option>
+								<option value="Foto" <?php if (@$tipo_miniatura == 'Foto') { ?> selected <?php } ?>>Foto</option>
+							</select>
+						</div>
+
+						<div class="col-md-3">
+							<label>Status do Pedido Via Whatsapp</label> <!-- enviar informações do status do pedido por whatsapp ou não -->
+							<select class="form-control" name="status_whatsapp">
+								<option value="Sim" <?php if (@$status_whatsapp == 'Sim') { ?> selected <?php } ?>>Sim</option>
+								<option value="Não" <?php if (@$status_whatsapp == 'Não') { ?> selected <?php } ?>>Não</option>
+							</select>
+						</div>
+
+						<div class="col-md-3">
+							<label>Previsão de Entrega <small>(Min.)</small></label>
+							<input type="number" class="form-control" id="previsao_entrega" name="previsao_entrega" placeholder="Previsão Minutos" value="<?php echo @$previsao_entrega ?>" required>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-2">
+							<label>Abertura</label>
+							<input type="time" name="horario_abertura" class="form-control" value="<?php echo @$horario_abertura ?>">
+						</div>
+
+						<div class="col-md-2">
+							<label>Fechamento</label>
+							<input type="time" name="horario_fechamento" class="form-control" value="<?php echo @$horario_fechamento ?>">
 						</div>
 
 						<div class="col-md-8">
 							<label>Texto Fechamento <small>(Fora do Horário)</small></label>
-								<input maxlength="255" type="text" name="texto_fechamento_horario" class="form-control" value="<?php echo @$texto_fechamento_horario ?>" placeholder="Texto que vai aparecer quando o cliente tentar fazer pedido fora do horário de funcionamento">		
+							<input maxlength="255" type="text" name="texto_fechamento_horario" class="form-control" value="<?php echo @$texto_fechamento_horario ?>" placeholder="Texto que vai aparecer quando o cliente tentar fazer pedido fora do horário de funcionamento">
 						</div>
 					</div>
 
 					<div class="row">
-						<div class="col-md-3">							
-								<label>Estabelecimento</label>
-								<select class="form-control" name="status_estabelecimento">
-								<option value="Aberto" <?php if(@$status_estabelecimento == 'Aberto'){?> selected <?php } ?> >Aberto</option>
-									<option value="Fechado" <?php if(@$status_estabelecimento == 'Fechado'){?> selected <?php } ?> >Fechado</option>	
-									</select>
+						<div class="col-md-3">
+							<label>Estabelecimento</label>
+							<select class="form-control" name="status_estabelecimento">
+								<option value="Aberto" <?php if (@$status_estabelecimento == 'Aberto') { ?> selected <?php } ?>>Aberto</option>
+								<option value="Fechado" <?php if (@$status_estabelecimento == 'Fechado') { ?> selected <?php } ?>>Fechado</option>
+							</select>
 						</div>
 						<div class="col-md-9">
 							<label>Texto Fechamento <small>(Imprevisto)</small></label>
-								<input maxlength="255" type="text" name="texto_fechamento_imprevisto" class="form-control" value="<?php echo @$texto_fechamento_imprevisto ?>" placeholder="Caso marque a opção de Estabelecimento Fechado, coloque aqui o texto que deseja aparecer">		
+							<input maxlength="255" type="text" name="texto_fechamento_imprevisto" class="form-control" value="<?php echo @$texto_fechamento_imprevisto ?>" placeholder="Caso marque a opção de Estabelecimento Fechado, coloque aqui o texto que deseja aparecer">
 						</div>
 					</div>
 
 					<div class="row">
-						<div class="col-md-4">						
-								<div class="form-group"> 
-									<label>Logo (*PNG)</label> 
-									<input class="form-control" type="file" name="foto-logo" onChange="carregarImgLogo();" id="foto-logo">
-								</div>						
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Logo (*PNG)</label>
+								<input class="form-control" type="file" name="foto-logo" onChange="carregarImgLogo();" id="foto-logo">
 							</div>
-							<div class="col-md-2">
-								<div id="divImg">
-									<img src="../../img/<?php echo $logo_sistema ?>"  width="80px" id="target-logo">									
-								</div>
+						</div>
+						<div class="col-md-2">
+							<div id="divImg">
+								<img src="../../img/<?php echo $logo_sistema ?>" width="80px" id="target-logo">
 							</div>
+						</div>
 
-							<div class="col-md-4">						
-								<div class="form-group"> 
-									<label>Ícone (*Png)</label> 
-									<input class="form-control" type="file" name="foto-icone" onChange="carregarImgIcone();" id="foto-icone">
-								</div>						
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Ícone (*Png)</label>
+								<input class="form-control" type="file" name="foto-icone" onChange="carregarImgIcone();" id="foto-icone">
 							</div>
-							<div class="col-md-2">
-								<div id="divImg">
-									<img src="../../img/<?php echo $favicon_sistema ?>"  width="50px" id="target-icone">									
-								</div>
+						</div>
+						<div class="col-md-2">
+							<div id="divImg">
+								<img src="../../img/<?php echo $favicon_sistema ?>" width="50px" id="target-icone">
 							</div>
+						</div>
 					</div>
 
 					<div class="row">
-							<div class="col-md-4">						
-								<div class="form-group"> 
-									<label>Logo Relatório (*Jpg)</label> 
-									<input class="form-control" type="file" name="foto-logo-rel" onChange="carregarImgLogoRel();" id="foto-logo-rel">
-								</div>						
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Logo Relatório (*Jpg)</label>
+								<input class="form-control" type="file" name="foto-logo-rel" onChange="carregarImgLogoRel();" id="foto-logo-rel">
 							</div>
-							<div class="col-md-2">
-								<div id="divImg">
-									<img src="../../img/<?php echo @$logo_rel ?>"  width="80px" id="target-logo-rel">									
-								</div>
+						</div>
+						<div class="col-md-2">
+							<div id="divImg">
+								<img src="../../img/<?php echo @$logo_rel ?>" width="80px" id="target-logo-rel">
 							</div>
+						</div>
 					</div>
 					<br>
-				<small><div id="msg-config" align="center"></div></small>
-			</div>
-			<div class="modal-footer">       
-				<button type="submit" class="btn btn-primary">Salvar</button>
-			</div>
+					<small>
+						<div id="msg-config" align="center"></div>
+					</small>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Salvar</button>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -635,26 +669,26 @@ if (@$_GET['pagina'] != '') {
 
 <script type="text/javascript">
 	function carregarImgPerfil() {
-    var target = document.getElementById('target-usuario');
-    var file = document.querySelector("#foto_perfil").files[0];
-    
-        var reader = new FileReader();
+		var target = document.getElementById('target-usuario');
+		var file = document.querySelector("#foto_perfil").files[0];
 
-        reader.onloadend = function () {
-            target.src = reader.result;
-        };
+		var reader = new FileReader();
 
-        if (file) {
-            reader.readAsDataURL(file);
+		reader.onloadend = function() {
+			target.src = reader.result;
+		};
 
-        } else {
-            target.src = "";
-        }
-    }
+		if (file) {
+			reader.readAsDataURL(file);
+
+		} else {
+			target.src = "";
+		}
+	}
 </script>
 
 <script type="text/javascript">
-	$("#form-config").submit(function () {
+	$("#form-config").submit(function() {
 
 		event.preventDefault();
 		var formData = new FormData(this);
@@ -664,14 +698,14 @@ if (@$_GET['pagina'] != '') {
 			type: 'POST',
 			data: formData,
 
-			success: function (mensagem) {
+			success: function(mensagem) {
 				$('#msg-config').text('');
 				$('#msg-config').removeClass()
 				if (mensagem.trim() == "Editado com Sucesso!") {
 
 					$('#btn-fechar-config').click();
-					location.reload();				
-						
+					location.reload();
+
 
 				} else {
 
@@ -693,60 +727,60 @@ if (@$_GET['pagina'] != '') {
 
 <script type="text/javascript">
 	function carregarImgLogo() {
-    var target = document.getElementById('target-logo');
-    var file = document.querySelector("#foto-logo").files[0];
-    
-        var reader = new FileReader();
+		var target = document.getElementById('target-logo');
+		var file = document.querySelector("#foto-logo").files[0];
 
-        reader.onloadend = function () {
-            target.src = reader.result;
-        };
+		var reader = new FileReader();
 
-        if (file) {
-            reader.readAsDataURL(file);
+		reader.onloadend = function() {
+			target.src = reader.result;
+		};
 
-        } else {
-            target.src = "";
-        }
-    }
+		if (file) {
+			reader.readAsDataURL(file);
+
+		} else {
+			target.src = "";
+		}
+	}
 </script>
 
 <script type="text/javascript">
 	function carregarImgLogoRel() {
-    var target = document.getElementById('target-logo-rel');
-    var file = document.querySelector("#foto-logo-rel").files[0];
-    
-        var reader = new FileReader();
+		var target = document.getElementById('target-logo-rel');
+		var file = document.querySelector("#foto-logo-rel").files[0];
 
-        reader.onloadend = function () {
-            target.src = reader.result;
-        };
+		var reader = new FileReader();
 
-        if (file) {
-            reader.readAsDataURL(file);
+		reader.onloadend = function() {
+			target.src = reader.result;
+		};
 
-        } else {
-            target.src = "";
-        }
-    }
+		if (file) {
+			reader.readAsDataURL(file);
+
+		} else {
+			target.src = "";
+		}
+	}
 </script>
 
 <script type="text/javascript">
 	function carregarImgIcone() {
-    var target = document.getElementById('target-icone');
-    var file = document.querySelector("#foto-icone").files[0];
-    
-        var reader = new FileReader();
+		var target = document.getElementById('target-icone');
+		var file = document.querySelector("#foto-icone").files[0];
 
-        reader.onloadend = function () {
-            target.src = reader.result;
-        };
+		var reader = new FileReader();
 
-        if (file) {
-            reader.readAsDataURL(file);
+		reader.onloadend = function() {
+			target.src = reader.result;
+		};
 
-        } else {
-            target.src = "";
-        }
-    }
+		if (file) {
+			reader.readAsDataURL(file);
+
+		} else {
+			target.src = "";
+		}
+	}
 </script>

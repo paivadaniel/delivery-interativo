@@ -123,6 +123,18 @@ body {
     background: radial-gradient(#f58888, #e32424);
 }
 
+.verde-escuro {
+    background: radial-gradient(#1adb54, #36a867);
+}
+
+.laranja {
+    background: radial-gradient(#f5c071, #c98116);
+}
+
+.amarelo {
+    background: radial-gradient(#e4eb6e, #c3cc14);
+}
+
 /* POPUP 1 */
 
 .overlay {
@@ -361,15 +373,15 @@ body {
 .overlay-excluir {
     position: absolute;
     top: 75px;
-    right:22px;    
+    right: 22px;
     visibility: hidden;
     opacity: 0;
     background: #ffeae6;
-    width:300px;
-    height:auto;
-    z-index:1;
-      
-  }
+    width: 300px;
+    height: auto;
+    z-index: 1;
+
+}
 
 .overlay-excluir:target {
     /* quando chama a popup, ou seja, quando target */
@@ -409,7 +421,8 @@ input:valid~label {
     text-align: right;
     padding: 10px;
     background-color: #ededed;
-    font-size:0; /* se remover esse font-size 0, vai dar espaçamento entre as divs, para isso não ocorrer, temos que deixar font-size da div pai 0, e dar um font-size para os elementos filhos dessa div, no caso menos-mais, qtd-item-carrinho e total-item-carrinho */
+    font-size: 0;
+    /* se remover esse font-size 0, vai dar espaçamento entre as divs, para isso não ocorrer, temos que deixar font-size da div pai 0, e dar um font-size para os elementos filhos dessa div, no caso menos-mais, qtd-item-carrinho e total-item-carrinho */
 }
 
 .menos-mais {
@@ -418,8 +431,9 @@ input:valid~label {
     background: #cecece;
     padding: 3px;
     text-align: center;
-    display: inline-block; /* para remover a quebra de linha da div*/
-    font-size:15px;
+    display: inline-block;
+    /* para remover a quebra de linha da div*/
+    font-size: 15px;
 
 }
 
@@ -429,8 +443,9 @@ input:valid~label {
     background: #fff;
     padding: 3px;
     text-align: center;
-    display: inline-block; /* para remover a quebra de linha da div*/
-    font-size:15px;
+    display: inline-block;
+    /* para remover a quebra de linha da div*/
+    font-size: 15px;
 }
 
 .total-item-carrinho {
@@ -439,11 +454,11 @@ input:valid~label {
     background: #fff;
     padding: 3px;
     text-align: center;
-    display: inline-block; /* para remover a quebra de linha da div*/
-    font-size:15px;
-    color:#0a8f17;
+    display: inline-block;
+    /* para remover a quebra de linha da div*/
+    font-size: 15px;
+    color: #0a8f17;
 
 }
 
-.nome-produto {
-}
+.nome-produto {}

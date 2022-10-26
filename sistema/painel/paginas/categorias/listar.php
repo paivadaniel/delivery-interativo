@@ -1,6 +1,6 @@
 <?php
 require_once("../../../conexao.php");
-$tabela = 'usuarios';
+$tabela = 'categorias';
 
 $query = $pdo->query("SELECT * FROM $tabela order by id desc");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -13,9 +13,8 @@ if ($total_reg > 0) {
 	<thead> 
 	<tr> 
 	<th>Nome</th>	
-	<th class="esc">Email</th> 	
-	<th class="esc">Senha</th> 
-	<th class="esc">Nível</th>	
+	<th class="esc">Descrição</th> 	
+	<th class="esc">Cor</th> 
 	<th class="esc">Foto</th>		
 	<th>Ações</th>
 	</tr> 
@@ -28,20 +27,12 @@ HTML;
         }
         $id = $res[$i]['id'];
         $nome = $res[$i]['nome'];
-        $email = $res[$i]['email'];
-        $cpf = $res[$i]['cpf'];
-        $senha = $res[$i]['senha'];
-        $nivel = $res[$i]['nivel'];
-        $ativo = $res[$i]['ativo'];
-        $data = $res[$i]['data'];
+        $descricao = $res[$i]['descricao'];
         $foto = $res[$i]['foto'];
-        $telefone = $res[$i]['telefone'];
-
-        if ($nivel == 'Administrador') { //não exibe a senha de administradores
-            $senha = '*********';
-        }
-
-        $dataF = implode('/', array_reverse(explode('-', $data)));
+        $cor = $res[$i]['cor'];
+        $ativo = $res[$i]['ativo'];
+       
+        $descricaoF = mb_strimwidth($descricao, 0, 85, '...'); //mostra do caracter 0 até o 85, depois adiciona '...'
 
         if ($ativo == 'Sim') {
             $icone = 'fa-check-square';
@@ -59,15 +50,11 @@ HTML;
 
 <tr class="{$classe_linha}">
 <td>{$nome}</td>
-<td class="esc">{$email}</td>
-<td class="esc">{$senha}</td>
-<td class="esc">{$nivel}</td>
-<td class="esc"><img src="images/perfil/{$foto}" width="30px"></td> <!-- listar.php é chamado em ajax.js que por sua vez é chamado em usuarios.php, que está dentro de painel/index.php -->
+<td class="esc">{$descricaoF}</td>
+<td class="esc"><div class="divcor {$cor}"></div></td>
+<td class="esc"><img src="images/{$tabela}/{$foto}" width="30px"></td> <!-- listar.php é chamado em ajax.js que por sua vez é chamado em usuarios.php, que está dentro de painel/index.php -->
 <td>
-<big><a href="#" onclick="editar('{$id}','{$nome}', '{$email}', '{$senha}', '{$nivel}', '{$foto}', '{$telefone}', '{$cpf}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
-
-	<big><a href="#" onclick="mostrar('{$nome}', '{$email}', '{$cpf}', '{$senha}', '{$nivel}', '{$dataF}', '{$ativo}', '{$telefone}', '{$foto}')" title="Ver Dados"><i class="fa fa-info-circle text-secondary"></i></a></big>
-
+<big><a href="#" onclick="editar('{$id}','{$nome}', '{$descricao}', '{$foto}', '{$cor}', '{$ativo}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
 
 	<li class="dropdown head-dpdn2" style="display: inline-block;">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><big><i class="fa fa-trash-o text-danger"></i></big></a>

@@ -5,6 +5,14 @@ require_once('conexao.php');
 $senha = '123';
 $senha_crip = md5($senha); //função md5 codifica a variável senha
 
+//cria um nivel administrador caso não houver nenhum
+$query = $pdo->query("SELECT * FROM niveis WHERE nome = 'Administrador'");
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+
+if (@count($res) == 0) { //se não tiver nivel administrador cadastrado, cadastra-o
+    $pdo->query("INSERT INTO niveis SET nome = 'Administrador'");
+}
+
 //cria um usuário administrador caso não houver nenhum
 $query = $pdo->query("SELECT * FROM usuarios WHERE nivel = 'Administrador'");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);

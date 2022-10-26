@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 18-Out-2022 às 05:06
+-- Tempo de geração: 26-Out-2022 às 21:58
 -- Versão do servidor: 10.4.21-MariaDB
 -- versão do PHP: 8.0.10
 
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `delivery_interativo`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `categorias`
+--
+
+CREATE TABLE `categorias` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `descricao` varchar(255) DEFAULT NULL,
+  `foto` varchar(100) DEFAULT NULL,
+  `cor` varchar(30) NOT NULL,
+  `ativo` varchar(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `categorias`
+--
+
+INSERT INTO `categorias` (`id`, `nome`, `descricao`, `foto`, `cor`, `ativo`) VALUES
+(1, 'Pizzas Gostosas', 'Pizzas Muito Saborosas!!!!', '26-10-2022-16-40-44-curso-de-php.jpg', 'verde-escuro', 'Sim');
 
 -- --------------------------------------------------------
 
@@ -59,6 +81,26 @@ INSERT INTO `config` (`id`, `nome_sistema`, `email_sistema`, `telefone_sistema`,
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `niveis`
+--
+
+CREATE TABLE `niveis` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(35) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `niveis`
+--
+
+INSERT INTO `niveis` (`id`, `nome`) VALUES
+(5, 'Administrador'),
+(6, 'Cliente'),
+(7, 'Funcionário');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `usuarios`
 --
 
@@ -81,17 +123,29 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `cpf`, `senha`, `senha_crip`, `nivel`, `ativo`, `data`, `foto`, `telefone`) VALUES
-(1, 'Administrador', 'danielantunespaiva@gmail.com', '000.000.000-00', '123', '202cb962ac59075b964b07152d234b70', 'Administrador', 'Sim', '2022-10-17', '17-10-2022-18-37-21-logo_rel.jpg', '(15) 99180-5895'),
-(2, 'usuario', 'usuario@hotmail.com', '000.000.000-01', '123', '202cb962ac59075b964b07152d234b70', 'Cliente', 'Sim', '2022-10-17', '', NULL);
+(1, 'Administrador 2', 'danielantunespaiva@gmail.com', '000.000.000-00', '123', '202cb962ac59075b964b07152d234b70', 'Administrador', 'Sim', '2022-10-17', '26-10-2022-01-25-29-04.jpg', '(15) 99180-5895'),
+(8, 'João da Silva', 'joao@hotmail.com', '000.000.000-2', '123', '202cb962ac59075b964b07152d234b70', 'Cliente', 'Sim', '2022-10-26', '26-10-2022-09-53-03-gordolio.jpg', '(10) 10101-0101');
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
+-- Índices para tabela `categorias`
+--
+ALTER TABLE `categorias`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `config`
 --
 ALTER TABLE `config`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `niveis`
+--
+ALTER TABLE `niveis`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -105,16 +159,28 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de tabela `categorias`
+--
+ALTER TABLE `categorias`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de tabela `config`
 --
 ALTER TABLE `config`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de tabela `niveis`
+--
+ALTER TABLE `niveis`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
