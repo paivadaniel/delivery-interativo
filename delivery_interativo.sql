@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 26-Out-2022 às 21:58
+-- Tempo de geração: 28-Out-2022 às 20:56
 -- Versão do servidor: 10.4.21-MariaDB
 -- versão do PHP: 8.0.10
 
@@ -20,6 +20,20 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `delivery_interativo`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `adicionais`
+--
+
+CREATE TABLE `adicionais` (
+  `id` int(11) NOT NULL,
+  `produto` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `ativo` varchar(5) NOT NULL,
+  `valor` decimal(8,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -41,7 +55,8 @@ CREATE TABLE `categorias` (
 --
 
 INSERT INTO `categorias` (`id`, `nome`, `descricao`, `foto`, `cor`, `ativo`) VALUES
-(1, 'Pizzas Gostosas', 'Pizzas Muito Saborosas!!!!', '26-10-2022-16-40-44-curso-de-php.jpg', 'verde-escuro', 'Sim');
+(1, 'Pizzas Gostosas', 'Pizzas Muito Saborosas!!!!', '26-10-2022-16-40-44-curso-de-php.jpg', 'verde-escuro', 'Sim'),
+(3, 'Bebidas', 'Bebidas', 'sem-foto.jpg', 'roxo', 'Sim');
 
 -- --------------------------------------------------------
 
@@ -81,6 +96,52 @@ INSERT INTO `config` (`id`, `nome_sistema`, `email_sistema`, `telefone_sistema`,
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `entradas`
+--
+
+CREATE TABLE `entradas` (
+  `id` int(11) NOT NULL,
+  `produto` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `motivo` varchar(100) NOT NULL,
+  `usuario` int(11) NOT NULL,
+  `data` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `entradas`
+--
+
+INSERT INTO `entradas` (`id`, `produto`, `quantidade`, `motivo`, `usuario`, `data`) VALUES
+(1, 3, 11, 'Compra', 1, '2022-10-27'),
+(2, 3, 1, 'Achou na rua', 1, '2022-10-27');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `ingredientes`
+--
+
+CREATE TABLE `ingredientes` (
+  `id` int(11) NOT NULL,
+  `produto` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `ativo` varchar(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `ingredientes`
+--
+
+INSERT INTO `ingredientes` (`id`, `produto`, `nome`, `ativo`) VALUES
+(1, 2, 'Tomate', 'Sim'),
+(5, 2, 'Maçã', 'Sim'),
+(6, 2, 'Limão', 'Não'),
+(7, 2, 'Farinha', 'Não');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `niveis`
 --
 
@@ -97,6 +158,58 @@ INSERT INTO `niveis` (`id`, `nome`) VALUES
 (5, 'Administrador'),
 (6, 'Cliente'),
 (7, 'Funcionário');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `produtos`
+--
+
+CREATE TABLE `produtos` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(100) NOT NULL,
+  `descricao` varchar(1000) DEFAULT NULL,
+  `categoria` int(11) NOT NULL,
+  `valor_compra` decimal(8,2) NOT NULL,
+  `valor_venda` decimal(8,2) NOT NULL,
+  `estoque` int(11) NOT NULL,
+  `foto` varchar(100) NOT NULL,
+  `nivel_estoque` int(11) NOT NULL,
+  `tem_estoque` varchar(5) NOT NULL,
+  `ativo` varchar(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `produtos`
+--
+
+INSERT INTO `produtos` (`id`, `nome`, `descricao`, `categoria`, `valor_compra`, `valor_venda`, `estoque`, `foto`, `nivel_estoque`, `tem_estoque`, `ativo`) VALUES
+(2, 'Produto Novo 01', 'Piriri', 1, '40.00', '80.00', 0, '27-10-2022-02-01-57-curso-de-php.jpg', 10, 'Não', 'Sim'),
+(3, 'Coca Cola Lata 350ml', '', 3, '2.00', '5.00', 8, '27-10-2022-15-20-02-coca-cola-lata.jpeg', 10, 'Sim', 'Sim');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `saidas`
+--
+
+CREATE TABLE `saidas` (
+  `id` int(11) NOT NULL,
+  `produto` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `motivo` varchar(100) NOT NULL,
+  `usuario` int(11) NOT NULL,
+  `data` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `saidas`
+--
+
+INSERT INTO `saidas` (`id`, `produto`, `quantidade`, `motivo`, `usuario`, `data`) VALUES
+(1, 3, 1, 'Roubaram', 1, '2022-10-27'),
+(2, 3, 1, 'Perdi', 1, '2022-10-27'),
+(3, 3, 2, 'Dei', 1, '2022-10-27');
 
 -- --------------------------------------------------------
 
@@ -126,9 +239,38 @@ INSERT INTO `usuarios` (`id`, `nome`, `email`, `cpf`, `senha`, `senha_crip`, `ni
 (1, 'Administrador 2', 'danielantunespaiva@gmail.com', '000.000.000-00', '123', '202cb962ac59075b964b07152d234b70', 'Administrador', 'Sim', '2022-10-17', '26-10-2022-01-25-29-04.jpg', '(15) 99180-5895'),
 (8, 'João da Silva', 'joao@hotmail.com', '000.000.000-2', '123', '202cb962ac59075b964b07152d234b70', 'Cliente', 'Sim', '2022-10-26', '26-10-2022-09-53-03-gordolio.jpg', '(10) 10101-0101');
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `variacoes`
+--
+
+CREATE TABLE `variacoes` (
+  `id` int(11) NOT NULL,
+  `produto` int(11) NOT NULL,
+  `sigla` varchar(5) NOT NULL,
+  `nome` varchar(50) DEFAULT NULL,
+  `descricao` varchar(50) DEFAULT NULL,
+  `valor` decimal(8,2) NOT NULL,
+  `ativo` varchar(5) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `variacoes`
+--
+
+INSERT INTO `variacoes` (`id`, `produto`, `sigla`, `nome`, `descricao`, `valor`, `ativo`) VALUES
+(8, 3, 'M', 'Média', 'Item médio', '32.00', 'Sim');
+
 --
 -- Índices para tabelas despejadas
 --
+
+--
+-- Índices para tabela `adicionais`
+--
+ALTER TABLE `adicionais`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices para tabela `categorias`
@@ -143,9 +285,33 @@ ALTER TABLE `config`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices para tabela `entradas`
+--
+ALTER TABLE `entradas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `ingredientes`
+--
+ALTER TABLE `ingredientes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `niveis`
 --
 ALTER TABLE `niveis`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `produtos`
+--
+ALTER TABLE `produtos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `saidas`
+--
+ALTER TABLE `saidas`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -155,14 +321,26 @@ ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices para tabela `variacoes`
+--
+ALTER TABLE `variacoes`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT de tabelas despejadas
 --
+
+--
+-- AUTO_INCREMENT de tabela `adicionais`
+--
+ALTER TABLE `adicionais`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `config`
@@ -171,16 +349,46 @@ ALTER TABLE `config`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de tabela `entradas`
+--
+ALTER TABLE `entradas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de tabela `ingredientes`
+--
+ALTER TABLE `ingredientes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT de tabela `niveis`
 --
 ALTER TABLE `niveis`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT de tabela `produtos`
+--
+ALTER TABLE `produtos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `saidas`
+--
+ALTER TABLE `saidas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de tabela `variacoes`
+--
+ALTER TABLE `variacoes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
