@@ -406,6 +406,53 @@ $pag = 'produtos';
 </div>
 
 
+<!-- Modal Adicionais-->
+<div class="modal fade" id="modalAdicionais" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="exampleModalLabel"><span id="titulo_nome_adc"></span></h4>
+                <button id="btn-fechar-adc" type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="form-adc">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="form-group">
+                                <input maxlength="50" type="text" class="form-control" id="nome_adc" name="nome_adc" placeholder="Adicional" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="valor_adc" name="valor_adc" placeholder="Valor" required>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+
+                        </div>
+                    </div>
+
+                    <input type="hidden" id="id_prod_adc" name="id_prod_adc">
+                </form>
+
+                <br>
+                <small>
+                    <div id="mensagem-adc" align="center"></div>
+                </small>
+                <hr>
+                <div id="listar-adc"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- na chamada do script abaixo, o src mais correto seria ../js/ajax.js, porém, essa página é aberta dentro de painel/index.php, portanto, o correto é js/ajax.js -->
 <script type="text/javascript">
     var pag = "<?= $pag ?>";
@@ -663,6 +710,92 @@ $pag = 'produtos';
 
         });
     }
+
+    // adicionais
+
+    function adicionais(id, nome) {
+
+        $('#titulo_nome_adc').text(nome);
+        $('#id_prod_adc').val(id);
+
+        listarAdicionais(id);
+        $('#modalAdicionais').modal('show');
+        limparCamposAdicionais();
+
+    }
+
+    function limparCamposAdicionais() {
+        $('#nome_adc').val('');
+        $('#valor_adc').val('');
+
+    }
+
+    function listarAdicionais(id_prod_adc) {
+        $.ajax({
+            url: 'paginas/' + pag + "/listar-adicionais.php",
+            method: 'POST',
+            data: {
+                id_prod_adc
+            },
+            dataType: "html", //não é texto, é html
+
+            success: function(result) {
+                $("#listar-adc").html(result); //joga o resultado que trazer de listar.php na div com id listar
+                $('#mensagem-adc').text('');
+            }
+        });
+    }
+
+    function excluirAdc(id) {
+
+        var id_prod_adc = $('#id_prod_adc').val();
+
+        $.ajax({
+            url: 'paginas/' + pag + "/excluir-adicionais.php",
+            method: 'POST',
+            data: {
+                id
+            },
+            dataType: "text",
+
+            success: function(mensagem) {
+                if (mensagem.trim() == "Excluído com Sucesso!") {
+                    listarAdicionais(id_prod_adc);
+                } else {
+                    $('#mensagem-adc').addClass('text-danger')
+                    $('#mensagem-adc').text(mensagem)
+                }
+
+            },
+
+        });
+    }
+
+    function ativarAdc(id, acao) {
+
+        var id_prod_adc = $('#id_prod_adc').val();
+
+        $.ajax({
+            url: 'paginas/' + pag + "/mudar-status-adicionais.php",
+            method: 'POST',
+            data: {
+                id,
+                acao
+            },
+            dataType: "text",
+
+            success: function(mensagem) {
+                if (mensagem.trim() == "Alterado com Sucesso!") {
+                    listarAdicionais(id_prod_adc);
+                } else {
+                    $('#mensagem-adc').addClass('text-danger')
+                    $('#mensagem-adc').text(mensagem)
+                }
+
+            },
+
+        });
+    }
 </script>
 
 <script type="text/javascript">
@@ -803,6 +936,45 @@ $pag = 'produtos';
 
                     $('#mensagem-ing').addClass('text-danger')
                     $('#mensagem-ing').text(mensagem)
+                }
+
+            },
+
+            cache: false,
+            contentType: false,
+            processData: false,
+
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+    $("#form-adc").submit(function() {
+
+        var id_prod_adc = $('#id_prod_adc').val();
+
+        event.preventDefault();
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: 'paginas/' + pag + "/inserir-adicionais.php",
+            type: 'POST',
+            data: formData,
+
+            success: function(mensagem) {
+                $('#mensagem-adc').text('');
+                $('#mensagem-adc').removeClass()
+                if (mensagem.trim() == "Salvo com Sucesso!") {
+
+                    //$('#btn-fechar-var').click();
+                    listarAdicionais(id_prod_adc);
+                    limparCamposAdicionais();
+
+                } else {
+
+                    $('#mensagem-adc').addClass('text-danger')
+                    $('#mensagem-adc').text(mensagem)
                 }
 
             },

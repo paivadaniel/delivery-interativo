@@ -63,7 +63,7 @@ $pag = 'funcionarios';
                                     $query = $pdo->query("SELECT * FROM niveis ORDER BY nome asc");
                                     $res = $query->fetchAll(PDO::FETCH_ASSOC);
                                     $total_reg = @count($res);
-                                    
+
                                     if ($total_reg > 0) {
                                         for ($i = 0; $i < $total_reg; $i++) {
                                             foreach ($res[$i] as $key => $value) {
@@ -77,6 +77,29 @@ $pag = 'funcionarios';
 
 
                                 </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Tipo Chave Pix</label>
+                                <select class="form-control" name="tipo_chave" id="tipo_chave">
+                                    <option value="">Selecionar Chave</option>
+                                    <option value="CPF">CPF</option>
+                                    <option value="Telefone">Telefone</option>
+                                    <option value="Email">Email</option>
+                                    <option value="Código">Código</option>
+                                    <option value="CNPJ">CNPJ</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Chave Pix</label>
+                                <input type="text" class="form-control" id="chave_pix" name="chave_pix" placeholder="Chave Pix">
                             </div>
                         </div>
                     </div>
@@ -96,8 +119,6 @@ $pag = 'funcionarios';
 
                     </div>
 
-
-
                     <input type="hidden" name="id" id="id">
 
                     <br>
@@ -110,7 +131,6 @@ $pag = 'funcionarios';
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </form>
-
 
         </div>
     </div>
@@ -161,7 +181,21 @@ $pag = 'funcionarios';
                         <span id="ativo_dados"></span>
                     </div>
                 </div>
-      
+
+                <div class="row" style="border-bottom: 1px solid #cac7c7;">
+
+                    <div class="col-md-6">
+                        <span><b>Tipo Chave: </b></span>
+                        <span id="tipo_chave_dados"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <span><b>Chave Pix: </b></span>
+                        <span id="chave_pix_dados"></span>
+                    </div>
+
+                </div>
+
                 <div class="row">
                     <div class="col-md-12" align="center">
                         <img width="250px" id="target_mostrar">
@@ -202,25 +236,24 @@ $pag = 'funcionarios';
 
 
 <script type="text/javascript">
-    //as funções a seguir recebem parâmetros genéricos, por isso, não podem ser colocadas em ajax.js
-    function editar(id, nome, email, senha, nivel, foto, telefone, cpf) {
-        //recupera os valores do banco de dados para mostrar nos inputs da modal de editar dados do usuário
-        //passa valor para os ids abaixo, que são únicos na página usuarios.php, e estão na modal com id=modalForm
-        $('#id').val(id); //val é para input, text é para span e div
+    function editar(id, nome, email, senha, nivel, foto, telefone, cpf, tipo_chave, chave_pix) {
+        $('#id').val(id);
         $('#nome').val(nome);
         $('#email').val(email);
         $('#telefone').val(telefone);
         $('#cpf').val(cpf);
-        $('#nivel').val(nivel).change(); //tem que adicionar change() em input do tipo select
+        $('#cargo').val(nivel).change();
+        $('#tipo_chave').val(tipo_chave).change();
+        $('#chave_pix').val(chave_pix);
+
 
         $('#titulo_inserir').text('Editar Registro');
         $('#modalForm').modal('show');
-        $('#foto-usuario').val('');
-        $('#target-usuario').attr('src', 'images/perfil/' + foto);
+        $('#foto').val('');
+        $('#target').attr('src', 'images/perfil/' + foto);
     }
 
-
-    function mostrar(nome, email, cpf, senha, nivel, data, ativo, telefone, foto) {
+    function mostrar(nome, email, cpf, senha, nivel, data, ativo, telefone, foto, tipo_chave, chave_pix) {
 
         $('#nome_dados').text(nome);
         $('#email_dados').text(email);
@@ -230,6 +263,8 @@ $pag = 'funcionarios';
         $('#data_dados').text(data);
         $('#ativo_dados').text(ativo);
         $('#telefone_dados').text(telefone);
+        $('#tipo_chave_dados').text(tipo_chave);
+        $('#chave_pix_dados').text(chave_pix);
 
         $('#target_mostrar').attr('src', 'images/perfil/' + foto);
         $('#modalDados').modal('show');
@@ -242,7 +277,8 @@ $pag = 'funcionarios';
         $('#telefone').val('');
         $('#email').val('');
         $('#cpf').val('');
-        $('#foto-usuario').val('');
-        $('#target-usuario').attr('src', 'images/perfil/sem-foto.jpg');
+        $('#foto').val('');
+        $('#chave_pix').val('');
+        $('#target').attr('src', 'images/perfil/sem-foto.jpg');
     }
 </script>

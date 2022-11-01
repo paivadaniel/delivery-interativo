@@ -1,6 +1,6 @@
 <?php 
 require_once("../../../conexao.php");
-$tabela = 'usuarios';
+$tabela = 'usuarios'; //autor não criou uma tabela para funcionários, está usando a tabela usuários para os funcionários
 
 $id = $_POST['id'];
 $nome = $_POST['nome'];
@@ -10,6 +10,8 @@ $cpf = $_POST['cpf'];
 $nivel = $_POST['nivel'];
 $senha = '123';
 $senha_crip = md5($senha);
+$tipo_chave = $_POST['tipo_chave'];
+$chave_pix = $_POST['chave_pix'];
 
 //validar email
 $query = $pdo->query("SELECT * FROM $tabela WHERE email = '$email'");
@@ -68,17 +70,17 @@ if(@$_FILES['foto-usuario']['name'] != ""){ //se existir imagem
 	}
 }
 
-
 if($id == ""){
-	$query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome, email = :email, cpf = :cpf, senha = '$senha', senha_crip = '$senha_crip', nivel = '$nivel', data = curDate(), ativo = 'Sim', telefone = :telefone, foto = '$foto'");
+	$query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome, email = :email, cpf = :cpf, senha = '$senha', senha_crip = '$senha_crip', nivel = '$nivel', data = curDate(), ativo = 'Sim', telefone = :telefone, foto = '$foto', tipo_chave = '$tipo_chave', chave_pix = :chave_pix");
 }else{
-	$query = $pdo->prepare("UPDATE $tabela SET nome = :nome, email = :email, cpf = :cpf, nivel = '$nivel', telefone = :telefone, foto = '$foto' WHERE id = '$id'");
+	$query = $pdo->prepare("UPDATE $tabela SET nome = :nome, email = :email, cpf = :cpf, nivel = '$nivel', telefone = :telefone, foto = '$foto', tipo_chave = '$tipo_chave', chave_pix = :chave_pix WHERE id = '$id'");
 }
 
 $query->bindValue(":nome", "$nome");
 $query->bindValue(":email", "$email");
 $query->bindValue(":cpf", "$cpf");
 $query->bindValue(":telefone", "$telefone");
+$query->bindValue(":chave_pix", "$chave_pix");
 $query->execute();
 
 echo "Salvo com Sucesso!";

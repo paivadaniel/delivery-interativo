@@ -129,9 +129,29 @@ if (@$_GET['pagina'] != '') {
 	<!-- DataTables -->
 
 	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css" />
-
 	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
 
+	<!-- Select2 -->
+	<!-- é para poder filtrar select, por exemplo, se digitar "Ha", vai aparecer "Vila Haro", "Vila Hamburguer", e esconder os outros bairros -->
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<!-- CSS para personalizar os campos do Select2 -->
+	<style type="text/css">
+		.select2-selection__rendered {
+			line-height: 36px !important;
+			font-size:16px !important;
+			color:#666666 !important;
+
+		}
+
+		.select2-selection {
+			height: 36px !important;
+			font-size:16px !important;
+			color:#666666 !important;
+
+		}
+	</style>  
 
 </head>
 
@@ -167,6 +187,10 @@ if (@$_GET['pagina'] != '') {
 								<ul class="treeview-menu">
 									<li><a href="index.php?pagina=usuarios"><i class="fa fa-angle-right"></i> Usuários</a></li>
 									<li><a href="index.php?pagina=funcionarios"><i class="fa fa-angle-right"></i> Funcionários</a></li>
+									<li><a href="index.php?pagina=clientes"><i class="fa fa-angle-right"></i> Clientes</a></li>
+									<li><a href="index.php?pagina=fornecedores"><i class="fa fa-angle-right"></i> Fornecedores</a></li>
+
+
 								</ul>
 							</li>
 
@@ -177,6 +201,11 @@ if (@$_GET['pagina'] != '') {
 									<span>Cadastros</span>
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
+
+								<ul class="treeview-menu">
+									<li><a href="index.php?pagina=bairros"><i class="fa fa-angle-right"></i> Bairros</a></li>
+								</ul>
+
 								<ul class="treeview-menu">
 									<li><a href="index.php?pagina=niveis"><i class="fa fa-angle-right"></i> Níveis</a></li>
 								</ul>
@@ -197,6 +226,33 @@ if (@$_GET['pagina'] != '') {
 									<li><a href="index.php?pagina=saidas"><i class="fa fa-angle-right"></i> Saídas</a></li>
 									<li><a href="index.php?pagina=estoque"><i class="fa fa-angle-right"></i> Estoque Baixo</a></li>
 
+
+								</ul>
+							</li>
+
+							<li class="treeview">
+								<a href="#">
+									<i class="fa fa-dollar"></i>
+									<span>Financeiro</span>
+									<i class="fa fa-angle-left pull-right"></i>
+								</a>
+								<ul class="treeview-menu">
+									<li><a href="index.php?pagina=pagar"><i class="fa fa-angle-right"></i> Contas à Pagar</a></li>
+									<li><a href="index.php?pagina=receber"><i class="fa fa-angle-right"></i> Contas à Receber</a></li>
+
+
+
+								</ul>
+							</li>
+
+							<li class="treeview">
+								<a href="#">
+									<i class="fa fa-file-pdf-o"></i>
+									<span>Relatórios</span>
+									<i class="fa fa-angle-left pull-right"></i>
+								</a>
+								<ul class="treeview-menu">
+									<li><a href="rel/produtos_class.php" target="_blank"><i class="fa fa-angle-right"></i> Produtos</a></li>
 
 								</ul>
 							</li>
@@ -635,6 +691,15 @@ if (@$_GET['pagina'] != '') {
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.sel2').select2({
+		dropdownParent: $('#modalForm') //nome da modal em que será ativo o select2 nos campos select
+	});
+});
+
+</script>
 
 <script type="text/javascript">
 	$("#form-perfil").submit(function() {

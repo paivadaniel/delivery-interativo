@@ -19,6 +19,13 @@ $telefone_sistema = '(15) 99180-5895';
 $whatsapp_sistema = '55'.preg_replace('/[ ()-]+/' , '' , $telefone_sistema); //substitui colchetes, espaço, parenteses e hífen por nada
 $endereco_sistema = 'Rua X Número 0 Bairro Centro';
 
+$url_sistema = "http://$_SERVER[HTTP_HOST]/";
+$url = explode("//", $url_sistema);
+if($url[1] == 'localhost/'){
+	$url_sistema = "http://$_SERVER[HTTP_HOST]/dashboard/www/delivery-interativo/";
+}
+//$url_sistema = "http://localhost/dashboard/www/delivery-interativo/"; para não escrever tudo isso, usou o código acima, $_SERVER[HTTP_HOST] pega o endereço tanto se o projeto estiver hospedado, quando se estiver em localhost, porém, para localhost precisa do if acima
+
 //VERIFICAR SE EXISTE DADOS NO CONFIG
 $query = $pdo->query("SELECT * FROM config");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);

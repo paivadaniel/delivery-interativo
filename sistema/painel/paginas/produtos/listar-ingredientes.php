@@ -72,7 +72,7 @@ HTML;
 
     echo <<<HTML
 </tbody>
-<small><div id="mensagem-var" align="center"></div></small>
+<small><div id="mensagem-ing" align="center"></div></small>
 </table>
 </small>
 HTML;

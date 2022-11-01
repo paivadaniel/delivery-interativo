@@ -1,6 +1,6 @@
 <?php
 require_once("../../../conexao.php");
-$tabela = 'usuarios';
+$tabela = 'usuarios'; //autor não criou uma tabela para funcionários, está usando a tabela usuários para os funcionários
 
 $query = $pdo->query("SELECT * FROM $tabela WHERE nivel != 'Administrador' order by id desc");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -36,6 +36,8 @@ HTML;
         $data = $res[$i]['data'];
         $foto = $res[$i]['foto'];
         $telefone = $res[$i]['telefone'];
+        $tipo_chave = $res[$i]['tipo_chave'];
+        $chave_pix = $res[$i]['chave_pix'];
 
         if ($nivel == 'Administrador') { //não exibe a senha de administradores
             $senha = '*********';
@@ -64,10 +66,10 @@ HTML;
 <td class="esc">{$nivel}</td>
 <td class="esc"><img src="images/perfil/{$foto}" width="30px"></td> <!-- listar.php é chamado em ajax.js que por sua vez é chamado em usuarios.php, que está dentro de painel/index.php -->
 <td>
-<big><a href="#" onclick="editar('{$id}','{$nome}', '{$email}', '{$senha}', '{$nivel}', '{$foto}', '{$telefone}', '{$cpf}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
+    
+<big><a href="#" onclick="editar('{$id}','{$nome}', '{$email}', '{$senha}', '{$nivel}', '{$foto}', '{$telefone}', '{$cpf}', '{$tipo_chave}', '{$chave_pix}')" title="Editar Dados"><i class="fa fa-edit text-primary"></i></a></big>
 
-	<big><a href="#" onclick="mostrar('{$nome}', '{$email}', '{$cpf}', '{$senha}', '{$nivel}', '{$dataF}', '{$ativo}', '{$telefone}', '{$foto}')" title="Ver Dados"><i class="fa fa-info-circle text-secondary"></i></a></big>
-
+<big><a href="#" onclick="mostrar('{$nome}', '{$email}', '{$cpf}', '{$senha}', '{$nivel}', '{$dataF}', '{$ativo}', '{$telefone}', '{$foto}', '{$tipo_chave}', '{$chave_pix}')" title="Ver Dados"><i class="fa fa-info-circle text-secondary"></i></a></big>
 
 	<li class="dropdown head-dpdn2" style="display: inline-block;">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><big><i class="fa fa-trash-o text-danger"></i></big></a>
@@ -108,4 +110,3 @@ HTML;
         $('#tabela_filter label input').focus(); //foca no campo de busca da tabela ao entrar na tabela
     });
 </script>
-

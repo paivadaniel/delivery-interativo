@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 28-Out-2022 às 20:56
+-- Tempo de geração: 01-Nov-2022 às 21:08
 -- Versão do servidor: 10.4.21-MariaDB
 -- versão do PHP: 8.0.10
 
@@ -35,6 +35,39 @@ CREATE TABLE `adicionais` (
   `valor` decimal(8,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `adicionais`
+--
+
+INSERT INTO `adicionais` (`id`, `produto`, `nome`, `ativo`, `valor`) VALUES
+(2, 2, 'Cheddar', 'Não', '7.00'),
+(3, 2, 'Bacon', 'Sim', '5.00'),
+(6, 2, 'Ketchup', 'Sim', '3.50'),
+(7, 2, 'Azeite', 'Não', '5.52'),
+(9, 3, 'Laranja', 'Não', '4.69');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `bairros`
+--
+
+CREATE TABLE `bairros` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `valor` decimal(8,2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `bairros`
+--
+
+INSERT INTO `bairros` (`id`, `nome`, `valor`) VALUES
+(1, 'VIla Haro', '8.00'),
+(2, 'Alto da Boa Vista', '12.00'),
+(4, 'Jardim Rodrigo', '19.00'),
+(5, 'Éden', '26.00');
+
 -- --------------------------------------------------------
 
 --
@@ -57,6 +90,30 @@ CREATE TABLE `categorias` (
 INSERT INTO `categorias` (`id`, `nome`, `descricao`, `foto`, `cor`, `ativo`) VALUES
 (1, 'Pizzas Gostosas', 'Pizzas Muito Saborosas!!!!', '26-10-2022-16-40-44-curso-de-php.jpg', 'verde-escuro', 'Sim'),
 (3, 'Bebidas', 'Bebidas', 'sem-foto.jpg', 'roxo', 'Sim');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `telefone` varchar(20) NOT NULL,
+  `logradouro` varchar(50) NOT NULL,
+  `numero` varchar(10) NOT NULL,
+  `complemento` varchar(50) DEFAULT NULL,
+  `bairro` varchar(50) NOT NULL,
+  `data` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `clientes`
+--
+
+INSERT INTO `clientes` (`id`, `nome`, `telefone`, `logradouro`, `numero`, `complemento`, `bairro`, `data`) VALUES
+(2, 'Eduardo Sakamoto', '(90) 91019-1019', 'Rua Japão', '666', 'Apartamento 213', 'Jardim Rodrigo', '2022-10-31');
 
 -- --------------------------------------------------------
 
@@ -119,6 +176,31 @@ INSERT INTO `entradas` (`id`, `produto`, `quantidade`, `motivo`, `usuario`, `dat
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `fornecedores`
+--
+
+CREATE TABLE `fornecedores` (
+  `id` int(11) NOT NULL,
+  `nome` varchar(50) NOT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `telefone` varchar(20) DEFAULT NULL,
+  `endereco` varchar(100) DEFAULT NULL,
+  `data` date NOT NULL,
+  `tipo_chave` varchar(35) DEFAULT NULL,
+  `chave_pix` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `fornecedores`
+--
+
+INSERT INTO `fornecedores` (`id`, `nome`, `email`, `telefone`, `endereco`, `data`, `tipo_chave`, `chave_pix`) VALUES
+(2, 'Marco Janela e Porta', 'janelasportas23@hotmail.com', '(04) 10410-4105', 'Rua das Acácias, 23', '2022-10-31', NULL, NULL),
+(3, 'João da Banana', 'banana@hotmail.com', '(15) 91919-1919', 'Rua do Mato, 99', '2022-11-01', 'CPF', '131.313.313-00');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `ingredientes`
 --
 
@@ -135,7 +217,6 @@ CREATE TABLE `ingredientes` (
 
 INSERT INTO `ingredientes` (`id`, `produto`, `nome`, `ativo`) VALUES
 (1, 2, 'Tomate', 'Sim'),
-(5, 2, 'Maçã', 'Sim'),
 (6, 2, 'Limão', 'Não'),
 (7, 2, 'Farinha', 'Não');
 
@@ -158,6 +239,38 @@ INSERT INTO `niveis` (`id`, `nome`) VALUES
 (5, 'Administrador'),
 (6, 'Cliente'),
 (7, 'Funcionário');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `pagar`
+--
+
+CREATE TABLE `pagar` (
+  `id` int(11) NOT NULL,
+  `descricao` varchar(50) DEFAULT NULL,
+  `tipo` varchar(30) NOT NULL,
+  `valor` decimal(8,2) NOT NULL,
+  `data_lanc` date NOT NULL,
+  `data_venc` date NOT NULL,
+  `data_pgto` date NOT NULL,
+  `usuario_lanc` int(11) NOT NULL,
+  `usuario_baixa` int(11) NOT NULL,
+  `foto` varchar(100) NOT NULL,
+  `fornecedor` int(11) NOT NULL,
+  `pago` varchar(5) NOT NULL,
+  `produto` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `funcionario` int(11) NOT NULL,
+  `cliente` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `pagar`
+--
+
+INSERT INTO `pagar` (`id`, `descricao`, `tipo`, `valor`, `data_lanc`, `data_venc`, `data_pgto`, `usuario_lanc`, `usuario_baixa`, `foto`, `fornecedor`, `pago`, `produto`, `quantidade`, `funcionario`, `cliente`) VALUES
+(1, 'Conta de Luz', 'Conta', '120.00', '2022-11-01', '2022-11-01', '2022-11-12', 1, 1, '01-11-2022-01-46-25-curso-de-aplicativo-ecommerce-react-native.jpeg', 0, 'Sim', 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -228,16 +341,19 @@ CREATE TABLE `usuarios` (
   `ativo` varchar(5) NOT NULL,
   `data` date NOT NULL,
   `foto` varchar(100) NOT NULL,
-  `telefone` varchar(20) DEFAULT NULL
+  `telefone` varchar(20) DEFAULT NULL,
+  `tipo_chave` varchar(35) DEFAULT NULL,
+  `chave_pix` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `nome`, `email`, `cpf`, `senha`, `senha_crip`, `nivel`, `ativo`, `data`, `foto`, `telefone`) VALUES
-(1, 'Administrador 2', 'danielantunespaiva@gmail.com', '000.000.000-00', '123', '202cb962ac59075b964b07152d234b70', 'Administrador', 'Sim', '2022-10-17', '26-10-2022-01-25-29-04.jpg', '(15) 99180-5895'),
-(8, 'João da Silva', 'joao@hotmail.com', '000.000.000-2', '123', '202cb962ac59075b964b07152d234b70', 'Cliente', 'Sim', '2022-10-26', '26-10-2022-09-53-03-gordolio.jpg', '(10) 10101-0101');
+INSERT INTO `usuarios` (`id`, `nome`, `email`, `cpf`, `senha`, `senha_crip`, `nivel`, `ativo`, `data`, `foto`, `telefone`, `tipo_chave`, `chave_pix`) VALUES
+(1, 'Administrador 2', 'danielantunespaiva@gmail.com', '000.000.000-00', '123', '202cb962ac59075b964b07152d234b70', 'Administrador', 'Sim', '2022-10-17', '26-10-2022-01-25-29-04.jpg', '(15) 99180-5895', NULL, NULL),
+(8, 'João da Silva', 'joao@hotmail.com', '000.000.000-2', '123', '202cb962ac59075b964b07152d234b70', 'Cliente', 'Sim', '2022-10-26', '26-10-2022-09-53-03-gordolio.jpg', '(10) 10101-0101', NULL, NULL),
+(11, 'Marcos Teste de Func', 'marcosfunc@hotmail.com', '314.343.435-35', '123', '202cb962ac59075b964b07152d234b70', 'Funcionário', 'Sim', '2022-11-01', '01-11-2022-16-53-25-mendigo-fudido.jpg', '(15) 99180-5891', 'Email', 'marcosfunc@hotmail.com');
 
 -- --------------------------------------------------------
 
@@ -273,9 +389,21 @@ ALTER TABLE `adicionais`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices para tabela `bairros`
+--
+ALTER TABLE `bairros`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `categorias`
 --
 ALTER TABLE `categorias`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `clientes`
+--
+ALTER TABLE `clientes`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -291,6 +419,12 @@ ALTER TABLE `entradas`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices para tabela `fornecedores`
+--
+ALTER TABLE `fornecedores`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `ingredientes`
 --
 ALTER TABLE `ingredientes`
@@ -300,6 +434,12 @@ ALTER TABLE `ingredientes`
 -- Índices para tabela `niveis`
 --
 ALTER TABLE `niveis`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `pagar`
+--
+ALTER TABLE `pagar`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -334,13 +474,25 @@ ALTER TABLE `variacoes`
 -- AUTO_INCREMENT de tabela `adicionais`
 --
 ALTER TABLE `adicionais`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT de tabela `bairros`
+--
+ALTER TABLE `bairros`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `categorias`
 --
 ALTER TABLE `categorias`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de tabela `config`
@@ -355,6 +507,12 @@ ALTER TABLE `entradas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT de tabela `fornecedores`
+--
+ALTER TABLE `fornecedores`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT de tabela `ingredientes`
 --
 ALTER TABLE `ingredientes`
@@ -365,6 +523,12 @@ ALTER TABLE `ingredientes`
 --
 ALTER TABLE `niveis`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de tabela `pagar`
+--
+ALTER TABLE `pagar`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
@@ -382,7 +546,7 @@ ALTER TABLE `saidas`
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `variacoes`
