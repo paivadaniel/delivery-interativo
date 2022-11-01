@@ -55,6 +55,7 @@ HTML;
 		$data_pgtoF = implode('/', array_reverse(explode('-', $data_pgto)));
 		$data_vencF = implode('/', array_reverse(explode('-', $data_venc)));
 
+		$whats = '';
 
 		$query2 = $pdo->query("SELECT * FROM fornecedores where id = '$fornecedor'");
 		$res2 = $query2->fetchAll(PDO::FETCH_ASSOC);
@@ -64,11 +65,10 @@ HTML;
 			$telefone_pessoa = $res2[0]['telefone'];
 			$chave_pix_forn = $res2[0]['chave_pix'];
 			$tipo_chave_forn = $res2[0]['tipo_chave'];
-			$classe_whats = '';
+			$whats = '55' . preg_replace('/[ ()-]+/', '', $telefone_pessoa);
 		} else {
 			$nome_pessoa = 'Nenhum!';
 			$telefone_pessoa = '';
-			$classe_whats = 'ocultar';
 			$chave_pix_forn = '';
 			$tipo_chave_forn = '';
 		}
@@ -81,13 +81,12 @@ HTML;
 			$telefone_func = $res2[0]['telefone'];
 			$chave_pix_func = $res2[0]['chave_pix'];
 			$tipo_chave_func = $res2[0]['tipo_chave'];
-			$classe_whats = ''; //se tiver funcionário relacionado à conta, por exemplo, pagamento de funcionário, mostrará o whatsapp do funcionário
+			$whats = '55' . preg_replace('/[ ()-]+/', '', $telefone_func);
 		} else {
 			$nome_func = 'Nenhum!';
 			$telefone_func = '';
 			$chave_pix_func = '';
 			$tipo_chave_func = '';
-			$classe_whats = 'ocultar'; //se não tiver funcionário relacionado à conta, não mostrará o whatsapp do funcionário
 		}
 
 		$query2 = $pdo->query("SELECT * FROM usuarios where id = '$usuario_baixa'");
@@ -97,6 +96,12 @@ HTML;
 			$nome_usuario_pgto = $res2[0]['nome'];
 		} else {
 			$nome_usuario_pgto = 'Nenhum!';
+		}
+
+		if ($nome_func != 'Nenhum' || $nome_pessoa != 'Nenhum') { //nome_pessoa refere-se à fornecedor, nome_func refere-se à funcionário
+			$classe_whats = '';
+		} else {
+			$classe_whats = 'ocultar'; //se tanto não tiver funcionário quanto não tiver fornecedor
 		}
 
 		$query2 = $pdo->query("SELECT * FROM usuarios where id = '$usuario_lanc'");
@@ -134,8 +139,6 @@ HTML;
 		} else {
 			$classe_debito = '';
 		}
-
-		$whats = '55' . preg_replace('/[ ()-]+/', '', $telefone_pessoa);
 
 		if ($nome_pessoa == 'Nenhum!' and $nome_func != 'Nenhum!') {
 			$chave = 'Pix Funcionário : Tipo ' . $tipo_chave_func . ' - Chave ' . $chave_pix_func;
