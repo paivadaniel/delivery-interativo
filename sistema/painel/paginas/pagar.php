@@ -438,4 +438,69 @@ $data_final_mes = $ano_atual . "-" . $mes_atual . "-" . $dia_final_mes;
 
 		});
 	}
+
+	function editar(id, descricao, fornecedor, valor, data_venc, data_pgto, foto, func) {
+		$('#id').val(id);
+		$('#descricao').val(descricao);
+		$('#fornecedor').val(fornecedor).change();
+		$('#valor').val(valor);
+		$('#data_venc').val(data_venc);
+		$('#data_pgto').val(data_pgto);
+		$('#funcionario').val(func).change();
+
+		$('#titulo_inserir').text('Editar Registro');
+		$('#modalForm').modal('show');
+		$('#foto').val('');
+		$('#target').attr('src', 'images/contas/' + foto);
+	}
+
+	function limparCampos() {
+		$('#id').val('');
+		$('#descricao').val('');
+		$('#valor').val('');
+		$('#data_pgto').val('');
+		$('#data_venc').val('<?= $data_hoje ?>');
+		$('#foto').val('');
+
+		$('#target').attr('src', 'images/contas/sem-foto.jpg');
+	}
+
+	function mostrar(descricao, valor, data_lanc, data_venc, data_pgto, usuario_lanc, usuario_pgto, foto, fornecedor, link, nome_func, tel_func, chave) {
+
+		$('#nome_dados').text(descricao);
+		$('#valor_dados').text(valor);
+		$('#data_lanc_dados').text(data_lanc);
+		$('#data_venc_dados').text(data_venc);
+		$('#data_pgto_dados').text(data_pgto);
+		$('#usuario_lanc_dados').text(usuario_lanc);
+		$('#usuario_baixa_dados').text(usuario_pgto);
+		$('#fornecedor_dados').text(fornecedor);
+		$('#nome_func_dados').text(nome_func);
+		$('#tel_func_dados').text(tel_func);
+		$('#chave_dados').text(chave);
+
+		$('#link_mostrar').attr('href', 'images/contas/' + link);
+		$('#target_mostrar').attr('src', 'images/contas/' + foto);
+
+		$('#modalDados').modal('show');
+	}
+
+	function saida(id, nome, estoque) {
+
+		$('#nome_saida').text(nome);
+		$('#estoque_saida').val(estoque);
+		$('#id_saida').val(id);
+
+		$('#modalSaida').modal('show');
+	}
+
+	function entrada(id, nome, estoque) {
+
+		$('#nome_entrada').text(nome);
+		$('#estoque_entrada').val(estoque);
+		$('#id_entrada').val(id);
+
+		$('#modalEntrada').modal('show');
+	}
+
 </script>

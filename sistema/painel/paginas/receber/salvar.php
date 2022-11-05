@@ -2,13 +2,13 @@
 require_once("../../../conexao.php");
 $tabela = 'receber';
 @session_start();
-$id_usuario = $_SESSION['id'];
+$id_usuario = $_SESSION['id_usuario'];
 
 $id = $_POST['id'];
 $descricao = $_POST['descricao'];
 $valor = $_POST['valor'];
 $valor = str_replace(',', '.', $valor);
-$pessoa = $_POST['pessoa'];
+$cliente = $_POST['cliente'];
 $data_venc = $_POST['data_venc'];
 $data_pgto = $_POST['data_pgto'];
 
@@ -17,8 +17,6 @@ if($descricao == ""){
 	exit();
 }
 
-
-
 if($data_pgto != ''){
 	$usuario_pgto = $id_usuario;
 	$pago = 'Sim';
@@ -26,7 +24,6 @@ if($data_pgto != ''){
 	$usuario_pgto = 0;
 	$pago = 'Não';
 }
-
 
 //validar troca da foto
 $query = $pdo->query("SELECT * FROM $tabela where id = '$id'");
@@ -38,12 +35,11 @@ if($total_reg > 0){
 	$foto = 'sem-foto.jpg';
 }
 
-
 //SCRIPT PARA SUBIR FOTO NO SERVIDOR
 $nome_img = date('d-m-Y H:i:s') .'-'.@$_FILES['foto']['name'];
 $nome_img = preg_replace('/[ :]+/' , '-' , $nome_img);
 
-$caminho = '../../img/contas/' .$nome_img;
+$caminho = '../../images/contas/' .$nome_img;
 
 $imagem_temp = @$_FILES['foto']['tmp_name']; 
 
@@ -53,7 +49,7 @@ if(@$_FILES['foto']['name'] != ""){
 	
 			//EXCLUO A FOTO ANTERIOR
 			if($foto != "sem-foto.jpg"){
-				@unlink('../../img/contas/'.$foto);
+				@unlink('../../images/contas/'.$foto);
 			}
 
 			$foto = $nome_img;
@@ -65,18 +61,15 @@ if(@$_FILES['foto']['name'] != ""){
 	}
 }
 
-
-
-
 if($id == ""){
-	$query = $pdo->prepare("INSERT INTO $tabela SET descricao = :descricao, tipo = 'Conta', valor = :valor, data_lanc = curDate(), data_venc = '$data_venc', data_pgto = '$data_pgto', usuario_lanc = '$id_usuario', usuario_baixa = '$usuario_pgto', foto = '$foto', pessoa = '$pessoa', pago = '$pago'");
+	$query = $pdo->prepare("INSERT INTO $tabela SET descricao = :descricao, tipo = 'Conta', valor = :valor, data_lanc = curDate(), data_venc = '$data_venc', data_pgto = '$data_pgto', usuario_lanc = '$id_usuario', usuario_baixa = '$usuario_pgto', foto = '$foto', cliente = '$cliente', pago = '$pago'");
 }else{
-	$query = $pdo->prepare("UPDATE $tabela SET descricao = :descricao, valor = :valor, data_venc = '$data_venc', data_pgto = '$data_pgto', foto = '$foto', pessoa = '$pessoa' WHERE id = '$id'");
+	$query = $pdo->prepare("UPDATE $tabela SET descricao = :descricao, valor = :valor, data_venc = '$data_venc', data_pgto = '$data_pgto', foto = '$foto', cliente = '$cliente' WHERE id = '$id'");
 }
 
 $query->bindValue(":descricao", "$descricao");
 $query->bindValue(":valor", "$valor");
 $query->execute();
 
-echo 'Salvo com Sucesso';
+echo 'Salvo com Sucesso!';
  ?>

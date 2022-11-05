@@ -2,13 +2,13 @@
 require_once("../../../conexao.php");
 $tabela = 'pagar';
 @session_start();
-$id_usuario = $_SESSION['id'];
+$id_usuario = $_SESSION['id_usuario'];
 
 $id = $_POST['id'];
 $produto = $_POST['produto'];
 $valor = $_POST['valor'];
 $valor = str_replace(',', '.', $valor);
-$pessoa = $_POST['pessoa'];
+$fornecedor = $_POST['fornecedor'];
 $data_venc = $_POST['data_venc'];
 $data_pgto = $_POST['data_pgto'];
 $quantidade = $_POST['quantidade'];
@@ -31,7 +31,6 @@ if($data_pgto != ''){
 	$pago = 'Não';
 }
 
-
 //validar troca da foto
 $query = $pdo->query("SELECT * FROM $tabela where id = '$id'");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -47,14 +46,14 @@ if($total_reg > 0){
 $valor_unitario = $valor / $quantidade;
 $total_estoque = $estoque + $quantidade;
 $pdo->query("UPDATE produtos SET estoque = '$total_estoque', valor_compra = '$valor_unitario' WHERE id = '$produto'");
-
+	//tem que mudar a lógica acima, tem que ser feito update também na tabela de produtos, por exemplo, se tenho 20 cocas no estoque, e compro 5, vou para 5, ao editar a quantidade dessa última compra para 20 unidades, ao invés de ir para 40, ele vai para 45, está considerando como uma nova compra, não uma edição
 
 
 //SCRIPT PARA SUBIR FOTO NO SERVIDOR
 $nome_img = date('d-m-Y H:i:s') .'-'.@$_FILES['foto']['name'];
 $nome_img = preg_replace('/[ :]+/' , '-' , $nome_img);
 
-$caminho = '../../img/contas/' .$nome_img;
+$caminho = '../../images/contas/' .$nome_img;
 
 $imagem_temp = @$_FILES['foto']['tmp_name']; 
 
@@ -64,7 +63,7 @@ if(@$_FILES['foto']['name'] != ""){
 	
 			//EXCLUO A FOTO ANTERIOR
 			if($foto != "sem-foto.jpg"){
-				@unlink('../../img/contas/'.$foto);
+				@unlink('../../images/contas/'.$foto);
 			}
 
 			$foto = $nome_img;
@@ -76,18 +75,14 @@ if(@$_FILES['foto']['name'] != ""){
 	}
 }
 
-
-
-
 if($id == ""){
-	$query = $pdo->prepare("INSERT INTO $tabela SET descricao = :descricao, tipo = 'Compra', valor = :valor, data_lanc = curDate(), data_venc = '$data_venc', data_pgto = '$data_pgto', usuario_lanc = '$id_usuario', usuario_baixa = '$usuario_pgto', foto = '$foto', pessoa = '$pessoa', pago = '$pago', produto = '$produto', quantidade = '$quantidade'");
+	$query = $pdo->prepare("INSERT INTO $tabela SET descricao = :descricao, tipo = 'Compra', valor = :valor, data_lanc = curDate(), data_venc = '$data_venc', data_pgto = '$data_pgto', usuario_lanc = '$id_usuario', usuario_baixa = '$usuario_pgto', foto = '$foto', fornecedor = '$fornecedor', pago = '$pago', produto = '$produto', quantidade = '$quantidade'");
 }else{
-	$query = $pdo->prepare("UPDATE $tabela SET descricao = :descricao, valor = :valor, data_venc = '$data_venc', data_pgto = '$data_pgto', foto = '$foto', pessoa = '$pessoa', produto = '$produto', quantidade = '$quantidade' WHERE id = '$id'");
+	$query = $pdo->prepare("UPDATE $tabela SET descricao = :descricao, valor = :valor, data_venc = '$data_venc', data_pgto = '$data_pgto', foto = '$foto', fornecedor = '$fornecedor', produto = '$produto', quantidade = '$quantidade' WHERE id = '$id'");
 }
 
 $query->bindValue(":descricao", "$descricao");
 $query->bindValue(":valor", "$valor");
 $query->execute();
 
-echo 'Salvo com Sucesso';
- ?>
+echo 'Salvo com Sucesso!';

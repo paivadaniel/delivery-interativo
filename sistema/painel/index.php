@@ -17,12 +17,22 @@ $senha_usuario = $res[0]['senha'];
 $foto_usuario = $res[0]['foto'];
 $telefone_usuario = $res[0]['telefone'];
 
-
 if (@$_GET['pagina'] != '') {
 	$pagina = @$_GET['pagina'];
 } else {
 	$pagina = 'home';
 }
+
+$data_atual = date('Y-m-d');
+$mes_atual = Date('m');
+$ano_atual = Date('Y');
+$data_mes = $ano_atual . "-" . $mes_atual . "-01";
+$data_ano = $ano_atual . "-01-01";
+
+$partesData = explode('-', $data_atual);
+$dataDiaInicial = $partesData[2];
+$dataMesInicial = $partesData[1];
+//$dataAnoInicial = $partesData[0];
 
 ?>
 <!-- template utiliza bootstrap 4, portanto data-toggle ao invés de data-bs-toggle, e data-target ao invés de data-bs-target -->
@@ -136,22 +146,22 @@ if (@$_GET['pagina'] != '') {
 	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-<!-- CSS para personalizar os campos do Select2 -->
+	<!-- CSS para personalizar os campos do Select2 -->
 	<style type="text/css">
 		.select2-selection__rendered {
 			line-height: 36px !important;
-			font-size:16px !important;
-			color:#666666 !important;
+			font-size: 16px !important;
+			color: #666666 !important;
 
 		}
 
 		.select2-selection {
 			height: 36px !important;
-			font-size:16px !important;
-			color:#666666 !important;
+			font-size: 16px !important;
+			color: #666666 !important;
 
 		}
-	</style>  
+	</style>
 
 </head>
 
@@ -237,10 +247,13 @@ if (@$_GET['pagina'] != '') {
 									<i class="fa fa-angle-left pull-right"></i>
 								</a>
 								<ul class="treeview-menu">
-									<li><a href="index.php?pagina=pagar"><i class="fa fa-angle-right"></i> Contas à Pagar</a></li>
+									<li><a href="index.php?pagina=vendas"><i class="fa fa-angle-right"></i> Vendas</a></li>
+
+									<li><a href="index.php?pagina=compras"><i class="fa fa-angle-right"></i> Compras</a></li>
+
 									<li><a href="index.php?pagina=receber"><i class="fa fa-angle-right"></i> Contas à Receber</a></li>
 
-
+									<li><a href="index.php?pagina=pagar"><i class="fa fa-angle-right"></i> Contas à Pagar</a></li>
 
 								</ul>
 							</li>
@@ -253,6 +266,13 @@ if (@$_GET['pagina'] != '') {
 								</a>
 								<ul class="treeview-menu">
 									<li><a href="rel/produtos_class.php" target="_blank"><i class="fa fa-angle-right"></i> Produtos</a></li>
+
+									<li><a href="" data-toggle="modal" data-target="#RelCon"><i class="fa fa-angle-right"></i> Contas</a></li>
+
+									<li><a href="" data-toggle="modal" data-target="#RelLuc"><i class="fa fa-angle-right"></i> Lucro</a></li>
+
+									<li><a href="" data-toggle="modal" data-target="#RelVen"><i class="fa fa-angle-right"></i> Vendas</a></li>
+
 
 								</ul>
 							</li>
@@ -692,13 +712,257 @@ if (@$_GET['pagina'] != '') {
 	</div>
 </div>
 
-<script type="text/javascript">
-$(document).ready(function() {
-	$('.sel2').select2({
-		dropdownParent: $('#modalForm') //nome da modal em que será ativo o select2 nos campos select
-	});
-});
+<!-- Modal Rel Contas -->
+<div class="modal fade" id="RelCon" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="exampleModalLabel">Relatório de Contas
+					<small>(
+						<a href="#" onclick="datas('1980-01-01', 'tudo-Con', 'Con')">
+							<span style="color:#000" id="tudo-Con">Tudo</span>
+						</a> /
+						<a href="#" onclick="datas('<?php echo $data_atual ?>', 'hoje-Con', 'Con')">
+							<span id="hoje-Con">Hoje</span>
+						</a> /
+						<a href="#" onclick="datas('<?php echo $data_mes ?>', 'mes-Con', 'Con')">
+							<span style="color:#000" id="mes-Con">Mês</span>
+						</a> /
+						<a href="#" onclick="datas('<?php echo $data_ano ?>', 'ano-Con', 'Con')">
+							<span style="color:#000" id="ano-Con">Ano</span>
+						</a>
+						)</small>
 
+				</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<form method="post" action="rel/rel_contas_class.php" target="_blank">
+				<div class="modal-body">
+
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Data Inicial</label>
+								<input type="date" class="form-control" name="dataInicial" id="dataInicialRel-Con" value="<?php echo date('Y-m-d') ?>" required>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Data Final</label>
+								<input type="date" class="form-control" name="dataFinal" id="dataFinalRel-Con" value="<?php echo date('Y-m-d') ?>" required>
+							</div>
+						</div>
+
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Pago</label>
+								<select class="form-control" name="pago" style="width:100%;">
+									<option value="">Todas</option>
+									<option value="Sim">Somente Pagas</option>
+									<option value="Não">Pendentes</option>
+
+								</select>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Pagar / Receber</label>
+								<select class="form-control sel13" name="tabela" style="width:100%;">
+									<option value="pagar">Contas à Pagar</option>
+									<option value="receber">Contas à Receber</option>
+
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Consultar Por</label>
+								<select class="form-control sel13" name="busca" style="width:100%;">
+									<option value="data_venc">Data de Vencimento</option>
+									<option value="data_pgto">Data de Pagamento</option>
+
+								</select>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Gerar Relatório</button>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+<!-- Modal Rel Lucro -->
+<div class="modal fade" id="RelLuc" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="exampleModalLabel">Demonstrativo de Lucro
+					<small>(
+						<a href="#" onclick="datas('1980-01-01', 'tudo-Luc', 'Luc')">
+							<span style="color:#000" id="tudo-Luc">Tudo</span>
+						</a> / 
+						<a href="#" onclick="datas('<?php echo $data_atual ?>', 'hoje-Luc', 'Luc')">
+							<span id="hoje-Luc">Hoje</span>
+						</a> /
+						<a href="#" onclick="datas('<?php echo $data_mes ?>', 'mes-Luc', 'Luc')">
+							<span style="color:#000" id="mes-Luc">Mês</span>
+						</a> /
+						<a href="#" onclick="datas('<?php echo $data_ano ?>', 'ano-Luc', 'Luc')">
+							<span style="color:#000" id="ano-Luc">Ano</span>
+						</a> 
+					)</small>
+
+
+
+				</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form method="post" action="rel/rel_lucro_class.php" target="_blank">
+				<div class="modal-body">
+
+					<div class="row">
+						<div class="col-md-4">						
+							<div class="form-group"> 
+								<label>Data Inicial</label> 
+								<input type="date" class="form-control" name="dataInicial" id="dataInicialRel-Luc" value="<?php echo date('Y-m-d') ?>" required> 
+							</div>						
+						</div>
+						<div class="col-md-4">
+							<div class="form-group"> 
+								<label>Data Final</label> 
+								<input type="date" class="form-control" name="dataFinal" id="dataFinalRel-Luc" value="<?php echo date('Y-m-d') ?>" required> 
+							</div>
+						</div>
+
+
+
+					</div>
+
+
+
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Gerar Relatório</button>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal Rel Vendas -->
+<div class="modal fade" id="RelVen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="exampleModalLabel">Relatório de Vendas
+					<small>(
+						<a href="#" onclick="datas('1980-01-01', 'tudo-Ven', 'Ven')">
+							<span style="color:#000" id="tudo-Ven">Tudo</span>
+						</a> /
+						<a href="#" onclick="datas('<?php echo $data_atual ?>', 'hoje-Ven', 'Ven')">
+							<span id="hoje-Ven">Hoje</span>
+						</a> /
+						<a href="#" onclick="datas('<?php echo $data_mes ?>', 'mes-Ven', 'Ven')">
+							<span style="color:#000" id="mes-Ven">Mês</span>
+						</a> /
+						<a href="#" onclick="datas('<?php echo $data_ano ?>', 'ano-Ven', 'Ven')">
+							<span style="color:#000" id="ano-Ven">Ano</span>
+						</a>
+						)</small>
+
+				</h4>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<form method="post" action="rel/rel_vendas_class.php" target="_blank">
+				<div class="modal-body">
+
+					<div class="row">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Data Inicial</label>
+								<input type="date" class="form-control" name="dataInicial" id="dataInicialRel-Ven" value="<?php echo date('Y-m-d') ?>" required>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Data Final</label>
+								<input type="date" class="form-control" name="dataFinal" id="dataFinalRel-Ven" value="<?php echo date('Y-m-d') ?>" required>
+							</div>
+						</div>
+
+					</div>
+
+					<div class="row">
+						<div class="col-md-6">						
+							<div class="form-group"> 
+								<label>Status</label> 
+								<select class="form-control" name="status" style="width:100%;">
+									<option value="">Todas</option>
+									<option value="Finalizado">Finalizadas</option>
+									<option value="Cancelado">Canceladas</option>
+
+								</select> 
+							</div>						
+						</div>
+						<div class="col-md-6">
+							<div class="form-group"> 
+								<label>Forma PGTO</label> 
+								<select class="form-control" name="forma_pgto" style="width:100%;">
+									<option value="">Todas</option>
+									<option value="Dinheiro">Dinheiro</option>
+									<option value="Pix">Pix</option>
+									<option value="Cartão de Crédito">Cartão de Crédito</option>
+									<option value="Cartão de Débito">Cartão de Débito</option>																		
+								</select>
+							</div>
+						</div>
+
+
+
+					</div>
+
+
+				</div>
+
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Gerar Relatório</button>
+				</div>
+			</form>
+
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('.sel2').select2({
+			dropdownParent: $('#modalForm') //nome da modal em que será ativo o select2 nos campos select
+		});
+	});
 </script>
 
 <script type="text/javascript">
@@ -853,5 +1117,51 @@ $(document).ready(function() {
 		} else {
 			target.src = "";
 		}
+	}
+</script>
+
+<script type="text/javascript">
+	function datas(data, id, campo) { //id=tudo-Con, campo = Con
+
+		var data_atual = "<?= $data_atual ?>";
+		var separarData = data_atual.split("-");
+		var mes = separarData[1];
+		var ano = separarData[0];
+
+		var separarId = id.split("-");
+
+		//tudo-Con, hoje-Con, mes-Con, ano-Con
+
+		if (separarId[0] == 'tudo') { //se tiver clicado em tudo
+			data_atual = '2100-12-31'; //segunda data (a que vai Da primeira até à Segunda)
+		}
+
+		if (separarId[0] == 'ano') { //se tiver clicado em ano
+			data_atual = ano + '-12-31';
+		}
+
+		if (separarId[0] == 'mes') { //se tiver clicado em mês
+			if (mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 || mes == 10 || mes == 12) {
+				data_atual = ano + '-' + mes + '-31';
+			} else if (mes == 4 || mes == 6 || mes == 9 || mes == 11) {
+				data_atual = ano + '-' + mes + '-30';
+			} else {
+				data_atual = ano + '-' + mes + '-28';
+			}
+
+		}
+
+		//se tiver clicado em hoje vai a data_adtual sem passar pelos if acima
+
+		$('#dataInicialRel-' + campo).val(data); //primeira data
+		$('#dataFinalRel-' + campo).val(data_atual);
+
+		document.getElementById('hoje-' + campo).style.color = "#000";
+		document.getElementById('mes-' + campo).style.color = "#000";
+		document.getElementById(id).style.color = "blue";
+
+		document.getElementById('tudo-' + campo).style.color = "#000";
+		document.getElementById('ano-' + campo).style.color = "#000";
+		document.getElementById(id).style.color = "blue";
 	}
 </script>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 01-Nov-2022 às 21:08
+-- Tempo de geração: 05-Nov-2022 às 11:44
 -- Versão do servidor: 10.4.21-MariaDB
 -- versão do PHP: 8.0.10
 
@@ -270,7 +270,9 @@ CREATE TABLE `pagar` (
 --
 
 INSERT INTO `pagar` (`id`, `descricao`, `tipo`, `valor`, `data_lanc`, `data_venc`, `data_pgto`, `usuario_lanc`, `usuario_baixa`, `foto`, `fornecedor`, `pago`, `produto`, `quantidade`, `funcionario`, `cliente`) VALUES
-(1, 'Conta de Luz', 'Conta', '120.00', '2022-11-01', '2022-11-01', '2022-11-12', 1, 1, '01-11-2022-01-46-25-curso-de-aplicativo-ecommerce-react-native.jpeg', 0, 'Sim', 0, 0, 0, 0);
+(5, 'Conta de Luz', 'Conta', '120.00', '2022-11-03', '2022-11-03', '2022-11-05', 1, 1, '03-11-2022-14-41-58-banner-teste.jpg', 0, 'Sim', 0, 0, 0, 0),
+(6, 'dadada', 'Conta', '31.00', '2022-11-03', '2022-11-03', '2022-11-02', 1, 1, 'sem-foto.jpg', 0, 'Sim', 0, 0, 0, 0),
+(9, 'Compra - (22) Coca Cola Lata 350ml', 'Compra', '23.00', '2022-11-03', '2022-11-03', '2022-11-03', 1, 1, 'sem-foto.jpg', 2, 'Sim', 3, 22, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -298,7 +300,38 @@ CREATE TABLE `produtos` (
 
 INSERT INTO `produtos` (`id`, `nome`, `descricao`, `categoria`, `valor_compra`, `valor_venda`, `estoque`, `foto`, `nivel_estoque`, `tem_estoque`, `ativo`) VALUES
 (2, 'Produto Novo 01', 'Piriri', 1, '40.00', '80.00', 0, '27-10-2022-02-01-57-curso-de-php.jpg', 10, 'Não', 'Sim'),
-(3, 'Coca Cola Lata 350ml', '', 3, '2.00', '5.00', 8, '27-10-2022-15-20-02-coca-cola-lata.jpeg', 10, 'Sim', 'Sim');
+(3, 'Coca Cola Lata 350ml', '', 3, '1.05', '5.00', 145, '27-10-2022-15-20-02-coca-cola-lata.jpeg', 10, 'Sim', 'Sim');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `receber`
+--
+
+CREATE TABLE `receber` (
+  `id` int(11) NOT NULL,
+  `descricao` varchar(50) DEFAULT NULL,
+  `tipo` varchar(30) NOT NULL,
+  `valor` decimal(8,2) NOT NULL,
+  `data_lanc` date NOT NULL,
+  `data_venc` date NOT NULL,
+  `data_pgto` date NOT NULL,
+  `usuario_lanc` int(11) NOT NULL,
+  `usuario_baixa` int(11) NOT NULL,
+  `foto` varchar(100) NOT NULL,
+  `pago` varchar(5) NOT NULL,
+  `produto` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `funcionario` int(11) NOT NULL,
+  `cliente` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `receber`
+--
+
+INSERT INTO `receber` (`id`, `descricao`, `tipo`, `valor`, `data_lanc`, `data_venc`, `data_pgto`, `usuario_lanc`, `usuario_baixa`, `foto`, `pago`, `produto`, `quantidade`, `funcionario`, `cliente`) VALUES
+(4, 'Conta do Marcos', 'Conta', '110.00', '2022-11-03', '2022-11-03', '2022-11-03', 1, 1, '03-11-2022-16-35-15-curso-de-aplicativo-de-tarefas-com-react.jpeg', 'Sim', 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -378,6 +411,37 @@ CREATE TABLE `variacoes` (
 INSERT INTO `variacoes` (`id`, `produto`, `sigla`, `nome`, `descricao`, `valor`, `ativo`) VALUES
 (8, 3, 'M', 'Média', 'Item médio', '32.00', 'Sim');
 
+-- --------------------------------------------------------
+
+--
+-- Estrutura da tabela `vendas`
+--
+
+CREATE TABLE `vendas` (
+  `id` int(11) NOT NULL,
+  `cliente` int(11) NOT NULL,
+  `valor` decimal(8,2) NOT NULL,
+  `total_pago` decimal(8,2) NOT NULL,
+  `troco` decimal(8,2) NOT NULL,
+  `data` date NOT NULL,
+  `hora` time NOT NULL,
+  `status` varchar(25) NOT NULL,
+  `pago` varchar(5) NOT NULL,
+  `obs` varchar(100) DEFAULT NULL,
+  `taxa_entrega` decimal(8,2) NOT NULL,
+  `tipo_pgto` varchar(25) NOT NULL,
+  `usuario_baixa` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `vendas`
+--
+
+INSERT INTO `vendas` (`id`, `cliente`, `valor`, `total_pago`, `troco`, `data`, `hora`, `status`, `pago`, `obs`, `taxa_entrega`, `tipo_pgto`, `usuario_baixa`) VALUES
+(1, 2, '65.00', '70.00', '5.00', '2022-11-03', '12:00:00', 'Cancelado', 'Sim', 'Apertar interfone ao chegar.', '5.00', 'dinheiro', 0),
+(2, 2, '35.00', '40.00', '5.00', '2022-11-03', '20:58:35', 'Finalizado', 'Sim', '', '3.00', 'cartão de crédito', 1),
+(3, 2, '30.00', '90.00', '0.00', '2022-11-03', '21:14:33', 'Preparando', 'Sim', NULL, '4.00', 'Pago', 1);
+
 --
 -- Índices para tabelas despejadas
 --
@@ -449,6 +513,12 @@ ALTER TABLE `produtos`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices para tabela `receber`
+--
+ALTER TABLE `receber`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `saidas`
 --
 ALTER TABLE `saidas`
@@ -464,6 +534,12 @@ ALTER TABLE `usuarios`
 -- Índices para tabela `variacoes`
 --
 ALTER TABLE `variacoes`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `vendas`
+--
+ALTER TABLE `vendas`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -528,13 +604,19 @@ ALTER TABLE `niveis`
 -- AUTO_INCREMENT de tabela `pagar`
 --
 ALTER TABLE `pagar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT de tabela `receber`
+--
+ALTER TABLE `receber`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `saidas`
@@ -553,6 +635,12 @@ ALTER TABLE `usuarios`
 --
 ALTER TABLE `variacoes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT de tabela `vendas`
+--
+ALTER TABLE `vendas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
