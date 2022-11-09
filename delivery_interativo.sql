@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 05-Nov-2022 às 11:44
+-- Tempo de geração: 09-Nov-2022 às 21:33
 -- Versão do servidor: 10.4.21-MariaDB
 -- versão do PHP: 8.0.10
 
@@ -299,7 +299,7 @@ CREATE TABLE `produtos` (
 --
 
 INSERT INTO `produtos` (`id`, `nome`, `descricao`, `categoria`, `valor_compra`, `valor_venda`, `estoque`, `foto`, `nivel_estoque`, `tem_estoque`, `ativo`) VALUES
-(2, 'Produto Novo 01', 'Piriri', 1, '40.00', '80.00', 0, '27-10-2022-02-01-57-curso-de-php.jpg', 10, 'Não', 'Sim'),
+(2, 'Produto Novo 01', 'Piriri', 1, '40.00', '80.00', 0, '27-10-2022-02-01-57-curso-de-php.jpg', 10, 'Sim', 'Sim'),
 (3, 'Coca Cola Lata 350ml', '', 3, '1.05', '5.00', 145, '27-10-2022-15-20-02-coca-cola-lata.jpeg', 10, 'Sim', 'Sim');
 
 -- --------------------------------------------------------
@@ -440,7 +440,7 @@ CREATE TABLE `vendas` (
 INSERT INTO `vendas` (`id`, `cliente`, `valor`, `total_pago`, `troco`, `data`, `hora`, `status`, `pago`, `obs`, `taxa_entrega`, `tipo_pgto`, `usuario_baixa`) VALUES
 (1, 2, '65.00', '70.00', '5.00', '2022-11-03', '12:00:00', 'Cancelado', 'Sim', 'Apertar interfone ao chegar.', '5.00', 'dinheiro', 0),
 (2, 2, '35.00', '40.00', '5.00', '2022-11-03', '20:58:35', 'Finalizado', 'Sim', '', '3.00', 'cartão de crédito', 1),
-(3, 2, '30.00', '90.00', '0.00', '2022-11-03', '21:14:33', 'Preparando', 'Sim', NULL, '4.00', 'Pago', 1);
+(3, 2, '30.00', '90.00', '0.00', '2022-11-03', '21:14:33', 'Iniciado', 'Sim', NULL, '4.00', 'Pago', 1);
 
 --
 -- Índices para tabelas despejadas

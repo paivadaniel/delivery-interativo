@@ -178,7 +178,7 @@ $dataMesInicial = $partesData[1];
 							<span class="icon-bar"></span>
 							<span class="icon-bar"></span>
 						</button>
-						<h1><a class="navbar-brand" href="index.php"><span class="fa fa-cutlery"></span> Glance<span class="dashboard_text">Design dashboard</span></a></h1>
+						<h1><a class="navbar-brand" href="index.php"><span class="fa fa-cutlery"></span> Delivery<span class="dashboard_text">Dashboard</span></a></h1>
 					</div>
 					<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 						<ul class="sidebar-menu">
@@ -298,49 +298,74 @@ $dataMesInicial = $partesData[1];
 				<div class="profile_details_left">
 					<!--notifications of menu start -->
 					<ul class="nofitications-dropdown">
+
+						<?php
+
+						//pedidos novos, para que possa dar sequencia neles
+						$query = $pdo->query("SELECT * FROM vendas where data = curDate() and status = 'Iniciado'");
+						$res = $query->fetchAll(PDO::FETCH_ASSOC);
+						$total_reg = @count($res);
+
+
+						if($total_reg == 1) {
+							$texto_pedidos = 'Você possui 1 pedido.';
+						} else { //para 0 e mais de 1
+							$texto_pedidos = 'Você possui ' . $total_reg . ' pedidos.';
+
+						}
+
+						?>
+
 						<li class="dropdown head-dpdn">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">4</span></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-cutlery" style="color:#FFF"></i><span class="badge"><?php echo $total_reg ?></span></a>
 							<ul class="dropdown-menu">
 								<li>
 									<div class="notification_header">
-										<h3>You have 3 new messages</h3>
+										<h3><?php echo $texto_pedidos ?></h3>
 									</div>
 								</li>
-								<li><a href="#">
-										<div class="user_img"><img src="images/1.jpg" alt=""></div>
-										<div class="notification_desc">
-											<p>Lorem ipsum dolor amet</p>
-											<p><span>1 hour ago</span></p>
-										</div>
-										<div class="clearfix"></div>
-									</a></li>
-								<li class="odd"><a href="#">
-										<div class="user_img"><img src="images/4.jpg" alt=""></div>
-										<div class="notification_desc">
-											<p>Lorem ipsum dolor amet </p>
-											<p><span>1 hour ago</span></p>
-										</div>
-										<div class="clearfix"></div>
-									</a></li>
-								<li><a href="#">
-										<div class="user_img"><img src="images/3.jpg" alt=""></div>
-										<div class="notification_desc">
-											<p>Lorem ipsum dolor amet </p>
-											<p><span>1 hour ago</span></p>
-										</div>
-										<div class="clearfix"></div>
-									</a></li>
-								<li><a href="#">
-										<div class="user_img"><img src="images/2.jpg" alt=""></div>
-										<div class="notification_desc">
-											<p>Lorem ipsum dolor amet </p>
-											<p><span>1 hour ago</span></p>
-										</div>
-										<div class="clearfix"></div>
-									</a></li>
+
+								<?php
+								for ($i = 0; $i < $total_reg; $i++) {
+									foreach ($res[$i] as $key => $value) {
+									}
+
+									$id = $res[$i]['id'];
+									$cliente = $res[$i]['cliente'];
+									$valor = $res[$i]['valor'];
+									$hora = $res[$i]['hora'];
+
+									$valorF = number_format($valor, 2, ',', '.');
+
+									$query2 = $pdo->query("SELECT * FROM clientes where id = '$cliente'");
+									$res2 = $query2->fetchAll(PDO::FETCH_ASSOC);
+									$total_reg2 = @count($res2);
+									if ($total_reg2 > 0) {
+										$nome_cliente = $res2[0]['nome'];
+									} else {
+										$nome_cliente = 'Nenhum';
+									}
+
+								?>
+
+									<li>
+										<a href="#">
+											<div class="user_img"><img src="images/1.jpg" alt=""></div>
+											<div class="notification_desc">
+												<p><b>Pedido <?php echo $id ?></b> - <?php echo $nome_cliente ?> </p>
+												<p><span>Feito às <?php echo $hora ?></span></p>
+											</div>
+											<div class="clearfix"></div>
+										</a>
+									</li>
+
+								<?php
+								}
+								?>
+
 								<li>
 									<div class="notification_bottom">
-										<a href="#">See all messages</a>
+										<a href="#">Ir para os pedidos.</a>
 									</div>
 								</li>
 							</ul>
@@ -814,7 +839,7 @@ $dataMesInicial = $partesData[1];
 					<small>(
 						<a href="#" onclick="datas('1980-01-01', 'tudo-Luc', 'Luc')">
 							<span style="color:#000" id="tudo-Luc">Tudo</span>
-						</a> / 
+						</a> /
 						<a href="#" onclick="datas('<?php echo $data_atual ?>', 'hoje-Luc', 'Luc')">
 							<span id="hoje-Luc">Hoje</span>
 						</a> /
@@ -823,8 +848,8 @@ $dataMesInicial = $partesData[1];
 						</a> /
 						<a href="#" onclick="datas('<?php echo $data_ano ?>', 'ano-Luc', 'Luc')">
 							<span style="color:#000" id="ano-Luc">Ano</span>
-						</a> 
-					)</small>
+						</a>
+						)</small>
 
 
 
@@ -837,16 +862,16 @@ $dataMesInicial = $partesData[1];
 				<div class="modal-body">
 
 					<div class="row">
-						<div class="col-md-4">						
-							<div class="form-group"> 
-								<label>Data Inicial</label> 
-								<input type="date" class="form-control" name="dataInicial" id="dataInicialRel-Luc" value="<?php echo date('Y-m-d') ?>" required> 
-							</div>						
+						<div class="col-md-4">
+							<div class="form-group">
+								<label>Data Inicial</label>
+								<input type="date" class="form-control" name="dataInicial" id="dataInicialRel-Luc" value="<?php echo date('Y-m-d') ?>" required>
+							</div>
 						</div>
 						<div class="col-md-4">
-							<div class="form-group"> 
-								<label>Data Final</label> 
-								<input type="date" class="form-control" name="dataFinal" id="dataFinalRel-Luc" value="<?php echo date('Y-m-d') ?>" required> 
+							<div class="form-group">
+								<label>Data Final</label>
+								<input type="date" class="form-control" name="dataFinal" id="dataFinalRel-Luc" value="<?php echo date('Y-m-d') ?>" required>
 							</div>
 						</div>
 
@@ -916,26 +941,26 @@ $dataMesInicial = $partesData[1];
 					</div>
 
 					<div class="row">
-						<div class="col-md-6">						
-							<div class="form-group"> 
-								<label>Status</label> 
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Status</label>
 								<select class="form-control" name="status" style="width:100%;">
 									<option value="">Todas</option>
 									<option value="Finalizado">Finalizadas</option>
 									<option value="Cancelado">Canceladas</option>
 
-								</select> 
-							</div>						
+								</select>
+							</div>
 						</div>
 						<div class="col-md-6">
-							<div class="form-group"> 
-								<label>Forma PGTO</label> 
+							<div class="form-group">
+								<label>Forma de Pagamento</label>
 								<select class="form-control" name="forma_pgto" style="width:100%;">
 									<option value="">Todas</option>
 									<option value="Dinheiro">Dinheiro</option>
 									<option value="Pix">Pix</option>
 									<option value="Cartão de Crédito">Cartão de Crédito</option>
-									<option value="Cartão de Débito">Cartão de Débito</option>																		
+									<option value="Cartão de Débito">Cartão de Débito</option>
 								</select>
 							</div>
 						</div>
