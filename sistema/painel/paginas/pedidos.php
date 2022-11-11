@@ -3,63 +3,27 @@
 require_once("verificar.php");
 require_once("../conexao.php");
 
-$pag = 'vendas';
+$pag = 'pedidos';
 
-$data_hoje = date('Y-m-d');
-$data_ontem = date('Y-m-d', strtotime("-1 days", strtotime($data_hoje)));
-
-$mes_atual = Date('m');
-$ano_atual = Date('Y');
-$data_inicio_mes = $ano_atual . "-" . $mes_atual . "-01";
-
-if ($mes_atual == '4' || $mes_atual == '6' || $mes_atual == '9' || $mes_atual == '11') {
-	$dia_final_mes = '30';
-} else if ($mes_atual == '2') {
-	$dia_final_mes = '28';
-} else {
-	$dia_final_mes = '31';
-}
-
-$data_final_mes = $ano_atual . "-" . $mes_atual . "-" . $dia_final_mes;
+$segundos = $tempo_atualizar *1000;
 
 ?>
 
-<div class="bs-example widget-shadow" style="padding:15px">
+<div class="bs-example widget-shadow" style="padding:15px; margin-top:-5px;">
 
 	<div class="row">
-		<div class="col-md-6" style="margin-bottom:5px;">
-			<div style="float:left; margin-right:10px"><span><small><i title="Data Inicial" class="fa fa-calendar-o"></i></small></span></div>
-			<div style="float:left; margin-right:20px">
-				<input type="date" class="form-control " name="data-inicial" id="data-inicial-caixa" value="<?php echo $data_hoje ?>" required>
-			</div>
 
-			<div style="float:left; margin-right:10px"><span><small><i title="Data Final" class="fa fa-calendar-o"></i></small></span></div>
-			<div style="float:left; margin-right:30px">
-				<input type="date" class="form-control " name="data-final" id="data-final-caixa" value="<?php echo $data_hoje ?>" required>
-			</div>
-		</div>
-
-		<div class="col-md-2" style="margin-top:5px;" align="center">
-			<div>
+			<div class="col-md-12" align="center">
 				<small>
-					<a title="Conta de Ontem" class="text-muted" href="#" onclick="valorData('<?php echo $data_ontem ?>', '<?php echo $data_ontem ?>')"><span>Ontem</span></a> /
-					<a title="Conta de Hoje" class="text-muted" href="#" onclick="valorData('<?php echo $data_hoje ?>', '<?php echo $data_hoje ?>')"><span>Hoje</span></a> /
-					<a title="Conta do Mês" class="text-muted" href="#" onclick="valorData('<?php echo $data_inicio_mes ?>', '<?php echo $data_final_mes ?>')"><span>Mês</span></a>
+					<a title="Todas as Vendas" class="text-muted" href="#" onclick="buscarContas('')"><span>Todos (<span id="todos_pedidos"></span>)</span></a> /
+					<a title="Todas as Vendas" class="text-muted" href="#" onclick="buscarContas('Iniciado')"><i class="fa fa-square text-primary" style="margin-right:3px"></i><span>Iniciado (<span id="iniciado_pedidos"></span>)</span></a> /
+					<a title="Vendas Pendentes" class="text-muted" href="#" onclick="buscarContas('Preparando')"><i class="fa fa-square text-danger" style="margin-right:3px"></i><span>Preparando (<span id="preparando_pedidos"></span>)</span></a> /
+					<a title="Vendas Concluídas" class="text-muted" href="#" onclick="buscarContas('Entrega')"><i class="fa fa-square text-laranja" style="margin-right:3px"></i><span>Em Rota de Entrega (<span id="entrega_pedidos"></span>)</span></a>
 				</small>
 			</div>
-		</div>
-
-		<div class="col-md-3" style="margin-top:5px;" align="center">
-			<div>
-				<small>
-					<a title="Todas as Vendas" class="text-muted" href="#" onclick="buscarContas('')"><span>Todas</span></a> /
-					<a title="Vendas Pendentes" class="text-muted" href="#" onclick="buscarContas('Cancelado')"><span>Canceladas</span></a> /
-					<a title="Vendas Concluídas" class="text-muted" href="#" onclick="buscarContas('Finalizado')"><span>Finalizadas</span></a>
-				</small>
-			</div>
-		</div>
 
 		<input type="hidden" id="buscar-contas">
+		<input type="hidden" id="id_ultimo_pedido">
 
 	</div>
 
@@ -169,82 +133,25 @@ $data_final_mes = $ano_atual . "-" . $mes_atual . "-" . $dia_final_mes;
 <script src="js/ajax.js"></script>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('.sel2').select2({
-			dropdownParent: $('#modalForm')
-		});
-	});
-</script>
+	var seg = '<?=$segundos?>';
+	$(document).ready(function() {    
+   setInterval(()=>{ //setTimeout atualiza uma única vez, setInterval atualiza a cada intervalo, por exemplo, para 3 segundos devemos digitar 3000, que é medido em milisegundos
+        		listar();
+    		}, seg);   
+} );
 
-<script type="text/javascript">
-	function carregarImg() {
-		var target = document.getElementById('target');
-		var file = document.querySelector("#foto").files[0];
-
-
-		var arquivo = file['name'];
-		resultado = arquivo.split(".", 2);
-
-		if (resultado[1] === 'pdf') {
-			$('#target').attr('src', "images/pdf.png");
-			return;
-		}
-
-		if (resultado[1] === 'rar' || resultado[1] === 'zip') {
-			$('#target').attr('src', "images/rar.png");
-			return;
-		}
-
-		var reader = new FileReader();
-
-		reader.onloadend = function() {
-			target.src = reader.result;
-		};
-
-		if (file) {
-			reader.readAsDataURL(file);
-
-		} else {
-			target.src = "";
-		}
-	}
-</script>
-
-<script type="text/javascript">
-	function valorData(dataInicio, dataFinal) {
-		$('#data-inicial-caixa').val(dataInicio);
-		$('#data-final-caixa').val(dataFinal);
-		listar();
-	}
-</script>
-
-<script type="text/javascript">
-	$('#data-inicial-caixa').change(function() {
-		//$('#tipo-busca').val('');
-		listar();
-	});
-
-	$('#data-final-caixa').change(function() {
-		//$('#tipo-busca').val('');
-		listar();
-	});
 </script>
 
 <script type="text/javascript">
 	function listar() {
 
-		var dataInicial = $('#data-inicial-caixa').val();
-		var dataFinal = $('#data-final-caixa').val();
 		var status = $('#buscar-contas').val();
+		var id_ultimo_pedido = $('#id_ultimo_pedido').val();
 
 		$.ajax({
 			url: 'paginas/' + pag + "/listar.php",
 			method: 'POST',
-			data: {
-				dataInicial,
-				dataFinal,
-				status
-			},
+			data: {status, id_ultimo_pedido},
 			dataType: "html",
 
 			success: function(result) {
@@ -280,4 +187,25 @@ $data_final_mes = $ano_atual . "-" . $mes_atual . "-" . $dia_final_mes;
 
 		$('#modalDados').modal('show');
 	}
+
+	function baixar(id) {
+		$.ajax({
+			url: 'paginas/' + pag + "/baixar.php",
+			method: 'POST',
+			data: {id},
+			dataType: "text",
+
+			success: function(mensagem) {
+				if (mensagem.trim() == "Baixado com Sucesso!") {
+					listar();
+				} else {
+					$('#mensagem-excluir').addClass('text-danger')
+					$('#mensagem-excluir').text(mensagem)
+				}
+
+			},
+
+		});
+	}
+
 </script>

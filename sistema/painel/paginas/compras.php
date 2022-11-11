@@ -100,7 +100,7 @@ $data_final_mes = $ano_atual . "-" . $mes_atual . "-" . $dia_final_mes;
 								<select class="form-control sel2" id="produto" name="produto" style="width:100%;">
 
 									<?php
-									$query = $pdo->query("SELECT * FROM produtos ORDER BY nome asc");
+									$query = $pdo->query("SELECT * FROM produtos WHERE tem_estoque = 'Sim' ORDER BY nome asc"); //se tem_estoque for diferente de Sim, pode ser um produto que não está à venda mas necessita de controle de estoque, por exemplo, uma lata de ervilha se for uma pizzaria, já que esta usa ervilha na pizza
 									$res = $query->fetchAll(PDO::FETCH_ASSOC);
 									$total_reg = @count($res);
 

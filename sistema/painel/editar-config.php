@@ -16,6 +16,7 @@ $horario_fechamento = $_POST['horario_fechamento'];
 $texto_fechamento_horario = $_POST['texto_fechamento_horario'];
 $status_estabelecimento = $_POST['status_estabelecimento'];
 $texto_fechamento_imprevisto = $_POST['texto_fechamento_imprevisto'];
+$tempo_atualizar = $_POST['tempo_atualizar'];
 
 //validar troca da foto logo png
 $query = $pdo->query("SELECT * FROM config");
@@ -126,7 +127,7 @@ if(@$_FILES['foto-logo-rel']['name'] != ""){
 	}
 }
 
-$query = $pdo->prepare("UPDATE config SET nome_sistema = :nome_sistema, email_sistema = :email_sistema, telefone_sistema = :telefone_sistema, telefone_fixo = :telefone_fixo, endereco_sistema = :endereco_sistema, instagram_sistema = :instagram_sistema, tipo_rel = '$tipo_rel', tipo_miniatura = '$tipo_miniatura', status_whatsapp = '$status_whatsapp', previsao_entrega = '$previsao_entrega', horario_abertura = '$horario_abertura', horario_fechamento = '$horario_fechamento', texto_fechamento_horario = :texto_fechamento_horario, status_estabelecimento = '$status_estabelecimento', texto_fechamento_imprevisto = :texto_fechamento_imprevisto, logo_sistema = '$logo_sistema', favicon_sistema = '$favicon_sistema', logo_rel = '$logo_rel' "); //não precisa de where, pois a tabela config só terá 1 linha
+$query = $pdo->prepare("UPDATE config SET nome_sistema = :nome_sistema, email_sistema = :email_sistema, telefone_sistema = :telefone_sistema, telefone_fixo = :telefone_fixo, endereco_sistema = :endereco_sistema, instagram_sistema = :instagram_sistema, tipo_rel = '$tipo_rel', tipo_miniatura = '$tipo_miniatura', status_whatsapp = '$status_whatsapp', previsao_entrega = '$previsao_entrega', horario_abertura = '$horario_abertura', horario_fechamento = '$horario_fechamento', texto_fechamento_horario = :texto_fechamento_horario, status_estabelecimento = '$status_estabelecimento', texto_fechamento_imprevisto = :texto_fechamento_imprevisto, logo_sistema = '$logo_sistema', favicon_sistema = '$favicon_sistema', logo_rel = '$logo_rel', tempo_atualizar = '$tempo_atualizar'"); //não precisa de where, pois a tabela config só terá 1 linha
 //previsao_entrega é tipo number, portanto, não tem como injetar SQL nele
 
 $query->bindValue(":nome_sistema", "$nome_sistema");

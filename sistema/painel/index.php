@@ -188,6 +188,13 @@ $dataMesInicial = $partesData[1];
 									<i class="fa fa-dashboard"></i> <span>Home</span>
 								</a>
 							</li>
+
+							<li class="treeview">
+								<a href="index.php?pagina=pedidos">
+									<i class="fa fa-motorcycle"></i> <span>Pedidos</span>
+								</a>
+							</li>
+
 							<li class="treeview">
 								<a href="#">
 									<i class="fa fa-users"></i>
@@ -304,14 +311,12 @@ $dataMesInicial = $partesData[1];
 						//pedidos novos, para que possa dar sequencia neles
 						$query = $pdo->query("SELECT * FROM vendas where data = curDate() and status = 'Iniciado'");
 						$res = $query->fetchAll(PDO::FETCH_ASSOC);
-						$total_reg = @count($res);
+						$total_reg = @count($res); //conta todos os pedidos em aberto
 
-
-						if($total_reg == 1) {
+						if ($total_reg == 1) {
 							$texto_pedidos = 'Você possui 1 pedido.';
 						} else { //para 0 e mais de 1
 							$texto_pedidos = 'Você possui ' . $total_reg . ' pedidos.';
-
 						}
 
 						?>
@@ -326,6 +331,12 @@ $dataMesInicial = $partesData[1];
 								</li>
 
 								<?php
+
+								//mostra os 6 últimos pedidos feitos
+								$query = $pdo->query("SELECT * FROM vendas where data = curDate() and status = 'Iniciado' order by id desc limit 6");
+								$res = $query->fetchAll(PDO::FETCH_ASSOC);
+								$total_reg = @count($res);
+
 								for ($i = 0; $i < $total_reg; $i++) {
 									foreach ($res[$i] as $key => $value) {
 									}
@@ -352,12 +363,14 @@ $dataMesInicial = $partesData[1];
 										<a href="#">
 											<div class="user_img"><img src="images/1.jpg" alt=""></div>
 											<div class="notification_desc">
-												<p><b>Pedido <?php echo $id ?></b> - <?php echo $nome_cliente ?> </p>
-												<p><span>Feito às <?php echo $hora ?></span></p>
+												<p><b>Pedido <?php echo $id ?></b> - <span style="color:green !important">R$ <?php echo $valorF ?> </span></p>
+												<p><span>Feito às <?php echo $hora ?> por <i> <?php echo $nome_cliente ?> </i></span></p>
 											</div>
 											<div class="clearfix"></div>
 										</a>
 									</li>
+
+									<hr style="margin-bottom:2px">
 
 								<?php
 								}
@@ -365,7 +378,7 @@ $dataMesInicial = $partesData[1];
 
 								<li>
 									<div class="notification_bottom">
-										<a href="#">Ir para os pedidos.</a>
+										<a href="index.php?pagina=pedidos">Ir para os pedidos.</a>
 									</div>
 								</li>
 							</ul>
@@ -606,6 +619,19 @@ $dataMesInicial = $partesData[1];
 							<input maxlength="255" type="text" name="texto_fechamento_imprevisto" class="form-control" value="<?php echo @$texto_fechamento_imprevisto ?>" placeholder="Caso marque a opção de Estabelecimento Fechado, coloque aqui o texto que deseja aparecer">
 						</div>
 					</div>
+
+					<div class="row">
+						<div class="col-md-3">
+							<label>Atualizar Pedido</label>
+
+							<input type="number" name="tempo_atualizar" value="<?php echo $tempo_atualizar ?>" class='form-control' placeholder="Tempo em segundos">
+						</div>
+						<div class="col-md-9">
+							<label>Texto Fechamento <small>(Imprevisto)</small></label>
+							<input maxlength="255" type="text" name="texto_fechamento_imprevisto" class="form-control" value="<?php echo @$texto_fechamento_imprevisto ?>" placeholder="Caso marque a opção de Estabelecimento Fechado, coloque aqui o texto que deseja aparecer">
+						</div>
+					</div>
+
 
 					<div class="row">
 						<div class="col-md-4">

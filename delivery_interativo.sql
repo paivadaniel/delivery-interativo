@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 09-Nov-2022 às 21:33
+-- Tempo de geração: 11-Nov-2022 às 20:25
 -- Versão do servidor: 10.4.21-MariaDB
 -- versão do PHP: 8.0.10
 
@@ -88,8 +88,8 @@ CREATE TABLE `categorias` (
 --
 
 INSERT INTO `categorias` (`id`, `nome`, `descricao`, `foto`, `cor`, `ativo`) VALUES
-(1, 'Pizzas Gostosas', 'Pizzas Muito Saborosas!!!!', '26-10-2022-16-40-44-curso-de-php.jpg', 'verde-escuro', 'Sim'),
-(3, 'Bebidas', 'Bebidas', 'sem-foto.jpg', 'roxo', 'Sim');
+(1, 'Pizzas Gostosas', 'Pizzas Muito Saborosas!!!!', '09-07-2022-18-23-30-SANDUICHE.jpg', 'verde-escuro', 'Sim'),
+(3, 'Bebidas', 'Bebidas', '09-07-2022-18-23-50-BEBIDAS.jpg', 'roxo', 'Sim');
 
 -- --------------------------------------------------------
 
@@ -140,15 +140,16 @@ CREATE TABLE `config` (
   `texto_fechamento_imprevisto` varchar(255) DEFAULT NULL,
   `logo_sistema` varchar(100) NOT NULL,
   `favicon_sistema` varchar(100) NOT NULL,
-  `logo_rel` varchar(100) NOT NULL
+  `logo_rel` varchar(100) NOT NULL,
+  `tempo_atualizar` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `config`
 --
 
-INSERT INTO `config` (`id`, `nome_sistema`, `email_sistema`, `telefone_sistema`, `telefone_fixo`, `endereco_sistema`, `instagram_sistema`, `tipo_rel`, `tipo_miniatura`, `status_whatsapp`, `previsao_entrega`, `horario_abertura`, `horario_fechamento`, `texto_fechamento_horario`, `status_estabelecimento`, `texto_fechamento_imprevisto`, `logo_sistema`, `favicon_sistema`, `logo_rel`) VALUES
-(1, 'Delivery Interativo', 'danielantunespaiva@gmail.com', '(15) 99180-5895', '(15) 3031-4024', 'Alameda do Capiroto,  número 666, Bairro de Satã, Cidade do Caos', 'instagram.com/rapidin', 'PDF', 'Foto', 'Sim', 66, '18:30:00', '00:30:00', 'Texto para fechamento normal', 'Aberto', 'Texto para fechamento imprevisto', '17-10-2022-18-37-05-logo.png', 'favicon.png', 'logo_rel.jpg');
+INSERT INTO `config` (`id`, `nome_sistema`, `email_sistema`, `telefone_sistema`, `telefone_fixo`, `endereco_sistema`, `instagram_sistema`, `tipo_rel`, `tipo_miniatura`, `status_whatsapp`, `previsao_entrega`, `horario_abertura`, `horario_fechamento`, `texto_fechamento_horario`, `status_estabelecimento`, `texto_fechamento_imprevisto`, `logo_sistema`, `favicon_sistema`, `logo_rel`, `tempo_atualizar`) VALUES
+(1, 'Delivery Interativo', 'danielantunespaiva@gmail.com', '(15) 99180-5895', '(15) 3031-4024', 'Alameda do Capiroto,  número 666, Bairro de Satã, Cidade do Caos', 'instagram.com/rapidin', 'PDF', 'Foto', 'Sim', 66, '18:30:00', '00:30:00', 'Texto para fechamento normal', 'Aberto', 'Texto para fechamento imprevisto', 'logo.png', 'favicon.png', 'logo_rel.jpg', 10);
 
 -- --------------------------------------------------------
 
@@ -440,7 +441,11 @@ CREATE TABLE `vendas` (
 INSERT INTO `vendas` (`id`, `cliente`, `valor`, `total_pago`, `troco`, `data`, `hora`, `status`, `pago`, `obs`, `taxa_entrega`, `tipo_pgto`, `usuario_baixa`) VALUES
 (1, 2, '65.00', '70.00', '5.00', '2022-11-03', '12:00:00', 'Cancelado', 'Sim', 'Apertar interfone ao chegar.', '5.00', 'dinheiro', 0),
 (2, 2, '35.00', '40.00', '5.00', '2022-11-03', '20:58:35', 'Finalizado', 'Sim', '', '3.00', 'cartão de crédito', 1),
-(3, 2, '30.00', '90.00', '0.00', '2022-11-03', '21:14:33', 'Iniciado', 'Sim', NULL, '4.00', 'Pago', 1);
+(3, 2, '30.00', '90.00', '0.00', '2022-11-11', '21:14:33', 'Iniciado', 'Não', NULL, '4.00', 'pix', 1),
+(4, 2, '45.00', '50.00', '5.00', '2022-11-11', '19:54:21', 'Entrega', 'Não', 'teste', '5.00', 'dinheiro', 1),
+(5, 2, '13.00', '14.00', '1.00', '2022-11-11', '00:41:17', 'Iniciado', 'Não', NULL, '0.00', '', 0),
+(6, 2, '42.00', '0.00', '0.00', '2022-11-11', '19:54:21', 'Iniciado', 'Não', NULL, '0.00', '', 0),
+(7, 2, '13.00', '50.00', '0.00', '2022-11-11', '19:54:21', 'Iniciado', 'Não', NULL, '0.00', '', 0);
 
 --
 -- Índices para tabelas despejadas
@@ -640,7 +645,7 @@ ALTER TABLE `variacoes`
 -- AUTO_INCREMENT de tabela `vendas`
 --
 ALTER TABLE `vendas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

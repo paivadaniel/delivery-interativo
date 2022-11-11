@@ -21,7 +21,7 @@
 
             /
 
-            <span style="margin-left: 15px"><a href="<?php echo $instagram_sistema ?>" class="link-neutro" target="_blank"><i class="bi bi-instagram text-info"></i></a></span>
+            <span style="margin-left: 15px"><a href="<?php echo $instagram_sistema ?>" class="link-neutro" target="_blank"><i class="bi bi-instagram" style="color:#d11144; margin-right:4px;"></i>@instagram</a></span>
 
 
         </div>

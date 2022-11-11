@@ -19,6 +19,16 @@ if($categoria == 0 || $categoria == ""){ //categoria == 0 se não tiver categori
 	exit();
 }
 
+//validar nome do produto
+$query = $pdo->query("SELECT * FROM $tabela WHERE nome = '$nome'");
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$total_reg = @count($res);
+
+if($total_reg > 0 and $id != $res[0]['id']) {
+    echo "Nome de Produto já Cadastrado em nosso Banco de Dados, Escolha Outro!";
+    exit();
+}
+
 //validar troca da foto
 $query = $pdo->query("SELECT * FROM $tabela where id = '$id'");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);

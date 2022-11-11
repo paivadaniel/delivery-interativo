@@ -19,55 +19,58 @@ require_once('cabecalho.php'); //sistema/conexao.php já está sendo requisitado
     </nav>
 
     <div class="row cards">
-        <div class="col-6 col-md-4">
-            <a class="link-card" href="itens.php">
-                <div class="card azul">
-                    <h3 class="card-title">PIZZAS</h3>
-                </div> <!-- classe card do bootstrap já coloca uma borda automatizada ao inserir margin:10px no .card do css -->
-                <!-- inicialmente havia setado col-6 col-md-4, porém, card tem margin e padding no style.css, daí para não quebrar as colunas tive que diminuir -->
 
-            </a>
-        </div>
+        <?php
 
-        <div class="col-6 col-md-4">
-            <a class="link-card" href="#">
-                <div class="card vermelho">
-                    <h3 class="card-title">ESFIHAS</h3>
+        $query = $pdo->query("SELECT * FROM categorias WHERE ativo = 'Sim'");
+        $res = $query->fetchAll(PDO::FETCH_ASSOC);
+        $total_reg = @count($res);
+
+        if ($total_reg > 0) {
+
+            for ($i = 0; $i < $total_reg; $i++) {
+                foreach ($res[$i] as $key => $value) {
+                }
+
+                $cor = $res[$i]['cor'];
+                $nome = $res[$i]['nome'];
+                $foto = $res[$i]['foto'];
+
+                $nome_novo = strtolower(preg_replace(
+                    "[^a-zA-Z0-9-]",
+                    "-",
+                    strtr(
+                        utf8_decode(trim($nome)),
+                        utf8_decode("áàãâéêíóôõúüñçÁÀÃÂÉÊÍÓÔÕÚÜÑÇ"),
+                        "aaaaeeiooouuncAAAAEEIOOOUUNC-"
+                    )
+                ));
+                $url = preg_replace('/[ -]+/', '-', $nome_novo);
+
+        ?>
+
+                <div class="col-6 col-md-4">
+                    <a class="link-card" href="categoria-<?php echo $url ?>">
+                        <div class="card <?php echo $cor ?>" <?php if ($tipo_miniatura == 'Foto') { ?> style="background-image:url('sistema/painel/images/categorias/<?php echo $foto ?>'); background-size: cover; border: none;" <?php } ?>>
+
+                            <?php if ($tipo_miniatura == 'Foto') { ?>
+                                <div class="badge2"><?php echo $nome ?>
+                                </div>
+                            <?php } else { ?>
+                                <h3 class="card-title"><?php echo $nome ?></h3>
+                            <?php } ?>
+                        </div> <!-- classe card do bootstrap já coloca uma borda automatizada ao inserir margin:10px no .card do css -->
+                        <!-- inicialmente havia setado col-6 col-md-4, porém, card tem margin e padding no style.css, daí para não quebrar as colunas tive que diminuir -->
+
+                    </a>
                 </div>
-            </a>
-        </div>
 
-        <div class="col-6 col-md-4">
-            <a class="link-card" href="#">
-                <div class="card verde">
-                    <h3 class="card-title">PASTÉIS</h3>
-                </div>
-            </a>
-        </div>
+        <?php
 
-        <div class="col-6 col-md-4">
-            <a class="link-card" href="#">
-                <div class="card azul-escuro">
-                    <h3 class="card-title">SANDUÍCHES</h3>
-                </div>
-            </a>
-        </div>
+            } //fechamento for
+        } //fechamento if
 
-        <div class="col-6 col-md-4">
-            <a class="link-card" href="#">
-                <div class="card rosa">
-                    <h3 class="card-title">COQUETÉIS</h3>
-                </div>
-            </a>
-        </div>
-
-        <div class="col-6 col-md-4">
-            <a class="link-card" href="#">
-                <div class="card roxo">
-                    <h3 class="card-title">DRINKS</h3>
-                </div>
-            </a>
-        </div>
+        ?>
 
     </div>
 </div>

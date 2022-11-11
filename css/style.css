@@ -189,7 +189,7 @@ body {
 }
 
 .rodape {
-    position: absolute;
+    position: relative;
     /* position absolute faz referência ao elemento pai que é o body, já position relative faz referência ao próprio elemento, já position fixed não se move por nada, é igual aqueles botões de whatsapp no canto direito inferior da tela, que rolamos a tela e eles continuam ali, com bottom: 20px e right: 20px */
     bottom: 0px;
     width: 100%;
@@ -461,4 +461,22 @@ input:valid~label {
 
 }
 
-.nome-produto {}
+.badge2 {
+    position: absolute;
+    display: inline-block;
+    min-width: 10px;
+    padding: 4px 9px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #f6f2f8;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    background-color: #242424;
+    border-radius: 5px;
+    left: 0;
+    top: -10px;
+    z-index: 200;
+}
