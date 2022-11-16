@@ -7,6 +7,18 @@ $nome = $_POST['nome'];
 $descricao = $_POST['descricao'];
 $cor = $_POST['cor'];
 
+//formatação do nome da categoria
+$nome_novo = strtolower(preg_replace(
+	"[^a-zA-Z0-9-]",
+	"-",
+	strtr(
+		utf8_decode(trim($nome)),
+		utf8_decode("áàãâéêíóôõúüñçÁÀÃÂÉÊÍÓÔÕÚÜÑÇ"),
+		"aaaaeeiooouuncAAAAEEIOOOUUNC-"
+	)
+));
+$url = preg_replace('/[ -]+/', '-', $nome_novo);
+
 //validar nome da categoria
 $query = $pdo->query("SELECT * FROM $tabela WHERE nome = '$nome'");
 $res = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -56,9 +68,9 @@ if(@$_FILES['foto-categoria']['name'] != ""){ //se existir imagem
 
 
 if($id == ""){
-	$query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome, descricao = :descricao, cor = '$cor', ativo = 'Sim', foto = '$foto'");
+	$query = $pdo->prepare("INSERT INTO $tabela SET nome = :nome, descricao = :descricao, cor = '$cor', ativo = 'Sim', foto = '$foto', url =  '$url'");
 }else{
-	$query = $pdo->prepare("UPDATE $tabela SET nome = :nome, descricao = :descricao, cor = '$cor', foto = '$foto' WHERE id = '$id'");
+	$query = $pdo->prepare("UPDATE $tabela SET nome = :nome, descricao = :descricao, cor = '$cor', foto = '$foto', url =  '$url' WHERE id = '$id'");
 }
 
 $query->bindValue(":nome", "$nome");

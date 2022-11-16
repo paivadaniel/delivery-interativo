@@ -29,6 +29,11 @@ require_once('sistema/conexao.php');
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
+
+<!-- jQuery para funcionar o AJAX -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+
     <title> <?php echo $nome_sistema; ?> </title>
 </head>
 

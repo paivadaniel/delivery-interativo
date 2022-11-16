@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11-Nov-2022 às 20:25
+-- Tempo de geração: 16-Nov-2022 às 21:02
 -- Versão do servidor: 10.4.21-MariaDB
 -- versão do PHP: 8.0.10
 
@@ -43,8 +43,9 @@ INSERT INTO `adicionais` (`id`, `produto`, `nome`, `ativo`, `valor`) VALUES
 (2, 2, 'Cheddar', 'Não', '7.00'),
 (3, 2, 'Bacon', 'Sim', '5.00'),
 (6, 2, 'Ketchup', 'Sim', '3.50'),
-(7, 2, 'Azeite', 'Não', '5.52'),
-(9, 3, 'Laranja', 'Não', '4.69');
+(7, 4, 'Mussarela', 'Sim', '6.00'),
+(9, 4, 'Anchovas', 'Sim', '9.00'),
+(10, 4, 'Barbecue', 'Sim', '4.90');
 
 -- --------------------------------------------------------
 
@@ -71,6 +72,23 @@ INSERT INTO `bairros` (`id`, `nome`, `valor`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `carrinho`
+--
+
+CREATE TABLE `carrinho` (
+  `id` int(11) NOT NULL,
+  `sessao` varchar(35) NOT NULL,
+  `cliente` int(11) NOT NULL,
+  `produto` int(11) NOT NULL,
+  `quantidade` int(11) NOT NULL,
+  `total_item` decimal(8,2) NOT NULL,
+  `obs` varchar(255) NOT NULL,
+  `pedido` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `categorias`
 --
 
@@ -80,16 +98,17 @@ CREATE TABLE `categorias` (
   `descricao` varchar(255) DEFAULT NULL,
   `foto` varchar(100) DEFAULT NULL,
   `cor` varchar(30) NOT NULL,
-  `ativo` varchar(5) NOT NULL
+  `ativo` varchar(5) NOT NULL,
+  `url` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `categorias`
 --
 
-INSERT INTO `categorias` (`id`, `nome`, `descricao`, `foto`, `cor`, `ativo`) VALUES
-(1, 'Pizzas Gostosas', 'Pizzas Muito Saborosas!!!!', '09-07-2022-18-23-30-SANDUICHE.jpg', 'verde-escuro', 'Sim'),
-(3, 'Bebidas', 'Bebidas', '09-07-2022-18-23-50-BEBIDAS.jpg', 'roxo', 'Sim');
+INSERT INTO `categorias` (`id`, `nome`, `descricao`, `foto`, `cor`, `ativo`, `url`) VALUES
+(1, 'Pizzas Gostosas', 'Pizzas Muito Saborosas!!!!', '09-07-2022-18-23-30-SANDUICHE.jpg', 'verde-escuro', 'Sim', 'pizzas-gostosas'),
+(3, 'Bebidas', 'Bebidas', '09-07-2022-18-23-50-BEBIDAS.jpg', 'roxo', 'Sim', 'bebidas');
 
 -- --------------------------------------------------------
 
@@ -113,7 +132,8 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `nome`, `telefone`, `logradouro`, `numero`, `complemento`, `bairro`, `data`) VALUES
-(2, 'Eduardo Sakamoto', '(90) 91019-1019', 'Rua Japão', '666', 'Apartamento 213', 'Jardim Rodrigo', '2022-10-31');
+(2, 'Eduardo Sakamoto', '(55) 55555-5555', 'Rua Japão', '666', 'Apartamento 213', 'Jardim Rodrigo', '2022-10-31'),
+(3, 'Arnaldo Besta', '(44) 44444-4444', 'Rua Quatro', '44', 'apartamento 4', 'Passa Quatro', '2022-11-16');
 
 -- --------------------------------------------------------
 
@@ -172,7 +192,8 @@ CREATE TABLE `entradas` (
 
 INSERT INTO `entradas` (`id`, `produto`, `quantidade`, `motivo`, `usuario`, `data`) VALUES
 (1, 3, 11, 'Compra', 1, '2022-10-27'),
-(2, 3, 1, 'Achou na rua', 1, '2022-10-27');
+(2, 3, 1, 'Achou na rua', 1, '2022-10-27'),
+(3, 4, 30, 'Compra', 1, '2022-11-14');
 
 -- --------------------------------------------------------
 
@@ -217,9 +238,11 @@ CREATE TABLE `ingredientes` (
 --
 
 INSERT INTO `ingredientes` (`id`, `produto`, `nome`, `ativo`) VALUES
-(1, 2, 'Tomate', 'Sim'),
-(6, 2, 'Limão', 'Não'),
-(7, 2, 'Farinha', 'Não');
+(1, 4, 'Tomate', 'Sim'),
+(6, 4, 'Azeitona', 'Não'),
+(7, 4, 'Cebola', 'Sim'),
+(8, 3, 'Limão', 'Sim'),
+(9, 3, 'Uva', 'Sim');
 
 -- --------------------------------------------------------
 
@@ -292,16 +315,18 @@ CREATE TABLE `produtos` (
   `foto` varchar(100) NOT NULL,
   `nivel_estoque` int(11) NOT NULL,
   `tem_estoque` varchar(5) NOT NULL,
-  `ativo` varchar(5) NOT NULL
+  `ativo` varchar(5) NOT NULL,
+  `url` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `produtos`
 --
 
-INSERT INTO `produtos` (`id`, `nome`, `descricao`, `categoria`, `valor_compra`, `valor_venda`, `estoque`, `foto`, `nivel_estoque`, `tem_estoque`, `ativo`) VALUES
-(2, 'Produto Novo 01', 'Piriri', 1, '40.00', '80.00', 0, '27-10-2022-02-01-57-curso-de-php.jpg', 10, 'Sim', 'Sim'),
-(3, 'Coca Cola Lata 350ml', '', 3, '1.05', '5.00', 145, '27-10-2022-15-20-02-coca-cola-lata.jpeg', 10, 'Sim', 'Sim');
+INSERT INTO `produtos` (`id`, `nome`, `descricao`, `categoria`, `valor_compra`, `valor_venda`, `estoque`, `foto`, `nivel_estoque`, `tem_estoque`, `ativo`, `url`) VALUES
+(2, 'Produto Novo 01', 'Piriri', 1, '40.00', '80.00', 1, '27-10-2022-02-01-57-curso-de-php.jpg', 10, 'Sim', 'Sim', 'produto-novo-01'),
+(3, 'Coca Cola Lata 350ml', '', 3, '1.05', '5.00', 145, '27-10-2022-15-20-02-coca-cola-lata.jpeg', 10, 'Sim', 'Sim', 'coca-cola-lata-350ml'),
+(4, 'Pizza de Calabresa', '', 1, '10.00', '20.00', 30, 'calabresa.jpg', 10, 'Sim', 'Sim', 'pizza-de-calabresa');
 
 -- --------------------------------------------------------
 
@@ -361,6 +386,34 @@ INSERT INTO `saidas` (`id`, `produto`, `quantidade`, `motivo`, `usuario`, `data`
 -- --------------------------------------------------------
 
 --
+-- Estrutura da tabela `temp`
+--
+
+CREATE TABLE `temp` (
+  `id` int(11) NOT NULL,
+  `sessao` varchar(35) NOT NULL,
+  `tabela` varchar(25) NOT NULL,
+  `id_item` int(11) NOT NULL,
+  `id_variacao` int(11) DEFAULT NULL,
+  `carrinho` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `temp`
+--
+
+INSERT INTO `temp` (`id`, `sessao`, `tabela`, `id_item`, `id_variacao`, `carrinho`) VALUES
+(24, '2022-11-16-00:30:39-638', 'ingredientes', 7, 14, 0),
+(27, '2022-11-16-00:30:39-638', 'adicionais', 7, 14, 0),
+(28, '2022-11-16-00:30:39-638', 'adicionais', 9, 14, 0),
+(29, '2022-11-16-00:30:39-638', 'ingredientes', 1, 14, 0),
+(30, '2022-11-16-10:09:52-3640', 'adicionais', 7, 14, 0),
+(31, '2022-11-16-10:09:52-3640', 'adicionais', 9, 14, 0),
+(32, '2022-11-16-10:09:52-3640', 'adicionais', 10, 14, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura da tabela `usuarios`
 --
 
@@ -410,7 +463,11 @@ CREATE TABLE `variacoes` (
 --
 
 INSERT INTO `variacoes` (`id`, `produto`, `sigla`, `nome`, `descricao`, `valor`, `ativo`) VALUES
-(8, 3, 'M', 'Média', 'Item médio', '32.00', 'Sim');
+(8, 3, 'M', 'Média', 'Item médio', '32.00', 'Sim'),
+(11, 3, 'G', 'Grande', 'Grandão', '51.00', 'Sim'),
+(12, 4, 'P', 'Pequena', '4 Fatisaa', '20.00', 'Sim'),
+(13, 4, 'M', 'Média', '6 Fatias', '25.00', 'Sim'),
+(14, 4, 'G', 'Grande', '8 Fatias', '30.00', 'Sim');
 
 -- --------------------------------------------------------
 
@@ -461,6 +518,12 @@ ALTER TABLE `adicionais`
 -- Índices para tabela `bairros`
 --
 ALTER TABLE `bairros`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Índices para tabela `carrinho`
+--
+ALTER TABLE `carrinho`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -530,6 +593,12 @@ ALTER TABLE `saidas`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Índices para tabela `temp`
+--
+ALTER TABLE `temp`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Índices para tabela `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -555,13 +624,19 @@ ALTER TABLE `vendas`
 -- AUTO_INCREMENT de tabela `adicionais`
 --
 ALTER TABLE `adicionais`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de tabela `bairros`
 --
 ALTER TABLE `bairros`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT de tabela `carrinho`
+--
+ALTER TABLE `carrinho`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de tabela `categorias`
@@ -573,7 +648,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `config`
@@ -585,7 +660,7 @@ ALTER TABLE `config`
 -- AUTO_INCREMENT de tabela `entradas`
 --
 ALTER TABLE `entradas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de tabela `fornecedores`
@@ -597,7 +672,7 @@ ALTER TABLE `fornecedores`
 -- AUTO_INCREMENT de tabela `ingredientes`
 --
 ALTER TABLE `ingredientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `niveis`
@@ -615,7 +690,7 @@ ALTER TABLE `pagar`
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `receber`
@@ -630,6 +705,12 @@ ALTER TABLE `saidas`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT de tabela `temp`
+--
+ALTER TABLE `temp`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+
+--
 -- AUTO_INCREMENT de tabela `usuarios`
 --
 ALTER TABLE `usuarios`
@@ -639,7 +720,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `variacoes`
 --
 ALTER TABLE `variacoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `vendas`

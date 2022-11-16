@@ -7,7 +7,7 @@ require_once('cabecalho.php'); //sistema/conexao.php já está sendo requisitado
     <nav class="navbar bg-light fixed-top" style="box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);">
         <!-- fixed-top anula padding-top da classe main-container no css e faz com que o topo não desça mesmo com a rolagem da página -->
         <div class="container-fluid">
-            <a class="navbar-brand" href="index.php">
+            <a class="navbar-brand" href="index">
                 <img src="img/<?php echo $logo_sistema ?>" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
                 <?php echo $nome_sistema; ?>
             </a>
@@ -32,25 +32,43 @@ require_once('cabecalho.php'); //sistema/conexao.php já está sendo requisitado
                 foreach ($res[$i] as $key => $value) {
                 }
 
+                $id_categoria = $res[$i]['id'];
                 $cor = $res[$i]['cor'];
                 $nome = $res[$i]['nome'];
                 $foto = $res[$i]['foto'];
+                $url = $res[$i]['url'];
 
-                $nome_novo = strtolower(preg_replace(
-                    "[^a-zA-Z0-9-]",
-                    "-",
-                    strtr(
-                        utf8_decode(trim($nome)),
-                        utf8_decode("áàãâéêíóôõúüñçÁÀÃÂÉÊÍÓÔÕÚÜÑÇ"),
-                        "aaaaeeiooouuncAAAAEEIOOOUUNC-"
-                    )
-                ));
-                $url = preg_replace('/[ -]+/', '-', $nome_novo);
+                $query2 = $pdo->query("SELECT * FROM produtos WHERE categoria = '$id_categoria' and ativo = 'Sim'");
+                $res2 = $query2->fetchAll(PDO::FETCH_ASSOC);
+                $tem_produto = @count($res2);
+
+                $mostrar = 'ocultar';
+
+                if ($tem_produto > 0) {
+
+                    for ($i2 = 0; $i2 < $tem_produto; $i2++) {
+                        foreach ($res2[$i2] as $key => $value) {
+                        }
+
+                        $estoque_produto = $res2[$i2]['estoque'];
+                        $tem_estoque = $res2[$i2]['tem_estoque'];
+
+                        if (($tem_estoque == 'Sim' and $estoque_produto > 0) || ($tem_estoque == 'Não')) { //não entendi porque deve mostrar a categoria quando tem_estoque for igual a não, não entendi muito bem para que serve o tem_estoque
+                            //creio que tem_estoque seja por exemplo bala, refrigerante, ou seja, produtos que não necessitem ser feitos, e daí mostra o estoque deles independente se tiver ou não em estoque, pois podem ser comprados na hora e vendidos
+                            $mostrar = '';
+                        } else {
+                            $mostrar = 'ocultar';
+                        }
+                    }
+                } else {
+                    $mostrar = 'ocultar';
+                }
+
 
         ?>
 
                 <div class="col-6 col-md-4">
-                    <a class="link-card" href="categoria-<?php echo $url ?>">
+                    <a class="link-card <?php echo $mostrar ?>" href="categoria-<?php echo $url ?>">
                         <div class="card <?php echo $cor ?>" <?php if ($tipo_miniatura == 'Foto') { ?> style="background-image:url('sistema/painel/images/categorias/<?php echo $foto ?>'); background-size: cover; border: none;" <?php } ?>>
 
                             <?php if ($tipo_miniatura == 'Foto') { ?>

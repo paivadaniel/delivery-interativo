@@ -5,8 +5,10 @@ $tabela = 'variacoes';
 $id_produto = $_POST['id_prod_var'];
 $sigla = $_POST['sigla'];
 $nome = $_POST['nome'];
-$valor = $_POST['valor'];
 $descricao = $_POST['descricao'];
+
+$valor = $_POST['valor'];
+$valor = str_replace(',', '.', $valor);
 
 //validar sigla
 $query = $pdo->query("SELECT * from $tabela where sigla = '$sigla' and produto = '$id_produto'");
