@@ -3,3 +3,8 @@ mod04 aula64
 
 mod05 aula50
 //problema ao multiplicar preço do produto pela quantidade e mostrar na tela
+
+mod05 aula62
+//não está atualizando o id_carrinho na tabela temp, pode ser necessário colocar um intervalo
+de tempo após pegar o lastInsertId do carrinho antes de fazer o UPDATE na tabela
+//setTimeout() é usado para fazer esse delay

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 16-Nov-2022 às 21:02
+-- Tempo de geração: 18-Nov-2022 às 21:19
 -- Versão do servidor: 10.4.21-MariaDB
 -- versão do PHP: 8.0.10
 
@@ -86,6 +86,16 @@ CREATE TABLE `carrinho` (
   `pedido` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `carrinho`
+--
+
+INSERT INTO `carrinho` (`id`, `sessao`, `cliente`, `produto`, `quantidade`, `total_item`, `obs`, `pedido`) VALUES
+(20, '2022-11-17-16:54:27-2794', 3, 4, 1, '43.90', '', 0),
+(21, '2022-11-17-16:54:27-2794', 3, 4, 1, '38.90', '', 0),
+(22, '2022-11-18-17:06:31-318', 7, 4, 1, '30.00', 'dadadaaaetete', 0),
+(23, '2022-11-18-17:06:31-318', 7, 4, 1, '25.00', '', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -133,7 +143,12 @@ CREATE TABLE `clientes` (
 
 INSERT INTO `clientes` (`id`, `nome`, `telefone`, `logradouro`, `numero`, `complemento`, `bairro`, `data`) VALUES
 (2, 'Eduardo Sakamoto', '(55) 55555-5555', 'Rua Japão', '666', 'Apartamento 213', 'Jardim Rodrigo', '2022-10-31'),
-(3, 'Arnaldo Besta', '(44) 44444-4444', 'Rua Quatro', '44', 'apartamento 4', 'Passa Quatro', '2022-11-16');
+(3, 'Arnaldo Besta', '(44) 44444-4444', 'Rua Quatro', '44', 'apartamento 4', 'Passa Quatro', '2022-11-16'),
+(4, 'Cabrón', '(31) 31141-4141', '', '', NULL, '', '2022-11-17'),
+(5, 'Julio Pilantra', '(98) 81814-4194', '', '', NULL, '', '2022-11-17'),
+(6, 'Hector', '(14) 14131-3133', '', '', NULL, '', '2022-11-17'),
+(7, 'Jucaaaaa', '(11) 49295-2952', '', '', NULL, '', '2022-11-17'),
+(8, 'Geraldo', '(01) 91191-9191', '', '', NULL, '', '2022-11-17');
 
 -- --------------------------------------------------------
 
@@ -403,13 +418,10 @@ CREATE TABLE `temp` (
 --
 
 INSERT INTO `temp` (`id`, `sessao`, `tabela`, `id_item`, `id_variacao`, `carrinho`) VALUES
-(24, '2022-11-16-00:30:39-638', 'ingredientes', 7, 14, 0),
-(27, '2022-11-16-00:30:39-638', 'adicionais', 7, 14, 0),
-(28, '2022-11-16-00:30:39-638', 'adicionais', 9, 14, 0),
-(29, '2022-11-16-00:30:39-638', 'ingredientes', 1, 14, 0),
-(30, '2022-11-16-10:09:52-3640', 'adicionais', 7, 14, 0),
-(31, '2022-11-16-10:09:52-3640', 'adicionais', 9, 14, 0),
-(32, '2022-11-16-10:09:52-3640', 'adicionais', 10, 14, 0);
+(67, '2022-11-17-16:54:27-2794', 'adicionais', 10, 14, 0),
+(68, '2022-11-17-16:54:27-2794', 'adicionais', 9, 13, 0),
+(69, '2022-11-18-17:06:31-318', 'ingredientes', 1, 14, 0),
+(70, '2022-11-18-17:06:31-318', 'ingredientes', 7, 13, 0);
 
 -- --------------------------------------------------------
 
@@ -636,7 +648,7 @@ ALTER TABLE `bairros`
 -- AUTO_INCREMENT de tabela `carrinho`
 --
 ALTER TABLE `carrinho`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT de tabela `categorias`
@@ -648,7 +660,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `config`
@@ -708,7 +720,7 @@ ALTER TABLE `saidas`
 -- AUTO_INCREMENT de tabela `temp`
 --
 ALTER TABLE `temp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`

@@ -2,7 +2,19 @@
 require_once('cabecalho.php');
 @session_start();
 
-$sessao = $_SESSION['sessao_usuario'];
+$sessao = $_SESSION['sessao_usuario']; //variável criada em adicionais.php
+//aqui é para ele não ter que digitar telefone e nome após cada inserção de item no carrinho estando na mesma sessão, ou seja, se ele estiver na mesma compra (sessão), ele só preenche nome e telefone uma única vez
+$query = $pdo->query("SELECT * FROM carrinho WHERE sessao = '$sessao'");
+$res = $query->fetchAll(PDO::FETCH_ASSOC);
+$total_reg = @count($res);
+if ($total_reg > 0) {
+    $id_cliente = $res[0]['cliente'];
+
+    $query = $pdo->query("SELECT * FROM clientes WHERE id = '$id_cliente'");
+    $res = $query->fetchAll(PDO::FETCH_ASSOC);
+    $nome_cliente = $res[0]['nome'];
+    $telefone_cliente = $res[0]['telefone'];
+}
 
 $url_completa = $_GET['url'];  /*
 url_completa = adicionais.php?url=$1&item=$1
@@ -131,7 +143,7 @@ $valor_itemF = number_format($valor_item, 2, ',', '.');
 
         <div class="form-group">
             <label for="obs"></label>
-            <textarea maxlength="255" name="obs" class="form-control"></textarea>
+            <textarea maxlength="255" name="obs" class="form-control" id="obs"></textarea>
         </div>
 
     </div>
@@ -158,7 +170,7 @@ $valor_itemF = number_format($valor_item, 2, ',', '.');
                         <div class="row">
                             <div class="col-6">
                                 <div class="group">
-                                    <input type="text" onkeyup="buscarNome()" class="input" name="telefone" id="telefone" required>
+                                    <input type="text" onkeyup="buscarNome()" class="input" name="telefone" id="telefone" required value="<?php echo @$telefone_cliente ?>">
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
                                     <label class="label">Telefone</label>
@@ -167,7 +179,9 @@ $valor_itemF = number_format($valor_item, 2, ',', '.');
 
                             <div class="col-6">
                                 <div class="group">
-                                    <input type="text" class="input" name="nome" id="nome" required>
+                                    <input type="text" onclick="buscarNome()" class="input" name="nome" id="nome" required value="<?php echo @$nome_cliente ?>">
+                                    <!-- quando clica no input nome, mostra o nome se o telefone foi preenchido
+                                se ocorrer de colocar autopreenchimento do telefone, o onkeyup não será ativo, daí precisa de um onclick com buscarNome no input nome -->
                                     <span class="highlight"></span>
                                     <span class="bar"></span>
                                     <label class="label">Nome</label>
@@ -176,11 +190,11 @@ $valor_itemF = number_format($valor_item, 2, ',', '.');
 
                             <div class="row" align="center">
                                 <div class="col-6">
-                                    <a href="index.php" class="btn btn-primary" style="width:100%">COMPRAR MAIS</a>
+                                    <a href="#" onclick="comprarMais()" class="btn btn-primary" style="width:100%">COMPRAR MAIS</a>
                                 </div>
 
                                 <div class="col-6">
-                                    <button class="btn btn-success" style="width:100%">FINALIZAR COMPRA</button>
+                                    <a href="#" onclick="finalizarPedido()" class="btn btn-success" style="width:100%">FINALIZAR COMPRA</a>
                                 </div>
 
                                 <br>
@@ -275,5 +289,79 @@ require_once('rodape.php');
                 $('#nome').val(result);
             }
         });
+    }
+
+    function comprarMais() {
+
+        var telefone = $("#telefone").val();
+        var nome = $("#nome").val();
+
+        if (telefone == '') {
+            alert("Preencha o telefone!");
+            return; //é tipo exit() do php
+        }
+
+        if (nome == '') {
+            alert("Preencha o nome!");
+            return; //é tipo exit() do php
+        }
+
+        addCarrinho();
+        window.location = 'index';
+    }
+
+
+    function finalizarPedido() {
+
+        var telefone = $("#telefone").val();
+        var nome = $("#nome").val();
+
+        if (telefone == '') {
+            alert("Preencha o telefone!");
+            return; //é tipo exit() do php
+        }
+
+        if (nome == '') {
+            alert("Preencha o nome!");
+            return; //é tipo exit() do php
+        }
+
+        addCarrinho();
+        window.location = 'carrinho';
+
+    }
+
+    function addCarrinho() {
+
+        var telefone = $("#telefone").val();
+        var nome = $("#nome").val();
+        var quantidade = $("#quantidade").val();
+        var total_item = $("#total_item_input").val(); //total_item_input começa com value="$valor_item", porém, termina com o valor total do item contabilizando a quantidade e o acréscimo de adicionais
+        var id_produto = '<?= $id_produto ?>';
+        var obs = $("#obs").val(); //elemento com id=obs é textarea
+        //antes estava dando comprarMais() undefined no console.log porque estava fazendo var obs = <= $obs ?>, com interregoação antes do igual, o erro era causado porque não existia variável obs
+
+        $.ajax({
+            url: 'js/ajax/add-carrinho.php',
+            method: 'POST',
+            data: {
+                telefone,
+                nome,
+                quantidade,
+                total_item,
+                id_produto,
+                obs
+            },
+            dataType: "text",
+
+            success: function(mensagem) {
+                if (mensagem.trim() == "Inserido com Sucesso!") {
+
+                }
+
+            },
+
+        });
+
     }
 </script>
