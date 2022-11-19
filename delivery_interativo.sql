@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 18-Nov-2022 às 21:19
--- Versão do servidor: 10.4.21-MariaDB
--- versão do PHP: 8.0.10
+-- Tempo de geração: 19-Nov-2022 às 15:09
+-- Versão do servidor: 10.4.22-MariaDB
+-- versão do PHP: 8.0.15
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -94,7 +94,9 @@ INSERT INTO `carrinho` (`id`, `sessao`, `cliente`, `produto`, `quantidade`, `tot
 (20, '2022-11-17-16:54:27-2794', 3, 4, 1, '43.90', '', 0),
 (21, '2022-11-17-16:54:27-2794', 3, 4, 1, '38.90', '', 0),
 (22, '2022-11-18-17:06:31-318', 7, 4, 1, '30.00', 'dadadaaaetete', 0),
-(23, '2022-11-18-17:06:31-318', 7, 4, 1, '25.00', '', 0);
+(23, '2022-11-18-17:06:31-318', 7, 4, 1, '25.00', '', 0),
+(24, '2022-11-19-10:23:11-2198', 9, 4, 1, '43.90', 'pedido  do dia', 0),
+(25, '2022-11-19-10:23:11-2198', 9, 4, 1, '44.90', '', 0);
 
 -- --------------------------------------------------------
 
@@ -148,7 +150,8 @@ INSERT INTO `clientes` (`id`, `nome`, `telefone`, `logradouro`, `numero`, `compl
 (5, 'Julio Pilantra', '(98) 81814-4194', '', '', NULL, '', '2022-11-17'),
 (6, 'Hector', '(14) 14131-3133', '', '', NULL, '', '2022-11-17'),
 (7, 'Jucaaaaa', '(11) 49295-2952', '', '', NULL, '', '2022-11-17'),
-(8, 'Geraldo', '(01) 91191-9191', '', '', NULL, '', '2022-11-17');
+(8, 'Geraldo', '(01) 91191-9191', '', '', NULL, '', '2022-11-17'),
+(9, 'Melvin Krigger', '(13) 15353-5353', '', '', NULL, '', '2022-11-19');
 
 -- --------------------------------------------------------
 
@@ -421,7 +424,12 @@ INSERT INTO `temp` (`id`, `sessao`, `tabela`, `id_item`, `id_variacao`, `carrinh
 (67, '2022-11-17-16:54:27-2794', 'adicionais', 10, 14, 0),
 (68, '2022-11-17-16:54:27-2794', 'adicionais', 9, 13, 0),
 (69, '2022-11-18-17:06:31-318', 'ingredientes', 1, 14, 0),
-(70, '2022-11-18-17:06:31-318', 'ingredientes', 7, 13, 0);
+(70, '2022-11-18-17:06:31-318', 'ingredientes', 7, 13, 0),
+(71, '2022-11-19-10:23:11-2198', 'adicionais', 9, 14, 0),
+(72, '2022-11-19-10:23:11-2198', 'adicionais', 10, 14, 0),
+(73, '2022-11-19-10:23:11-2198', 'ingredientes', 1, 14, 0),
+(75, '2022-11-19-10:23:11-2198', 'adicionais', 7, 13, 0),
+(76, '2022-11-19-10:23:11-2198', 'ingredientes', 7, 13, 0);
 
 -- --------------------------------------------------------
 
@@ -648,7 +656,7 @@ ALTER TABLE `bairros`
 -- AUTO_INCREMENT de tabela `carrinho`
 --
 ALTER TABLE `carrinho`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT de tabela `categorias`
@@ -660,7 +668,7 @@ ALTER TABLE `categorias`
 -- AUTO_INCREMENT de tabela `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `config`
@@ -720,7 +728,7 @@ ALTER TABLE `saidas`
 -- AUTO_INCREMENT de tabela `temp`
 --
 ALTER TABLE `temp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`

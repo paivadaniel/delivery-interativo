@@ -20,6 +20,7 @@ if ($total_reg > 0) {
         $quantidade = $res[$i]['quantidade'];
         $total_item = $res[$i]['total_item'];
         $id_carrinho = $res[$i]['id'];
+        $obs = $res[$i]['obs'];
 
         $valor_unitario = $total_item / $quantidade;
 
@@ -38,7 +39,14 @@ if ($total_reg > 0) {
         $total_itemF = number_format($total_item, 2, ',', '.');
         $total_carrinhoF = number_format($total_carrinho, 2, ',', '.');
 
-echo <<< HTML
+
+        if ($obs == '') {
+            $classe_obs = 'text-warning';
+        } else {
+            $classe_obs = 'text-danger';
+        }
+
+        echo <<< HTML
 
                 <li class="list-group-item">
                     <!-- classe bootstrap justify-content-between foi removida aqui da li, ela distanciava os itens um em cada ponta, ou com espaçamento igualitário caso hajam mais de 2 itens -->
@@ -69,11 +77,11 @@ HTML;
                     $nome_ingrediente = $nome_ingrediente . ', ';
                 }
 
-                echo '<span class="ingredientes text-danger">'.$nome_ingrediente.'</span>';
+                echo '<span class="ingredientes text-danger">' . $nome_ingrediente . '</span>';
             } //fechamento for i2
         } //fechamento if
 
-echo <<< HTML
+        echo <<< HTML
 
                     <a href="#" onclick="excluir('{$id_carrinho}')" class="link-neutro"> <i class="bi bi-x-lg direita"></i> </a>
 
@@ -91,7 +99,16 @@ echo <<< HTML
                         </div>
                     </div>
 
+
+                    OBS
                     <div class="carrinho-qtd">
+
+                    <div class="itens-carrinho-qtd">
+                    <a href="#" title="Observações do Item" class="link-neutro" onclick="obs('{$id_carrinho}', '{$obs}')">
+                    <i class="bi bi-card-text {$classe_obs}"></i>
+                    </a>
+                    </div>
+
                         <a href="#" onclick="mudarQuantidade('{$id_carrinho}', '{$quantidade}', 'menos')" class="link-neutro">
                             <div class="menos-mais">-</div><!-- teve que usar div ao invés de span, pois span não aceita width nem height -->
                         </a>
@@ -107,7 +124,6 @@ echo <<< HTML
                 </li>
 
 HTML;
-
     } //fechamento for
 } else { //fechamento if
     echo "<script>window.alert('Carrinho Vazio!')</script>";
@@ -173,5 +189,14 @@ HTML;
     function fecharExcluir(id) {
         var popup = 'popup-excluir' + id;
         document.getElementById(popup).style.display = 'none';
+    }
+
+    function obs(id_carrinho, obs) {
+        var myModal = document.getElementById('myModal')
+        var myInput = document.getElementById('myInput')
+
+        myModal.addEventListener('shown.bs.modal', function() {
+            myInput.focus()
+        })
     }
 </script>

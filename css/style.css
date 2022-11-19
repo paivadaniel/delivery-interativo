@@ -350,7 +350,7 @@ body {
     position: absolute;
     top: 10px;
     right: 10px;
-    display:none;
+    display: none;
     /*visibility: hidden;*/
     /*opacity: 0;*/
     background: #ffeae6;
@@ -432,6 +432,15 @@ input:valid~label {
     font-size: 0;
     /* se remover esse font-size 0, vai dar espaçamento entre as divs, para isso não ocorrer, temos que deixar font-size da div pai 0, e dar um font-size para os elementos filhos dessa div, no caso menos-mais, qtd-item-carrinho e total-item-carrinho */
 }
+
+.itens-carrinho-qtd {
+    position: relative;
+    margin-right: 30px;
+    display: inline-block;
+    font-size: 12px;
+    /* se remover esse font-size 0, vai dar espaçamento entre as divs, para isso não ocorrer, temos que deixar font-size da div pai 0, e dar um font-size para os elementos filhos dessa div, no caso menos-mais, qtd-item-carrinho e total-item-carrinho */
+}
+
 
 .menos-mais {
     width: 25px;
