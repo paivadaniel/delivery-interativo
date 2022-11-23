@@ -104,7 +104,7 @@ HTML;
                     <div class="carrinho-qtd">
 
                     <div class="itens-carrinho-qtd">
-                    <a href="#" title="Observações do Item" class="link-neutro" onclick="obs('{$id_carrinho}', '{$obs}')">
+                    <a href="#" title="Observações do Item" class="link-neutro" onclick="obs()">
                     <i class="bi bi-card-text {$classe_obs}"></i>
                     </a>
                     </div>
@@ -138,6 +138,7 @@ HTML;
 
 //precisa fechar o php após o HTML;
 ?>
+
 
 <script type="text/javascript">
     $("#total-do-pedido").text('<?= $total_carrinhoF ?>');
@@ -191,12 +192,53 @@ HTML;
         document.getElementById(popup).style.display = 'none';
     }
 
-    function obs(id_carrinho, obs) {
-        var myModal = document.getElementById('myModal')
-        var myInput = document.getElementById('myInput')
+    function obs() {
 
-        myModal.addEventListener('shown.bs.modal', function() {
-            myInput.focus()
-        })
+        $("#nome_produto").text('<?= $nome_produto ?>');
+        $("#obs").text('<?= $obs ?>');
+        $("#id_carrinho").val('<?= $id_carrinho ?>');
+
+        var myModal = new bootstrap.Modal(document.getElementById('modalObs'), {
+            //backdrop: 'static', //não permite que fecha a janela quando clicar fora dela
+        });
+        myModal.show();
+
+
+
     }
+
+    $("#form-obs").submit(function() {
+
+        event.preventDefault();
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: 'paginas/' + pag + "/editar-obs-carrinho.php",
+            type: 'POST',
+            data: formData,
+
+            success: function(mensagem) {
+                $('#mensagem-obs').text('');
+                $('#mensagem-obs').removeClass()
+                if (mensagem.trim() == "Salvo com Sucesso!") {
+
+                    $('#btn-fechar-obs').click();
+                    listar();
+
+                } else {
+
+                    $('#mensagem-obs').addClass('text-danger')
+                    $('#mensagem-obs').text(mensagem)
+                }
+
+
+            },
+
+            cache: false,
+            contentType: false,
+            processData: false,
+
+        });
+
+    });
 </script>

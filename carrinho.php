@@ -60,6 +60,33 @@ require_once('rodape.php');
 ?>
 
 
+<!-- Modal -->
+<div class="modal fade" id="modalObs" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><span id="nome_produto"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="form-obs">
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="obs" class="mb-3">Observações:</label>
+                        <textarea maxlength="255" name="obs" class="form-control" id="obs"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+
+                <input type="text" id="id_carrinho" name="id_carrinho">
+            </form>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     $(document).ready(function() {
         listarCarrinho();
@@ -79,5 +106,4 @@ require_once('rodape.php');
             }
         });
     }
-
 </script>
