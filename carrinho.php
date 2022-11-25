@@ -66,7 +66,7 @@ require_once('rodape.php');
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"><span id="nome_produto"></span></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" id="btn-fechar-obs" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form id="form-obs">
                 <div class="modal-body">
@@ -77,6 +77,14 @@ require_once('rodape.php');
                     </div>
 
                 </div>
+
+                <small>
+
+                    <div id="mensagem-obs" align="center" class="mb-3">
+                        mensagem
+                    </div>
+                </small>
+
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
@@ -106,4 +114,41 @@ require_once('rodape.php');
             }
         });
     }
+
+
+    $("#form-obs").submit(function() {
+
+        event.preventDefault();
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: 'js/ajax/editar-obs-carrinho.php',
+            type: 'POST',
+            data: formData,
+
+            success: function(mensagem) {
+                $('#mensagem-obs').text('');
+                $('#mensagem-obs').removeClass()
+                if (mensagem.trim() == "Salvo com Sucesso!") {
+
+
+                    $('#btn-fechar-obs').click();
+                    listarCarrinho();
+
+                } else {
+
+                    $('#mensagem-obs').addClass('text-danger')
+                    $('#mensagem-obs').text(mensagem)
+                }
+
+
+            },
+
+            cache: false,
+            contentType: false,
+            processData: false,
+
+        });
+
+    });
 </script>
